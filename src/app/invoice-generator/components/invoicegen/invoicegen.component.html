@@ -1,0 +1,79 @@
+<div class="home">
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">Generate report for invoice</a>
+            <button class="toggle-button">&#9776;</button>
+            <div class="navbar-links">
+                <!-- <a href="#">Range Voice</a>
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Contact</a> -->
+                <button class="login-button" [routerLink]="['/login']">Logout</button>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<mat-card class="file-upload-container">
+    <mat-card-content>Select Excel File (.xlsx)</mat-card-content>
+    <input type="file" accept=".xlsx" (change)="onFileSelected($event)" />
+    &nbsp;
+    <button class="submitfile" mat-flat-button (click)="uploadFile()">Upload File</button>
+</mat-card>
+<div *ngIf="message" class="alert" [ngClass]="{'alert-success': success, 'alert-danger': !success}">
+    {{ message }}
+</div>
+
+
+
+
+<!-- <app-invoicedatereport></app-invoicedatereport> -->
+
+<mat-card>
+    <mat-card-content class="title">Invoice Details</mat-card-content>
+    <div style="max-height: 400px; overflow-y: auto;">
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>Invoice No.</th>
+                    <th>Invoice Date</th>
+                    <th>Invoice Amount</th>
+                    <th>Financed Amount</th>
+                    <th>Setup</th>
+                    <th>Interest</th>
+                    <th>Paid Amount</th>
+                    <th>Paid Date</th>
+                    <th>Credit Days</th>
+                    <th>Due Date</th>
+                    <th>Received Date</th>
+                    <th>Balance Amount</th>
+                    <th>Second Paid Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let invoice of invoicedetails">
+                    <td>{{ invoice.invoiceNo }}</td>
+                    <td>{{ invoice.invoiceDate | date }}</td>
+                    <td>{{ invoice.invoiceAmt }}</td>
+                    <td>{{ invoice.financedAmount }}</td>
+                    <td>{{ invoice.setup }}</td>
+                    <td>{{ invoice.interest }}</td>
+                    <td>{{ invoice.paidAmt }}</td>
+                    <td>{{ invoice.paidDate | date }}</td>
+                    <td>{{ invoice.creditDays }}</td>
+                    <td>{{ invoice.dueDate | date }}</td>
+                    <td>{{ invoice.recdDate | date }}</td>
+                    <td>{{ invoice.balAmt }}</td>
+                    <td>{{ invoice.secondPaidDate | date }}</td>
+                    <td>
+                        <button class="action-button"
+                            (click)="generateInvoiceByInvoiceNo(invoice.invoiceNo)">Download</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</mat-card>
