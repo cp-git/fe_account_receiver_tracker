@@ -134,11 +134,11 @@ export class InvoicegenComponent implements OnInit {
       // { text: invoiceInfo.secondPaidDate },
     ];
 
-    // pdfContent.push(
-    //   { text: 'Schedule of Accounts', style: header },
-    //   { text: 'Excel Factoring Group, LLC', style: header },
-    //   { text: 'DATASYS CONSULTING & SOFTWARE, INC', style: header },
-    // )
+    pdfContent.push(
+      { text: 'Schedule of Accounts', style: header },
+      { text: 'Excel Factoring Group, LLC', style: header },
+      { text: 'DATASYS CONSULTING & SOFTWARE, INC', style: header },
+    )
     pdfContent.push(
       { text: 'Invoice Details', style: 'header' },
       {
