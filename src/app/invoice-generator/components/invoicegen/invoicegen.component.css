@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+
+.example-container mat-form-field + mat-form-field {
+    margin-left: 8px;
+  }
+
 .submitfile {
     color: #ffffff;
     background: #121c9c;
@@ -250,4 +255,19 @@ input[type="file"]::file-selector-button:active {
     font-weight: bold;
     text-align: center;
     font-size: 18px;
+}
+
+input{
+    border: 1px groove red;
+    margin-left: 20px;
+}
+
+label{
+    margin-left: 30px;
+}
+
+#selectDta{
+    border: 1px groove red;
+    margin-left: 10px;
+
 }

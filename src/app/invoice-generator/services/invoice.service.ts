@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Invoicedetails } from '../class/invoicedetails';
 import { Observable } from 'rxjs';
+import { invoicegen } from '../components/class/invoicegen';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,12 @@ export class InvoiceService {
     console.log(formData);
 
     return this._http.post<any>(`${this.invoiceUrl}/import`, formData);
+  }
+
+
+  insertInvoice(invoice: invoicegen): Observable<any> {
+    // Send a POST request to the API endpoint for creating a new employee
+    return this._http.post<any>(`${this.invoiceUrl}/invoiceData`, invoice);
   }
 
 }

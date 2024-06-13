@@ -8,6 +8,7 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
 import { HttpEventType } from '@angular/common/http';
 import { style } from '@angular/animations';
+import { invoicegen } from '../class/invoicegen';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-invoicegen',
@@ -23,6 +24,8 @@ export class InvoicegenComponent implements OnInit {
   formData = new FormData();
   message: string = '';
   success: boolean = true;
+
+  invoicegenData= new invoicegen();
   constructor(
     private router: Router,
     private invoiceService: InvoiceService
@@ -46,8 +49,10 @@ export class InvoicegenComponent implements OnInit {
       formData.append('file', this.selectedFile);
       this.invoiceService.uploadExcelFile(formData).subscribe(
         (response) => {
-          this.getAllInvoiceDetails();
-          // alert("File uploaded successfully");
+          console.log(response);
+          
+          // this.getAllInvoiceDetails();
+           alert("File uploaded successfully");
         },
         (error) => {
           alert("upload file")
@@ -69,6 +74,23 @@ export class InvoicegenComponent implements OnInit {
 
       }
     )
+  }
+
+  addInvoicegen(invoicegenData:invoicegen){
+    this.invoiceService.insertInvoice(invoicegenData).subscribe(
+      response=>{
+        console.log(response);
+        alert("added successfully...")
+        location.reload();
+      },
+      (error)=>{
+        console.log(error);
+        alert("Duplicate Name ")
+        
+      }
+    
+    )
+
   }
 
   async generateInvoiceByInvoiceNo(invoiceId: any) {
