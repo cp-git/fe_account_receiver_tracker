@@ -12,8 +12,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { InvoicedatereportComponent } from './components/invoicedatereport/invoicedatereport.component';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 @NgModule({
   declarations: [
     InvoicegenComponent,
@@ -33,9 +34,11 @@ import {MatInputModule} from '@angular/material/input';
     MatNativeDateModule,
     MatIconModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule,
+    MatIconModule,
 
-    
+
 
   ]
 })
