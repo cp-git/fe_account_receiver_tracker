@@ -36,53 +36,53 @@
                             <h4 class="card-title" style="background-color: grey;">Add Invoice</h4>
                             <p class="card-category"></p>
                         </div>
-                        
+
                     </div>
 
                     <div class="card-body">
                         <form #benchForm="ngForm" (ngSubmit)="addInvoicegen(invoicegenData)" novalidate>
 
-                        
 
 
-                
+
+
                             <div class="row">
-                            
 
-                                
 
-                             
+
+
+
                                 <div class="col-md-4" style="margin-top: 20px;">
                                     <label>Invoice Number</label>
                                     <mat-form-field>
-                                        <input  matInput type="text" id="invoiceNo" name="invoiceNo"
+                                        <input matInput type="text" id="invoiceNo" name="invoiceNo"
                                             [(ngModel)]="invoicegenData.invoiceNo" required>
-                                      
+
                                     </mat-form-field>
                                 </div>
 
-                               
+
                                 <div class="col-md-4" style="margin-top: 20px;">
                                     <label>Invoice Date</label>
                                     <mat-form-field class="example-full-width">
-                                        <input  matInput type="date" id="invoiceDate" name="invoiceDate"
+                                        <input matInput type="date" id="invoiceDate" name="invoiceDate"
                                             [(ngModel)]="invoicegenData.invoiceDate" required>
-                                     
+
                                     </mat-form-field>
                                 </div>
 
-                               
+
                                 <div class="col-md-4" style="margin-top: 20px;">
                                     <label>Invoice Amount</label>
                                     <mat-form-field class="example-full-width">
-                                        <input type="number" matInput  id="invoiceAmt"
-                                            name="invoiceAmt" [(ngModel)]="invoicegenData.invoiceAmt">
+                                        <input type="number" matInput id="invoiceAmt" name="invoiceAmt"
+                                            [(ngModel)]="invoicegenData.invoiceAmt">
                                         <!-- Add validation and mat-error if needed -->
                                     </mat-form-field>
                                 </div>
 
                             </div>
-                          
+
                             <button mat-raised-button type="submit" class="btn btn-danger pull-right"
                                 [disabled]="benchForm.invalid" style="margin-left: 90%;">Submit</button>
                             <div class="clearfix"></div>
@@ -124,7 +124,7 @@
 
             <tbody>
                 <tr *ngFor="let invoice of invoicedetails">
-                   
+
                     <td>{{ invoice.invoiceNo }}</td>
                     <td>{{ invoice.invoiceDate | date }}</td>
                     <td>{{ invoice.invoiceAmt }}</td>

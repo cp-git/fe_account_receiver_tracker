@@ -25,7 +25,7 @@ export class InvoicegenComponent implements OnInit {
   message: string = '';
   success: boolean = true;
 
-  invoicegenData= new invoicegen();
+  invoicegenData = new invoicegen();
   constructor(
     private router: Router,
     private invoiceService: InvoiceService
@@ -50,9 +50,9 @@ export class InvoicegenComponent implements OnInit {
       this.invoiceService.uploadExcelFile(formData).subscribe(
         (response) => {
           console.log(response);
-          
+
           // this.getAllInvoiceDetails();
-           alert("File uploaded successfully");
+          alert("File uploaded successfully");
         },
         (error) => {
           alert("upload file")
@@ -76,19 +76,19 @@ export class InvoicegenComponent implements OnInit {
     )
   }
 
-  addInvoicegen(invoicegenData:invoicegen){
+  addInvoicegen(invoicegenData: invoicegen) {
     this.invoiceService.insertInvoice(invoicegenData).subscribe(
-      response=>{
+      response => {
         console.log(response);
         alert("added successfully...")
         location.reload();
       },
-      (error)=>{
+      (error) => {
         console.log(error);
         alert("Duplicate Name ")
-        
+
       }
-    
+
     )
 
   }
@@ -99,12 +99,18 @@ export class InvoicegenComponent implements OnInit {
       .toPromise();
 
     console.log("****" + JSON.stringify(invoiceInfo));
-
+    const formatDate = (dateString: string): string => {
+      const date = new Date(dateString);
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      const year = date.getFullYear().toString();
+      return `${month}/${day}/${year}`;
+    };
     const invoiceHeaderStyle = {
       // fillColor: '#A76AFF',
       bold: true,
       fontSize: 12,
-      alignment: 'center',
+      alignment: 'left',
       color: 'black',
       margin: [5, 5],
     };
@@ -112,26 +118,58 @@ export class InvoicegenComponent implements OnInit {
       // fillColor: '#A76AFF',
       bold: true,
       fontSize: 12,
+      lineHeight: 1.3,
       // alignment: 'center',
       color: 'black',
     };
     const header = {
       bold: true,
       fontSize: 14,
-      textalign: 'center',
+      alignment: 'center' as 'center',
+      color: 'black',
+
+    };
+    const titlepdf = {
+      bold: true,
+      fontSize: 18,
+      //lineHeight: 1,
+      alignment: 'center' as 'center',
+      color: 'black',
+      'lineSpacing': {
+        margin: [0, 0, 0, 10] //change number 6 to increase nspace
+      }
+    };
+    const lineHeight = {
+      lineHeight: 1
+    }
+    const height = {
+      lineHeight: 0.5
+    }
+    const boldBlueText = {
+      bold: true,
+      color: 'blue',
+    };
+    const schedule = {
+      // bold: true,
+      fontSize: 10,
+      // alignment: '',
       color: 'black',
     };
+    const totalAmount = parseFloat(invoiceInfo.invoiceAmt).toFixed(2);
+    const paidAmt = parseFloat(invoiceInfo.paidAmt || 0).toFixed(2);
     const pdfContent: Content = [];
     const invoiceHeaderRow = [
+      { text: ' ', style: invoiceHeaderStyle },
       { text: 'Customer', style: invoiceHeaderStyle },
-      { text: 'Invoice No', style: invoiceHeaderStyle },
+      { text: 'Invoice #', style: invoiceHeaderStyle },
+      { text: 'PO #', style: invoiceHeaderStyle },
       { text: 'Invoice Date', style: invoiceHeaderStyle },
-      { text: 'Invoice Amount', style: invoiceHeaderStyle },
-      { text: 'Financed Amount', style: invoiceHeaderStyle },
-      { text: 'Setup', style: invoiceHeaderStyle },
-      { text: 'Interest', style: invoiceHeaderStyle },
-      { text: 'Paid Amount', style: invoiceHeaderStyle },
-      { text: 'Paid Date', style: invoiceHeaderStyle },
+      { text: 'Invoice Amt', style: invoiceHeaderStyle },
+      // { text: 'Financed Amount', style: invoiceHeaderStyle },
+      // { text: 'Setup', style: invoiceHeaderStyle },
+      // { text: 'Interest', style: invoiceHeaderStyle },
+      // { text: 'Paid Amount', style: invoiceHeaderStyle },
+      // { text: 'Paid Date', style: invoiceHeaderStyle },
       // { text: 'Credit Days', style: invoiceHeaderStyle },
       // { text: 'Due Date', style: invoiceHeaderStyle },
       // { text: 'Recd Date', style: invoiceHeaderStyle },
@@ -139,16 +177,20 @@ export class InvoicegenComponent implements OnInit {
       // { text: 'Second Paid Date', style: invoiceHeaderStyle },
     ];
 
+
     const invoiceDataRow = [
-      { text: 'Datasys Inc' },
+      { text: '1' },
+      { text: 'Equinix ( US) Enterprises, Inc' },
       { text: invoiceInfo.invoiceNo },
-      { text: invoiceInfo.invoiceDate },
-      { text: invoiceInfo.invoiceAmt },
-      { text: invoiceInfo.financedAmount },
-      { text: invoiceInfo.setup },
-      { text: invoiceInfo.interest },
-      { text: invoiceInfo.paidAmt },
-      { text: invoiceInfo.paidDate },
+      { text: '' },
+      { text: formatDate(invoiceInfo.invoiceDate) },
+      { text: totalAmount },
+
+      // { text: invoiceInfo.financedAmount },
+      // { text: invoiceInfo.setup },
+      // { text: invoiceInfo.interest },
+      // { text: invoiceInfo.paidAmt },
+      // { text: invoiceInfo.paidDate },
       // { text: invoiceInfo.creditDays },
       // { text: invoiceInfo.dueDate },
       // { text: invoiceInfo.recdDate },
@@ -156,30 +198,77 @@ export class InvoicegenComponent implements OnInit {
       // { text: invoiceInfo.secondPaidDate },
     ];
 
-    // pdfContent.push(
-    //   { text: 'Schedule of Accounts', style: header },
-    //   { text: 'Excel Factoring Group, LLC', style: header },
-    //   { text: 'DATASYS CONSULTING & SOFTWARE, INC', style: header },
-    // )
     pdfContent.push(
-      { text: 'Invoice Details', style: 'header' },
+      { text: 'Schedule of Accounts', style: titlepdf },
+      { text: ' ', style: height },
+      { text: 'Excel Factoring Group, LLC', style: header },
+      { text: ' ', style: height },
+      { text: 'DATASYS CONSULTING & SOFTWARE, INC', style: header },
+      { text: ' ', style: height },
+
+    )
+
+    pdfContent.push(
+      { text: 'Schedule Number  DATA-0003', style: schedule },
       {
         table: {
           headerRows: 1,
-          widths: [55, 45, 45, 45, 45, 45, 45, 45, 45],
+          widths: [30, 150, 70, 70, 70, 70],
           body: [
             invoiceHeaderRow,
             invoiceDataRow,
           ]
         },
       },
-      // { text: " " },
-      // { text: "Submitted Date: " + "NA", style: details },
-      // { text: "Company : " + "DATASYS CONSULTING & SOFTWARE, IN", style: details },
-      // { text: "Signature : " + "_______________", style: details },
-      // { text: "Name/Title : " + "Suresh Babu, President", style: details }
+
     )
 
+    const certificationText =
+      `This is to certify that the parties named above are indebted to
+    the undersigned in the sums set opposite their respective
+    names,for merchandise sold and delivered or for work and  
+    labor done and accepted.The undersigned hereby sells,assigns 
+    and transfers all of its right, title and interest  in the
+    above listed accounts receivable ('Invoices') to Excel Factoring 
+    Group, LLC pursuant to that certain Accounts Receivable
+    Purchase Agreement between the undersigned and Excel
+    Factoring Group, LLC.`;
+
+    // Block with paragraph text
+    const paragraphBlock = {
+      text: certificationText,
+      margin: [5, 5, 5, 5],
+      alignment: 'left',
+      border: [true, true, true, true], // Add borders if needed
+      width: 'auto', // Adjust width as needed
+      style: { fontSize: 12, },
+    };
+
+    // Block with calculations
+    const calculationsBlock = {
+      text: `Total Amount: ${totalAmount}\nNet Advance: ${paidAmt}`,
+      margin: [5, 5, 5, 5],
+      alignment: 'right',
+      border: [true, true, true, true], // Add borders if needed
+      width: 'auto', // Adjust width as needed
+      style: { fontSize: 12 },
+    };
+    pdfContent.push({ text: ' ', style: lineHeight })
+    pdfContent.push({
+      table: {
+        widths: ['70%', '30%'], // Equal width for both blocks
+        body: [[paragraphBlock, calculationsBlock]],
+      },
+      // layout: 'noBorders', // Optionally remove table borders
+    });
+
+    pdfContent.push(
+      { text: " " },
+      { text: "Submitted Date     :                      " + "NA", style: details },
+      { text: "Company                :                      " + "DATASYS CONSULTING & SOFTWARE, IN", style: details },
+      { text: "Signature                :                      " + "_______________", style: details },
+      { text: "Name/Title             :                      " + "Suresh Babu, President", style: details }
+    )
     const documentDefinition: TDocumentDefinitions = {
       // pageOrientation: 'landscape',
       content: pdfContent,
@@ -190,27 +279,31 @@ export class InvoicegenComponent implements OnInit {
           margin: [0, 0, 0, 10]
         },
       },
-      footer: function (currentPage, pageCount) {
-        return {
-          columns: [
-            {
-              text: '',
-              alignment: 'left',
-              margin: [40, 0]
-            },
-            {
-              text: '',
-              alignment: 'right',
-              margin: [0, 0, 40, 0]
-            }
-          ]
-        };
-      }
+      // footer: function (currentPage, pageCount) {
+      //   return {
+      //     columns: [
+      //       {
+      //         stack: [
+      //           { text: 'Excel Factoring Group, LLC', bold: true },
+      //           { text: '54 MARC DRIVE ,Dayton, New Jersey, 08810' },
+      //           { text: 'Dayton, New Jersey, 08810' },
+      //         ],
+      //         alignment: 'left',
+      //         margin: [40, 0]
+      //       },
+      //       {
+      //         text: `Page ${currentPage} of ${pageCount}`,
+      //         alignment: 'right',
+      //         margin: [0, 0, 40, 0]
+      //       }
+      //     ]
+
+      //   };
+      // }
     };
 
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
     pdfDocGenerator.open();
   }
-
 
 }
