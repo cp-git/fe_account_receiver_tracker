@@ -10,7 +10,7 @@ export class LoginComponent implements OnInit {
 
   username: string = '';
   password: string = '';
-
+  isFinancier: boolean = false;
   constructor(
     private router: Router
   ) { }
@@ -20,13 +20,18 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.username === 'admin' && this.password === 'pass') {
-      // Redirect to the invoice route
-      alert("Login successfully...");
+      // Set session storage for admin
+      sessionStorage.setItem('isAdmin', 'true');
+      alert("Admin login successful...");
+      this.router.navigate(['/invoice']);
+    } else if (this.username === 'financier' && this.password === 'pass') {
+      // Set session storage for financier
+      sessionStorage.setItem('isFinancier', 'true');
+      alert("Financier login successful...");
       this.router.navigate(['/invoice']);
     } else {
-      // For demo purposes, let's just log a message for invalid credentials
-      console.log('Invalid credentials');
-      alert("invalid credentials");
+      // Handle invalid credentials
+      alert("Invalid credentials");
     }
   }
 

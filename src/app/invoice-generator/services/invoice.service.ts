@@ -21,6 +21,13 @@ export class InvoiceService {
   }
 
 
+  updateInvoiceDetailsByInvoiceNo(invoiceNo: string, invoiceGen: Invoicedetails): Observable<Object> {
+    return this._http.put<any>(`${this.invoiceUrl}/update/` + invoiceNo, invoiceGen);
+  }
+
+  updatePaidDateAsToday(invoiceNumbers: string[]): Observable<Object> {
+    return this._http.post<any>(`${this.invoiceUrl}/updatePaidDate`, invoiceNumbers);
+  }
   getAllInvoiceData(): Observable<Invoicedetails[]> {
     // alert(this.getAllEmployees)
     // Send a GET request to the API to retrieve a list of all employees

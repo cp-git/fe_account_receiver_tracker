@@ -24,19 +24,30 @@ export class InvoicegenComponent implements OnInit {
   formData = new FormData();
   message: string = '';
   success: boolean = true;
-
+  isFinancier: boolean = false;
+  todayDate: Date = new Date();
   invoicegenData = new invoicegen();
+  invoiceNumbers: string[] = [];
+
   constructor(
     private router: Router,
     private invoiceService: InvoiceService
   ) {
-
+    const Financer = sessionStorage.getItem('isFinancier')
+    if (Financer !== null) {
+      this.isFinancier = Financer === 'true'; // Convert string to boolean
+    }
   }
 
   ngOnInit(): void {
     this.getAllInvoiceDetails();
+    // alert(this.isFinancier)
   }
-
+  onLogout() {
+    sessionStorage.removeItem('isAdmin');
+    sessionStorage.removeItem('isFinancier');
+    this.router.navigate(['/']);
+  }
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
@@ -62,6 +73,40 @@ export class InvoicegenComponent implements OnInit {
         }
       );
     }
+  }
+
+  onCheckboxChange(event: any, invoiceNo: string): void {
+    if (event.target.checked) {
+      this.invoiceNumbers.push(invoiceNo);
+    } else {
+      const index = this.invoiceNumbers.indexOf(invoiceNo);
+      if (index > -1) {
+        this.invoiceNumbers.splice(index, 1);
+      }
+    }
+    console.log(this.invoiceNumbers + "****");
+  }
+  updatePaidDate() {
+    this.invoiceService.updatePaidDateAsToday(this.invoiceNumbers).subscribe(
+      (respone) => {
+        alert("Updated Successfully");
+        this.getAllInvoiceDetails()
+
+      }, (error) => {
+        alert("update Failed");
+      }
+    )
+  }
+  updateInvoiceByInvoiceNo(updatedInvoice: Invoicedetails) {
+    alert(JSON.stringify(updatedInvoice))
+    this.invoiceService.updateInvoiceDetailsByInvoiceNo(updatedInvoice.invoiceNo, updatedInvoice).subscribe(
+      (response) => {
+
+        alert("invoice updated successfully");
+      }, (error) => {
+        alert("invoice updated Fail");
+      }
+    )
   }
   getAllInvoiceDetails() {
     this.invoiceService.getAllInvoiceData().subscribe(
