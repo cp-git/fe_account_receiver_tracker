@@ -28,6 +28,9 @@ export class InvoiceService {
   updatePaidDateAsToday(invoiceNumbers: string[]): Observable<Object> {
     return this._http.post<any>(`${this.invoiceUrl}/updatePaidDate`, invoiceNumbers);
   }
+  updateRecDateAsToday(invoiceNumbers: string[]): Observable<Object> {
+    return this._http.post<any>(`${this.invoiceUrl}/updateRecDate`, invoiceNumbers);
+  }
   getAllInvoiceData(): Observable<Invoicedetails[]> {
     // alert(this.getAllEmployees)
     // Send a GET request to the API to retrieve a list of all employees
@@ -39,10 +42,10 @@ export class InvoiceService {
     // Send a GET request to the API to retrieve a list of all employees
     return this._http.get<Invoicedetails>(`${this.invoiceUrl}/getInvoice/${invoiceId}`);
   }
+
   uploadExcelFile(formData: FormData): Observable<any> {
     // Send a POST request to the API endpoint for creating a new employee
     console.log(formData);
-
     return this._http.post<any>(`${this.invoiceUrl}/import`, formData);
   }
 

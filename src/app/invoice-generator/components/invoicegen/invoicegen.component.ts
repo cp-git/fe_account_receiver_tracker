@@ -28,6 +28,7 @@ export class InvoicegenComponent implements OnInit {
   todayDate: Date = new Date();
   invoicegenData = new invoicegen();
   invoiceNumbers: string[] = [];
+  invoiceNumbersForUpdatingRecDate: string[] = [];
 
   constructor(
     private router: Router,
@@ -86,12 +87,36 @@ export class InvoicegenComponent implements OnInit {
     }
     console.log(this.invoiceNumbers + "****");
   }
+  onCheckboxRecDateChange(event: any, invoiceNoRec: string): void {
+    if (event.target.checked) {
+      this.invoiceNumbersForUpdatingRecDate.push(invoiceNoRec);
+    } else {
+      const index = this.invoiceNumbersForUpdatingRecDate.indexOf(invoiceNoRec);
+      if (index > -1) {
+        this.invoiceNumbersForUpdatingRecDate.splice(index, 1);
+      }
+    }
+    console.log(this.invoiceNumbersForUpdatingRecDate + "****Rec");
+  }
   updatePaidDate() {
     this.invoiceService.updatePaidDateAsToday(this.invoiceNumbers).subscribe(
       (respone) => {
-        alert("Updated Successfully");
+        alert("Due date updated Successfully");
+        this.invoiceNumbers = [];
         this.getAllInvoiceDetails()
 
+      }, (error) => {
+        alert("update Failed");
+      }
+    )
+
+  }
+  updateRecDate() {
+    this.invoiceService.updateRecDateAsToday(this.invoiceNumbersForUpdatingRecDate).subscribe(
+      (response) => {
+        alert("Rec date Updated Successfully");
+        this.invoiceNumbersForUpdatingRecDate = [];
+        this.getAllInvoiceDetails()
       }, (error) => {
         alert("update Failed");
       }

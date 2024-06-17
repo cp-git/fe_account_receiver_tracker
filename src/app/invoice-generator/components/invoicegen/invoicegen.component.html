@@ -36,11 +36,16 @@
     </form>
 </mat-card>
 <mat-card>
+
     <!-- <mat-card-content class="title">Invoice Details</mat-card-content>
     <button *ngIf="isFinancier" class="action-button" (click)="updatePaidDate()">Update Paid Date</button> -->
     <div class="header-container">
         <mat-card-content class="title">Invoice Details</mat-card-content>
-        <button *ngIf="isFinancier" class="action-button" (click)="updatePaidDate()">Update Paid Date</button>
+        <button *ngIf="isFinancier" class="action-button" (click)="updatePaidDate()"
+            [disabled]="invoiceNumbers.length==0">Update
+            Paid Date</button>
+        <button *ngIf="isFinancier" class="action-button" (click)="updateRecDate()"
+            [disabled]="invoiceNumbersForUpdatingRecDate.length===0">Update Rec Date</button>
     </div>
     <div class="table-container">
         <table class="custom-table">
@@ -77,7 +82,8 @@
                             {{ invoice.paidDate | date }}
                         </ng-container>
                         <ng-template #showCheckbox>
-                            <input type="checkbox" (change)="onCheckboxChange($event, invoice.invoiceNo)">
+                            <input class="checkbox" type="checkbox"
+                                (change)="onCheckboxChange($event, invoice.invoiceNo)">
                         </ng-template>
                     </td>
                     <!-- <td>
@@ -88,14 +94,25 @@
                     </td> -->
                     <td>{{ invoice.creditDays }}</td>
                     <td>{{ invoice.dueDate | date }}</td>
-                    <td>{{ invoice.recdDate | date }}</td>
+                    <td *ngIf="!isFinancier">{{ invoice.recdDate | date }}</td>
+                    <td *ngIf="isFinancier">
+                        <ng-container *ngIf="invoice.recdDate; else showCheckbox">
+                            {{ invoice.recdDate | date }}
+                        </ng-container>
+                        <ng-template #showCheckbox>
+                            <input class="checkbox" type="checkbox"
+                                (change)="onCheckboxRecDateChange($event, invoice.invoiceNo)">
+                        </ng-template>
+                    </td>
                     <td>{{ invoice.balAmt | currency:'USD':'symbol':'1.2-2' }}</td>
                     <td>{{ invoice.secondPaidDate | date }}</td>
                     <td>
                         <!-- <button class="action-button" (click)="updateInvoiceByInvoiceNo(invoice)">Update</button>
                         &nbsp; -->
-                        <button class="action-button"
-                            (click)="generateInvoiceByInvoiceNo(invoice.invoiceNo)">Download</button>
+                        <!-- <button class="action-button"
+                            (click)="generateInvoiceByInvoiceNo(invoice.invoiceNo)">Download</button> -->
+                        <button class="action-button" (click)="generateInvoiceByInvoiceNo(invoice.invoiceNo)"><i
+                                class="fa fa-download"></i></button>
 
                     </td>
 
