@@ -1,3 +1,4 @@
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Invoicedetails } from '../class/invoicedetails';
@@ -10,7 +11,7 @@ import { invoicegen } from '../components/class/invoicegen';
 export class InvoiceService {
 
 
-  private invoiceUrl: string = `http://localhost:8090/invoice/excel`;
+  private invoiceUrl: string = `http://localhost:8090/excel`;
   private countryUrl: any;
   private companyUrl: any;
 
@@ -30,6 +31,9 @@ export class InvoiceService {
   }
   updateRecDateAsToday(invoiceNumbers: string[]): Observable<Object> {
     return this._http.post<any>(`${this.invoiceUrl}/updateRecDate`, invoiceNumbers);
+  }
+  updateSecondPaidDateAsToday(invoiceNumbers: string[]): Observable<Object> {
+    return this._http.post<any>(`${this.invoiceUrl}/updateSecondDate`, invoiceNumbers);
   }
   getAllInvoiceData(): Observable<Invoicedetails[]> {
     // alert(this.getAllEmployees)
@@ -56,3 +60,5 @@ export class InvoiceService {
   }
 
 }
+
+
