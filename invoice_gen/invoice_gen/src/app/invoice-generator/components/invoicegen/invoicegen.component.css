@@ -66,11 +66,12 @@ body {
 }
 
 .login-button {
+    margin-left: 100%;
     background-color: #ce0202;
     color: white;
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
+    border: #313131;
+    border-radius: 45px;
     cursor: pointer;
 }
 
@@ -113,7 +114,7 @@ body {
     color: #fff;
     padding: 5px 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 45px;
     cursor: pointer;
 }
 
@@ -165,22 +166,22 @@ label {
 
 .custom-table th,
 .custom-table td {
-    /* font-size: smaller; */
-    padding: 8px;
+    font-size: smaller;
+    padding: 2px;
     text-align: left;
-    border: 2px solid #cfcece;
+    border: 1px solid #cfcece;
     /* Add borders for cells */
 }
 
 .custom-table th {
-    /* font-size: smaller; */
+    font-size: large;
     background-color: #5137ba;
     color: #ffffff;
     font-weight: bold;
 }
 
 .custom-table tbody tr:nth-child(even) {
-    background-color: #f1ffc5;
+    background-color: #cefcff;
 }
 
 .custom-table tbody tr:hover {
@@ -218,8 +219,8 @@ label {
 
 
 .checkbox {
-    width: 25px;
-    height: 25px;
+    width: 15px;
+    height: 15px;
 
     border: 2px solid #ccc;
     border-radius: 4px;
@@ -279,13 +280,27 @@ input {
     }
 }
 
-
-
-
 .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
+    padding: 10px;
     /* Adjust the padding as needed */
+}
+
+
+
+.buttons-container {
+    display: flex;
+    gap: 10px;
+    /* Adjust the gap between buttons as needed */
+}
+
+.download-button {
+    background-color: #a66ace;
+    color: #ffffff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 45px;
+    cursor: pointer;
 }

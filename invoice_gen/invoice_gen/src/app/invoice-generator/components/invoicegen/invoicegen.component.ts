@@ -29,7 +29,7 @@ export class InvoicegenComponent implements OnInit {
   invoicegenData = new invoicegen();
   invoiceNumbers: string[] = [];
   invoiceNumbersForUpdatingRecDate: string[] = [];
-
+  invoiceNoForSndPaidDate: string[] = [];
   constructor(
     private router: Router,
     private invoiceService: InvoiceService
@@ -98,6 +98,17 @@ export class InvoicegenComponent implements OnInit {
     }
     console.log(this.invoiceNumbersForUpdatingRecDate + "****Rec");
   }
+  onCheckboxSndDateChange(event: any, invoiceNoRec: string): void {
+    if (event.target.checked) {
+      this.invoiceNoForSndPaidDate.push(invoiceNoRec);
+    } else {
+      const index = this.invoiceNoForSndPaidDate.indexOf(invoiceNoRec);
+      if (index > -1) {
+        this.invoiceNoForSndPaidDate.splice(index, 1);
+      }
+    }
+    console.log(this.invoiceNoForSndPaidDate + "**second");
+  }
   updatePaidDate() {
     this.invoiceService.updatePaidDateAsToday(this.invoiceNumbers).subscribe(
       (respone) => {
@@ -117,6 +128,18 @@ export class InvoicegenComponent implements OnInit {
         alert("Rec date Updated Successfully");
         this.invoiceNumbersForUpdatingRecDate = [];
         this.getAllInvoiceDetails()
+      }, (error) => {
+        alert("update Failed");
+      }
+    )
+  }
+
+  updateSndPaidDate() {
+    this.invoiceService.updateSecondPaidDateAsToday(this.invoiceNoForSndPaidDate).subscribe(
+      (response) => {
+        alert("Second Paid Date Updated Successfully.");
+        this.invoiceNoForSndPaidDate = [];
+        this.getAllInvoiceDetails();
       }, (error) => {
         alert("update Failed");
       }

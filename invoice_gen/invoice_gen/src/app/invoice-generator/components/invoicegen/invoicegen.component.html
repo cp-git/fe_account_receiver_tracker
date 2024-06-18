@@ -9,7 +9,7 @@
                 <a href="#">About</a>
                 <a href="#">Services</a>
                 <a href="#">Contact</a> -->
-                <button class="login-button" (click)="onLogout()">Logout</button>
+                <button class="login-button" (click)="onLogout()"><i class="fa-solid fa-power-off fa-xl"></i></button>
             </div>
         </div>
     </nav>
@@ -41,12 +41,22 @@
     <button *ngIf="isFinancier" class="action-button" (click)="updatePaidDate()">Update Paid Date</button> -->
     <div class="header-container">
         <mat-card-content class="title">Invoice Details</mat-card-content>
-        <button *ngIf="isFinancier" class="action-button" (click)="updatePaidDate()"
-            [disabled]="invoiceNumbers.length==0">Update
-            Paid Date</button>
-        <button *ngIf="isFinancier" class="action-button" (click)="updateRecDate()"
-            [disabled]="invoiceNumbersForUpdatingRecDate.length===0">Update Rec Date</button>
+        <div class="buttons-container">
+            <button *ngIf="isFinancier" class="action-button" (click)="updatePaidDate()"
+                [disabled]="invoiceNumbers.length==0">
+                Update Paid Date
+            </button>
+            <button *ngIf="isFinancier" class="action-button" (click)="updateRecDate()"
+                [disabled]="invoiceNumbersForUpdatingRecDate.length===0">
+                Update Received Date
+            </button>
+            <button *ngIf="isFinancier" class="action-button" (click)="updateSndPaidDate()"
+                [disabled]="invoiceNoForSndPaidDate.length===0">
+                Update Second Paid Date
+            </button>
+        </div>
     </div>
+
     <div class="table-container">
         <table class="custom-table">
             <thead>
@@ -105,13 +115,23 @@
                         </ng-template>
                     </td>
                     <td>{{ invoice.balAmt | currency:'USD':'symbol':'1.2-2' }}</td>
-                    <td>{{ invoice.secondPaidDate | date }}</td>
+                    <!-- <td>{{ invoice.secondPaidDate | date }}</td> -->
+                    <td *ngIf="!isFinancier">{{ invoice.secondPaidDate | date }}</td>
+                    <td *ngIf="isFinancier">
+                        <ng-container *ngIf="invoice.secondPaidDate; else showCheckbox">
+                            {{ invoice.secondPaidDate | date }}
+                        </ng-container>
+                        <ng-template #showCheckbox>
+                            <input class="checkbox" type="checkbox"
+                                (change)="onCheckboxSndDateChange($event, invoice.invoiceNo)">
+                        </ng-template>
+                    </td>
                     <td>
                         <!-- <button class="action-button" (click)="updateInvoiceByInvoiceNo(invoice)">Update</button>
                         &nbsp; -->
                         <!-- <button class="action-button"
                             (click)="generateInvoiceByInvoiceNo(invoice.invoiceNo)">Download</button> -->
-                        <button class="action-button" (click)="generateInvoiceByInvoiceNo(invoice.invoiceNo)"><i
+                        <button class="download-button" (click)="generateInvoiceByInvoiceNo(invoice.invoiceNo)"><i
                                 class="fa fa-download"></i></button>
 
                     </td>
