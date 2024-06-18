@@ -1,0 +1,291 @@
+/* Resetting default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.example-container mat-form-field+mat-form-field {
+    margin-left: 8px;
+}
+
+.submitfile {
+    color: #ffffff;
+    background: #121c9c;
+}
+
+mat-card {
+    border: 2px solid #ccc;
+    margin-top: 5px;
+    ;
+    /* Add a 1px solid border with a light gray color */
+}
+
+
+body {
+    background-color: #ccc;
+    /* Gray background for the rest of the page */
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #274cba;
+    color: #fff;
+    padding: 10px 0;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    color: #fff;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.navbar-links a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.toggle-button {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    display: none;
+}
+
+.login-button {
+    background-color: #ce0202;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Media query for responsive design */
+@media only screen and (max-width: 768px) {
+    .navbar-links {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        padding: 10px 0;
+    }
+
+    .navbar-links a {
+        margin: 10px 0;
+    }
+
+    .toggle-button {
+        display: block;
+    }
+}
+
+
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+
+
+
+
+
+.action-button {
+    background-color: #6daf4c;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+.title {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;
+}
+
+input {
+    border: 1px groove red;
+    margin-left: 20px;
+}
+
+label {
+    margin-left: 30px;
+}
+
+#selectDta {
+    border: 1px groove red;
+    margin-left: 10px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.custom-table {
+    width: 100%;
+
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    overflow-y: auto;
+    max-height: 400px;
+    /* Adjust height as needed */
+}
+
+.custom-table th,
+.custom-table td {
+    /* font-size: smaller; */
+    padding: 8px;
+    text-align: left;
+    border: 2px solid #cfcece;
+    /* Add borders for cells */
+}
+
+.custom-table th {
+    /* font-size: smaller; */
+    background-color: #5137ba;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.custom-table tbody tr:nth-child(even) {
+    background-color: #f1ffc5;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #b4ff93;
+}
+
+.custom-table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.action-button {
+    padding: 6px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.action-button.disabled {
+    /* Styles for disabled state */
+    background-color: #ced4da;
+    /* Gray background */
+    color: #313131;
+    /* Gray text */
+    cursor: not-allowed;
+    /* Show not-allowed cursor */
+}
+
+
+.action-button:hover {
+    background-color: #45a049;
+}
+
+
+.checkbox {
+    width: 25px;
+    height: 25px;
+
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    margin-left: 30px;
+    vertical-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* input file css  */
+
+
+@use postcss-preset-env {
+    stage: 0
+}
+
+body {
+    min-height: 100vh;
+    display: grid;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+
+    &>input {
+        flex: 1 1 10ch;
+        margin: .5rem;
+
+        &[type="email"] {
+            flex: 3 1 30ch;
+        }
+    }
+}
+
+input {
+    border: none;
+    background: hsl(0 0% 93%);
+    border-radius: .25rem;
+    padding: .75rem 1rem;
+
+    &[type="submit"] {
+        background: hotpink;
+        color: white;
+        box-shadow: 0 .75rem .5rem -.5rem hsl(0 50% 80%);
+    }
+}
+
+
+
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    /* Adjust the padding as needed */
+}
