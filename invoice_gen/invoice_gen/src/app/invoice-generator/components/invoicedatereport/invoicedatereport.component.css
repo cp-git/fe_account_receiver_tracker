@@ -10,6 +10,12 @@ mat-card-content {
     padding: 10px;
 }
 
+h2 {
+    text-align: center;
+    margin-bottom: 12px;
+    font-size: larger
+}
+
 .date-form {
     display: flex;
     justify-content: center;
@@ -21,8 +27,9 @@ mat-card-content {
     margin: 0 10px;
 }
 
-.date-form input[type="date"] {
-    width: 150px;
+.date-form input[type="date"],
+.date-form select {
+    width: 160px;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -34,13 +41,180 @@ mat-card-content {
 .date-form button.submitfile {
     background-color: #261aad;
     color: #fff;
-    /* padding: 10px 20px; */
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-left: 20px;
+    padding: 10px 20px;
+    /* Restored padding for better button appearance */
 }
 
 .date-form button.submitfile:hover {
     background-color: #3e8e41;
+}
+
+
+
+
+
+.navbar {
+    background-color: #274cba;
+    color: #fff;
+    padding: 10px 0;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    color: #fff;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.navbar-links a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.toggle-button {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    display: none;
+}
+
+.login-button {
+    /* margin-left: 100%; */
+    background-color: #ce0202;
+    color: white;
+
+    padding: 10px 20px;
+    border: #313131;
+    border-radius: 45px;
+    cursor: pointer;
+}
+
+/* Media query for responsive design */
+@media only screen and (max-width: 768px) {
+    .navbar-links {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        padding: 10px 0;
+    }
+
+    .navbar-links a {
+        margin: 10px 0;
+    }
+
+    .toggle-button {
+        display: block;
+    }
+}
+
+
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+
+
+
+
+
+
+
+
+/* table css */
+
+
+
+
+.custom-table {
+    width: 100%;
+
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    overflow-y: auto;
+    max-height: 400px;
+    /* Adjust height as needed */
+}
+
+.custom-table th,
+.custom-table td {
+    font-size: smaller;
+    padding: 2px;
+    text-align: left;
+    border: 2px solid #7e7e7e;
+    /* Add borders for cells */
+}
+
+.custom-table th {
+    font-size: larger;
+    text-align: center;
+    background-color: #5137ba;
+    color: #ffffff;
+    /* font-weight: bold; */
+}
+
+.custom-table tbody tr:nth-child(even) {
+    background-color: #cefcff;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #b4ff93;
+}
+
+.custom-table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.action-button {
+    padding: 6px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.action-button.disabled {
+    /* Styles for disabled state */
+    background-color: #ced4da;
+    /* Gray background */
+    color: #313131;
+    /* Gray text */
+    cursor: not-allowed;
+    /* Show not-allowed cursor */
+}
+
+
+.action-button:hover {
+    background-color: #45a049;
+}
+
+
+
+.title {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;
 }

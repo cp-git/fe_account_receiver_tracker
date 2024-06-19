@@ -1,8 +1,8 @@
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Invoicedetails } from '../class/invoicedetails';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
 import { invoicegen } from '../components/class/invoicegen';
 
 @Injectable({
@@ -60,11 +60,37 @@ export class InvoiceService {
   }
 
 
+
   getAllInvoiceDataByStatusId(setdays:number): Observable<Invoicedetails[]> {
     // alert(this.getAllEmployees)
     // Send a GET request to the API to retrieve a list of all employees
     return this._http.get<Invoicedetails[]>(`${this.invoiceUrl}/invoiceProgress/${setdays}`);
   }
+
+
+  getInvoicesByDateRangeAndStatus(startDate: Date, endDate: Date, status: number): Observable<Invoicedetails[]> {
+    const startDateString = startDate.toISOString().split('T')[0];
+    const endDateString = endDate.toISOString().split('T')[0];
+
+    let params = new HttpParams()
+      .set('startDate', startDateString)
+      .set('endDate', endDateString)
+      .set('status', status.toString());
+
+    return this._http.get<Invoicedetails[]>(`${this.invoiceUrl}/filterDateRange`, { params })
+      .pipe(
+        catchError(this.handleError<Invoicedetails[]>('getInvoicesByDateRangeAndStatus', []))
+      );
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      return of(result as T);
+    };
+  }
+
+
 
 }
 
