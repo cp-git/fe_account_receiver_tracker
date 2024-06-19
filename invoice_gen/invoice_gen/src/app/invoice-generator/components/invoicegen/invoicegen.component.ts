@@ -18,7 +18,7 @@ import { invoicegen } from '../class/invoicegen';
 export class InvoicegenComponent implements OnInit {
 
 
-  statusId! :number;
+  statusId!: number;
   selectedFile!: File;
   invoicedetails: Invoicedetails[] = [];
   deatailsData: Invoicedetails[] = [];
@@ -44,7 +44,7 @@ export class InvoicegenComponent implements OnInit {
   ngOnInit(): void {
     this.getAllInvoiceDetails();
     // alert(this.isFinancier)
-    
+
   }
   onLogout() {
     sessionStorage.removeItem('isAdmin');
@@ -163,13 +163,13 @@ export class InvoicegenComponent implements OnInit {
       (data: Invoicedetails[]) => {
         this.invoicedetails = data;
         console.log(this.statusId + "============");
-        
+
         this.invoiceService.getAllInvoiceDataByStatusId(this.statusId).subscribe(
-          response=>{
+          response => {
             console.log(response);
-            this.deatailsData=response;
+            this.deatailsData = response;
             this.invoicedetails = this.deatailsData;
-            
+
           }
         )
         console.log(this.invoicedetails);
@@ -260,12 +260,11 @@ export class InvoicegenComponent implements OnInit {
       // alignment: '',
       color: 'black',
     };
-    const totalAmount = parseFloat(invoiceInfo.invoiceAmt).toFixed(2);
-    const paidAmt = parseFloat(invoiceInfo.paidAmt || 0).toFixed(2);
+
     const pdfContent: Content = [];
     const invoiceHeaderRow = [
       { text: ' ', style: invoiceHeaderStyle },
-      { text: 'Customer', style: invoiceHeaderStyle },
+      // { text: 'Customer', style: invoiceHeaderStyle },
       { text: 'Invoice #', style: invoiceHeaderStyle },
       { text: 'PO #', style: invoiceHeaderStyle },
       { text: 'Invoice Date', style: invoiceHeaderStyle },
@@ -282,10 +281,15 @@ export class InvoicegenComponent implements OnInit {
       // { text: 'Second Paid Date', style: invoiceHeaderStyle },
     ];
 
-
+    const invoiceAmt = parseFloat(invoiceInfo.invoiceAmt).toFixed(2);
+    const financedAmount = parseFloat(invoiceInfo.financedAmount).toFixed(2);
+    const setup = parseFloat(invoiceInfo.setup).toFixed(2);
+    const paidAmt = parseFloat(invoiceInfo.paidAmt || 0).toFixed(2);
+    const interest = parseFloat(invoiceInfo.interest || 0).toFixed(2);
+    const totalAmount = parseFloat(invoiceInfo.invoiceAmt).toFixed(2);
     const invoiceDataRow = [
       { text: '1' },
-      { text: 'Equinix ( US) Enterprises, Inc' },
+      // { text: 'Equinix ( US) Enterprises, Inc' },
       { text: invoiceInfo.invoiceNo },
       { text: '' },
       { text: formatDate(invoiceInfo.invoiceDate) },
@@ -306,8 +310,8 @@ export class InvoicegenComponent implements OnInit {
     pdfContent.push(
       { text: 'Schedule of Accounts', style: titlepdf },
       { text: ' ', style: height },
-      { text: 'Excel Factoring Group, LLC', style: header },
-      { text: ' ', style: height },
+      // { text: 'Excel Factoring Group, LLC', style: header },
+      // { text: ' ', style: height },
       { text: 'DATASYS CONSULTING & SOFTWARE, INC', style: header },
       { text: ' ', style: height },
 
@@ -318,7 +322,7 @@ export class InvoicegenComponent implements OnInit {
       {
         table: {
           headerRows: 1,
-          widths: [30, 150, 70, 70, 70, 70],
+          widths: [30, 110, 110, 110, 110],
           body: [
             invoiceHeaderRow,
             invoiceDataRow,
@@ -351,29 +355,47 @@ export class InvoicegenComponent implements OnInit {
 
     // Block with calculations
     const calculationsBlock = {
-      text: `Total Amount: ${totalAmount}\nNet Advance: ${paidAmt}`,
+      text: `Invoice Amount    : ${invoiceAmt}
+      
+      Financed Amount: ${financedAmount}
+      Setup                      : ${setup}
+      Intrest                     : ${interest}\n
+
+      Net Advance          : ${paidAmt}`,
       margin: [5, 5, 5, 5],
-      alignment: 'right',
+      alignment: 'left',
       border: [true, true, true, true], // Add borders if needed
       width: 'auto', // Adjust width as needed
       style: { fontSize: 12 },
     };
+
+
     pdfContent.push({ text: ' ', style: lineHeight })
+    // pdfContent.push({
+    //   table: {
+    //     widths: ['70%', '30%'], // Equal width for both blocks
+    //     body: [[calculationsBlock]],
+    //   },
+
+    //   // layout: 'noBorders', // Optionally remove table borders
+    // });
+
     pdfContent.push({
       table: {
-        widths: ['70%', '30%'], // Equal width for both blocks
-        body: [[paragraphBlock, calculationsBlock]],
+        widths: ['70%', '30%'], // Widths of the columns
+        body: [
+          [{ text: '', style: lineHeight }, { text: calculationsBlock, alignment: 'right' }]
+        ],
       },
-      // layout: 'noBorders', // Optionally remove table borders
     });
 
-    pdfContent.push(
-      { text: " " },
-      { text: "Submitted Date     :                      " + "NA", style: details },
-      { text: "Company                :                      " + "DATASYS CONSULTING & SOFTWARE, IN", style: details },
-      { text: "Signature                :                      " + "_______________", style: details },
-      { text: "Name/Title             :                      " + "Suresh Babu, President", style: details }
-    )
+    // pdfContent.push(
+    //   { text: " " },
+    //   { text: "Submitted Date     :                      " + "NA", style: details },
+    //   { text: "Company                :                      " + "DATASYS CONSULTING & SOFTWARE, IN", style: details },
+    //   { text: "Signature                :                      " + "_______________", style: details },
+    //   { text: "Name/Title             :                      " + "Suresh Babu, President", style: details }
+    // )
     const documentDefinition: TDocumentDefinitions = {
       // pageOrientation: 'landscape',
       content: pdfContent,
