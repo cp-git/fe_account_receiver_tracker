@@ -305,3 +305,14 @@ input {
     border-radius: 45px;
     cursor: pointer;
 }
+
+#data1{
+    margin-top: 20px;
+    margin-left: 70%;
+}
+
+#status{
+    width: 300px;
+    margin-left: 80px;
+    height: 40px;
+}

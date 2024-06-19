@@ -13,4 +13,5 @@ export class Invoicedetails {
     recdDate!: Date;
     balAmt!: number;
     secondPaidDate!: Date;
+    setdays!:any;
 }

@@ -36,8 +36,28 @@
         <input type="submit" value="Add Invoice" [disabled]="benchForm.invalid">
     </form>
 </mat-card>
+
+
 <mat-card>
 
+    <div class="row" *ngIf="!isFinancier" id="data1">
+        <div class="col-md-2">
+            <a style="margin-left: 80px;font-size: 22px;">Filter</a>
+
+        </div>
+        <div class="col-md-8">
+            <select id="status" name="status" [(ngModel)]="statusId" (change)="getAllInvoiceDetails()">
+                <option value=0>Invoice Date</option>
+                <option value=1>Paid Date</option>
+                <option value=2>Received Date</option>
+                <option value=3>Second Paid Date</option>
+            </select>
+
+        </div>
+       
+</div>
+
+  
     <!-- <mat-card-content class="title">Invoice Details</mat-card-content>
     <button *ngIf="isFinancier" class="action-button" (click)="updatePaidDate()">Update Paid Date</button> -->
     <div class="header-container">
@@ -57,6 +77,10 @@
             </button>
         </div>
     </div>
+
+    
+
+    
 
     <div class="table-container">
         <table class="custom-table">
@@ -146,3 +170,10 @@
         </table>
     </div>
 </mat-card>
+
+
+
+
+
+
+

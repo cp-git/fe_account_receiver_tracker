@@ -59,6 +59,15 @@ export class InvoiceService {
     return this._http.post<any>(`${this.invoiceUrl}/invoiceData`, invoice);
   }
 
+
+
+  getAllInvoiceDataByStatusId(setdays:number): Observable<Invoicedetails[]> {
+    // alert(this.getAllEmployees)
+    // Send a GET request to the API to retrieve a list of all employees
+    return this._http.get<Invoicedetails[]>(`${this.invoiceUrl}/invoiceProgress/${setdays}`);
+  }
+
+
   getInvoicesByDateRangeAndStatus(startDate: Date, endDate: Date, status: number): Observable<Invoicedetails[]> {
     const startDateString = startDate.toISOString().split('T')[0];
     const endDateString = endDate.toISOString().split('T')[0];
@@ -80,6 +89,7 @@ export class InvoiceService {
       return of(result as T);
     };
   }
+
 
 
 }

@@ -18,9 +18,10 @@ import { invoicegen } from '../class/invoicegen';
 export class InvoicegenComponent implements OnInit {
 
 
-
+  statusId! :number;
   selectedFile!: File;
   invoicedetails: Invoicedetails[] = [];
+  deatailsData: Invoicedetails[] = [];
   formData = new FormData();
   message: string = '';
   success: boolean = true;
@@ -43,6 +44,7 @@ export class InvoicegenComponent implements OnInit {
   ngOnInit(): void {
     this.getAllInvoiceDetails();
     // alert(this.isFinancier)
+    
   }
   onLogout() {
     sessionStorage.removeItem('isAdmin');
@@ -160,6 +162,16 @@ export class InvoicegenComponent implements OnInit {
     this.invoiceService.getAllInvoiceData().subscribe(
       (data: Invoicedetails[]) => {
         this.invoicedetails = data;
+        console.log(this.statusId + "============");
+        
+        this.invoiceService.getAllInvoiceDataByStatusId(this.statusId).subscribe(
+          response=>{
+            console.log(response);
+            this.deatailsData=response;
+            this.invoicedetails = this.deatailsData;
+            
+          }
+        )
         console.log(this.invoicedetails);
 
       }, (erro) => {
