@@ -9,6 +9,7 @@
                 <a href="#">About</a>
                 <a href="#">Services</a>
                 <a href="#">Contact</a> -->
+                <button class="login-button" [routerLink]="['/report']">Reports</button>
                 <button class="login-button" (click)="onLogout()"><i class="fa-solid fa-power-off fa-xl"></i></button>
             </div>
         </div>
@@ -110,8 +111,9 @@
                             {{ invoice.recdDate | date }}
                         </ng-container>
                         <ng-template #showCheckbox>
-                                <input class="checkbox" type="checkbox"
-                                    (change)="onCheckboxRecDateChange($event, invoice.invoiceNo)" [disabled]="!invoice.paidDate">
+                            <input class="checkbox" type="checkbox"
+                                (change)="onCheckboxRecDateChange($event, invoice.invoiceNo)"
+                                [disabled]="!invoice.paidDate">
                         </ng-template>
                     </td>
                     <td>{{ invoice.balAmt | currency:'USD':'symbol':'1.2-2' }}</td>
@@ -122,9 +124,10 @@
                             {{ invoice.secondPaidDate | date }}
                         </ng-container>
                         <ng-template #showCheckbox>
-                                    <input class="checkbox" type="checkbox"
-                                        (change)="onCheckboxSndDateChange($event, invoice.invoiceNo)"  [disabled]="!invoice.recdDate">
-                          
+                            <input class="checkbox" type="checkbox"
+                                (change)="onCheckboxSndDateChange($event, invoice.invoiceNo)"
+                                [disabled]="!invoice.recdDate">
+
                         </ng-template>
                     </td>
                     <td>
