@@ -110,8 +110,8 @@
                             {{ invoice.recdDate | date }}
                         </ng-container>
                         <ng-template #showCheckbox>
-                            <input class="checkbox" type="checkbox"
-                                (change)="onCheckboxRecDateChange($event, invoice.invoiceNo)">
+                                <input class="checkbox" type="checkbox"
+                                    (change)="onCheckboxRecDateChange($event, invoice.invoiceNo)" [disabled]="!invoice.paidDate">
                         </ng-template>
                     </td>
                     <td>{{ invoice.balAmt | currency:'USD':'symbol':'1.2-2' }}</td>
@@ -122,8 +122,9 @@
                             {{ invoice.secondPaidDate | date }}
                         </ng-container>
                         <ng-template #showCheckbox>
-                            <input class="checkbox" type="checkbox"
-                                (change)="onCheckboxSndDateChange($event, invoice.invoiceNo)">
+                                    <input class="checkbox" type="checkbox"
+                                        (change)="onCheckboxSndDateChange($event, invoice.invoiceNo)"  [disabled]="!invoice.recdDate">
+                          
                         </ng-template>
                     </td>
                     <td>
