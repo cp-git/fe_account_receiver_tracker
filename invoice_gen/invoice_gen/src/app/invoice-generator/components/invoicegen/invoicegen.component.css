@@ -169,15 +169,16 @@ label {
     font-size: smaller;
     padding: 2px;
     text-align: left;
-    border: 1px solid #cfcece;
+    border: 2px solid #9c9c9c;
     /* Add borders for cells */
 }
 
 .custom-table th {
-    font-size: large;
+    font-size: larger;
+    text-align: center;
     background-color: #5137ba;
     color: #ffffff;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 .custom-table tbody tr:nth-child(even) {
