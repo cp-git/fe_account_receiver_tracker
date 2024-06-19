@@ -1,12 +1,124 @@
-<mat-card>
+<div class="home">
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                Accounts Receivable Reports</a>
+            <button class="toggle-button">&#9776;</button>
+            <div class="navbar-links">
+                <!-- <a href="#">Range Voice</a>
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Contact</a> -->
+
+                <button class="login-button" [routerLink]="['/invoice']">Back</button>
+            </div>
+        </div>
+    </nav>
+</div>
+<!-- <mat-card>
+
     <mat-card-content>
         <h2>Select Invoice Date Range</h2>
         <form class="date-form">
             <label>From:</label>
-            <input type="date" name="From">
+            <input type="date" name="From" [(ngModel)]="startDate">
             <label>To:</label>
-            <input type="date" name="To">
-            <button class="submitfile" mat-flat-button>Submit</button>
+            <input type="date" name="To" [(ngModel)]="endDate">
+            <label>Status:</label>
+            <select id="status" name="status" [(ngModel)]="statusId"
+                (change)="getAllInvociesBySelectedDateRangeAndStatus()">
+                <option value="4" disabled selected>Select</option>
+                <option value=0>Inovice Date</option>
+                <option value=1>Paid Date</option>
+                <option value=2>Received Date</option>
+                <option value=3>Second Paid Date</option>
+            </select>
+
+            <button class="submitfile" (click)="getAllInvociesBySelectedDateRangeAndStatus()" mat-flat-button>Generate
+                Report</button>
         </form>
     </mat-card-content>
+</mat-card> -->
+
+
+<mat-card>
+    <mat-card-content>
+        <h2>Select Invoice Date Range</h2>
+        <form class="date-form" #myForm="ngForm" (ngSubmit)="generateReports()">
+            <label for="startDate">From:</label>
+            <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate" required>
+
+            <label for="endDate">To:</label>
+            <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate" [min]="startDate" required>
+
+            <label for="status">Status:</label>
+            <select id="status" name="status" [(ngModel)]="statusId"
+                (change)="getAllInvociesBySelectedDateRangeAndStatus()" required>
+                <option value="4" disabled>Select</option>
+                <option value="0">Invoice Date</option>
+                <option value="1">Paid Date</option>
+                <option value="2">Received Date</option>
+                <option value="3">Second Paid Date</option>
+            </select>
+
+            <button class="submitfile" mat-flat-button [disabled]="!myForm.valid">Generate Report</button>
+        </form>
+    </mat-card-content>
+</mat-card>
+
+
+<mat-card>
+    <mat-card-content class="title"> Filtered Invoice Details</mat-card-content>
+    <div class="table-container">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Invoice No.</th>
+                    <th>Invoice Date</th>
+                    <th>Invoice Amount</th>
+                    <th>Financed Amount</th>
+                    <th>Setup</th>
+                    <th>Interest</th>
+                    <th>Paid Amount</th>
+                    <th>Paid Date</th>
+                    <th>Credit Days</th>
+                    <th>Due Date</th>
+                    <th>Received Date</th>
+                    <th>Balance Amount</th>
+                    <th>Second Paid Date</th>
+                    <!-- <th>Action</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let invoice of invoices">
+                    <td>{{ invoice.invoiceNo }}</td>
+                    <td>{{ invoice.invoiceDate | date }}</td>
+                    <td>{{ invoice.invoiceAmt | currency:'USD':'symbol':'1.2-2' }}</td>
+                    <td>{{ invoice.financedAmount | currency:'USD':'symbol':'1.2-2' }}</td>
+                    <td>{{ invoice.setup | currency:'USD':'symbol':'1.2-2' }}</td>
+                    <td>{{ invoice.interest | currency:'USD':'symbol':'1.2-2' }}</td>
+                    <td>{{ invoice.paidAmt | currency:'USD':'symbol':'1.2-2' }}</td>
+                    <td> {{ invoice.paidDate | date }}</td>
+
+
+                    <td>{{ invoice.creditDays }}</td>
+                    <td>{{ invoice.dueDate | date }}</td>
+                    <td>{{ invoice.recdDate | date }}</td>
+
+                    <td>{{ invoice.balAmt | currency:'USD':'symbol':'1.2-2' }}</td>
+                    <!-- <td>{{ invoice.secondPaidDate | date }}</td> -->
+                    <td>{{ invoice.secondPaidDate | date }}</td>
+
+                    <!-- <td>
+                  
+                    <button class="download-button" (click)="generateInvoiceByInvoiceNo(invoice.invoiceNo)"><i
+                            class="fa fa-download"></i></button>
+
+                </td> -->
+
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </mat-card>
