@@ -47,6 +47,7 @@
         </div>
         <div class="col-md-8">
             <select id="status" name="status" [(ngModel)]="statusId" (change)="getAllInvoiceDetails()">
+                <option value=4>All Data</option>
                 <option value=0>Invoice Date</option>
                 <option value=1>Paid Date</option>
                 <option value=2>Received Date</option>

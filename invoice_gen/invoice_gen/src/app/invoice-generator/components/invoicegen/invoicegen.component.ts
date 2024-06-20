@@ -167,8 +167,14 @@ export class InvoicegenComponent implements OnInit {
         this.invoiceService.getAllInvoiceDataByStatusId(this.statusId).subscribe(
           response => {
             console.log(response);
-            this.deatailsData = response;
-            this.invoicedetails = this.deatailsData;
+
+            if(this.statusId !=4){
+              console.log("In Status Column Data...");
+              this.deatailsData = response;
+              this.invoicedetails = this.deatailsData;
+              
+            }
+           
 
           }
         )
