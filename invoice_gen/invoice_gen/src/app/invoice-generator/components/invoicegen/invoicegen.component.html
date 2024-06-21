@@ -1,20 +1,20 @@
-<div class="home">
-    <nav class="navbar">
-        <div class="container">
-            <a href="#" class="logo">
-                Accounts Receivable Details</a>
-            <button class="toggle-button">&#9776;</button>
-            <div class="navbar-links">
-                <!-- <a href="#">Range Voice</a>
+<nav class="navbar">
+    <div class="container">
+        <a href="#" class="logo">
+            Accounts Receivable Details</a>
+        <button class="toggle-button">&#9776;</button>
+        <div class="navbar-links">
+            <!-- <a href="#">Range Voice</a>
                 <a href="#">About</a>
                 <a href="#">Services</a>
                 <a href="#">Contact</a> -->
-                <button class="login-button" [routerLink]="['/report']">Reports</button>
-                <button class="login-button" (click)="onLogout()"><i class="fa-solid fa-power-off fa-xl"></i></button>
-            </div>
+            <button class="login-button" [routerLink]="['/report']">Reports</button>
+            &nbsp;
+            <button class="login-button" (click)="onLogout()"><i class="fa-solid fa-power-off fa-xl"></i></button>
         </div>
-    </nav>
-</div>
+    </div>
+</nav>
+
 
 
 
@@ -22,8 +22,8 @@
 
 <!-- <app-invoicedatereport></app-invoicedatereport> -->
 
-
-<mat-card *ngIf="!isFinancier">
+&nbsp;
+<mat-card *ngIf="!isFinancier" class="mat-elevation-z3 centered-card">
     <mat-card-content class="title"> Add Invoice Details</mat-card-content>
     <form #benchForm="ngForm" (ngSubmit)="addInvoicegen(invoicegenData)" novalidate>
         <input type="text" placeholder="Invoice Number" id="invoiceNo" name="invoiceNo"
@@ -37,7 +37,7 @@
     </form>
 </mat-card>
 
-
+&nbsp;
 <mat-card>
 
     <div class="row" *ngIf="!isFinancier" id="data1">
@@ -55,10 +55,10 @@
             </select>
 
         </div>
-       
-</div>
 
-  
+    </div>
+
+
     <!-- <mat-card-content class="title">Invoice Details</mat-card-content>
     <button *ngIf="isFinancier" class="action-button" (click)="updatePaidDate()">Update Paid Date</button> -->
     <div class="header-container">
@@ -79,9 +79,9 @@
         </div>
     </div>
 
-    
 
-    
+
+
 
     <div class="table-container">
         <table class="custom-table">
@@ -171,10 +171,3 @@
         </table>
     </div>
 </mat-card>
-
-
-
-
-
-
-
