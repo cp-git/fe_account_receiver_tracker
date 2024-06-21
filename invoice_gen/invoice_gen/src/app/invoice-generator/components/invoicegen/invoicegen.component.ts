@@ -168,13 +168,13 @@ export class InvoicegenComponent implements OnInit {
           response => {
             console.log(response);
 
-            if(this.statusId !=4){
+            if (this.statusId != 4) {
               console.log("In Status Column Data...");
               this.deatailsData = response;
               this.invoicedetails = this.deatailsData;
-              
+
             }
-           
+
 
           }
         )
@@ -203,7 +203,6 @@ export class InvoicegenComponent implements OnInit {
     )
 
   }
-
   async generateInvoiceByInvoiceNo(invoiceId: any) {
     const invoiceInfo: any = await this.invoiceService
       .getInvoiceByInvoiceId(invoiceId)
@@ -359,42 +358,27 @@ export class InvoicegenComponent implements OnInit {
       style: { fontSize: 12, },
     };
 
-    // Block with calculations
-    const calculationsBlock = {
-      text: `Invoice Amount    : ${invoiceAmt}
-      
-      Financed Amount: ${financedAmount}
-      Setup                      : ${setup}
-      Intrest                     : ${interest}\n
-
-      Net Advance          : ${paidAmt}`,
-      margin: [5, 5, 5, 5],
-      alignment: 'left',
-      border: [true, true, true, true], // Add borders if needed
-      width: 'auto', // Adjust width as needed
-      style: { fontSize: 12 },
-    };
 
 
-    pdfContent.push({ text: ' ', style: lineHeight })
-    // pdfContent.push({
-    //   table: {
-    //     widths: ['70%', '30%'], // Equal width for both blocks
-    //     body: [[calculationsBlock]],
-    //   },
 
-    //   // layout: 'noBorders', // Optionally remove table borders
-    // });
 
+    const calculationsBlock = [
+      { text: `Invoice Amount         :   ${invoiceAmt}\n\n`, color: 'black' },
+      { text: `Financed Amount      :   ${financedAmount}\n`, color: 'black' },
+      { text: `Setup                           :   ${setup}\n`, color: 'black' },
+      { text: `Interest                        :   ${interest}\n\n`, color: 'black' },
+      { text: `Net Advance               :   ${paidAmt}`, color: 'red' }
+    ];
+
+    pdfContent.push({ text: ' ', style: lineHeight });
     pdfContent.push({
       table: {
-        widths: ['70%', '30%'], // Widths of the columns
+        widths: ['50%'],
         body: [
-          [{ text: '', style: lineHeight }, { text: calculationsBlock, alignment: 'right' }]
+          [{ text: calculationsBlock, alignment: 'left' }]
         ],
       },
     });
-
     // pdfContent.push(
     //   { text: " " },
     //   { text: "Submitted Date     :                      " + "NA", style: details },
