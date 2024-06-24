@@ -169,24 +169,47 @@ Group, LLC pursuant to that certain Accounts Receivable
 Purchase Agreement between the undersigned and Excel
 Factoring Group, LLC.`;
 
+    // const calculationsBlock = [
+    //   { text: `Invoice Amount         :   ${totalInvoiceAmount.toFixed(2)}\n\n`, color: 'black' },
+    //   { text: `Financed Amount      :   ${totalFinancedAmount.toFixed(2)}\n`, color: 'black' },
+    //   { text: `Setup                           :   ${totalSetup.toFixed(2)}\n`, color: 'black' },
+    //   { text: `Interest                        :   ${totalIntrestAmount.toFixed(2)}\n\n`, color: 'black' },
+    //   { text: `Net Advance               :   ${totalPaidAmount.toFixed(2)}`, color: 'red' }
+    // ];
+
+    // pdfContent.push({ text: ' ', style: lineHeight });
+    // pdfContent.push({
+    //   table: {
+    //     widths: ['50%'],
+    //     body: [
+    //       [{ text: calculationsBlock, alignment: 'left' }]
+    //     ],
+    //   },
+    // });
     const calculationsBlock = [
-      { text: `Invoice Amount         :   ${totalInvoiceAmount.toFixed(2)}\n\n`, color: 'black' },
-      { text: `Financed Amount      :   ${totalFinancedAmount.toFixed(2)}\n`, color: 'black' },
-      { text: `Setup                           :   ${totalSetup.toFixed(2)}\n`, color: 'black' },
-      { text: `Interest                        :   ${totalIntrestAmount.toFixed(2)}\n\n`, color: 'black' },
-      { text: `Net Advance               :   ${totalPaidAmount.toFixed(2)}`, color: 'red' }
+      [{ text: 'Invoice Amount', alignment: 'left', color: 'black' }, { text: `$${totalInvoiceAmount.toFixed(2)}`, alignment: 'right', color: 'black' }],
+      [{ text: 'Financed Amount', alignment: 'left', color: 'black' }, { text: `$${totalFinancedAmount.toFixed(2)}`, alignment: 'right', color: 'black' }],
+      [{ text: 'Setup', alignment: 'left', color: 'black' }, { text: `$${totalSetup.toFixed(2)}`, alignment: 'right', color: 'black' }],
+      [{ text: 'Interest', alignment: 'left', color: 'black' }, { text: `$${totalIntrestAmount.toFixed(2)}`, alignment: 'right', color: 'black' }],
+      [{ text: 'Net Advance', alignment: 'left', color: 'red' }, { text: `$${totalPaidAmount.toFixed(2)}`, alignment: 'right', color: 'red' }]
     ];
 
-    pdfContent.push({ text: ' ', style: lineHeight });
-    pdfContent.push({
-      table: {
-        widths: ['50%'],
-        body: [
-          [{ text: calculationsBlock, alignment: 'left' }]
-        ],
-      },
-    });
+    pdfContent.push(
+      { text: ' ', style: lineHeight },
+    )
+    pdfContent.push(
+      // { text: ' ', style: lineHeight },
+      {
+        // alignment: 'center',
+        // layout: 'noBorders',
+        margin: [0, 0, 50, 0],
+        table: {
+          widths: ['30%', '20%'], // Adjust widths as needed
+          body: calculationsBlock,
 
+        },
+      }
+    );
 
     const documentDefinition: TDocumentDefinitions = {
       content: pdfContent,
