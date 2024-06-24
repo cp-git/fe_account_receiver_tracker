@@ -8,7 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
-    HomepageComponent
+    HomepageComponent,
+
   ],
   imports: [
     CommonModule,
