@@ -1,0 +1,52 @@
+<mat-card>
+  <nav class="navbar">
+
+    <mat-card-content class="title">Companies</mat-card-content>
+    <div  style="text-align: right; margin-right: 1rem;">
+      <button mat-raised-button color="#ce0202" (click)="goBack()" class="backButton"><mat-icon>arrow_back</mat-icon>Back</button>
+    </div>
+ </nav>
+
+    <div class="row" id="data1">
+      <div style="text-align: right;margin-right: 1rem;">
+        <button mat-raised-button color="primary" (click)="addCompany()" class="submitfile"><mat-icon class="mat-icon-custom">add</mat-icon>
+          Create Company</button>
+      </div>
+
+    </div>
+  
+    <div class="table-container">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <!-- <th>ID</th> -->
+            <th>Name</th>
+            <th>Address</th>
+            <th>Contact</th>
+            <th>Person</th>
+            <th>Active</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let company of companies">
+            <!-- <td>{{ company.companyId }}</td> -->
+            <td>{{ company.companyName }}</td>
+            <td>{{ company.companyAddress }}</td>
+            <td>{{ company.companyContact }}</td>
+            <td>{{ company.companyPerson }}</td>
+            <td>{{ company.active ? 'Active' : 'Inactive' }}</td>
+            <td class="action-buttons">
+              
+                <button mat-icon-button color="primary" (click)="editCompany(company.companyId)" class="action-button">
+                  <mat-icon class="mat-icon-custom">edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteCompany(company.companyId)" class="action-button">
+                  <mat-icon class="mat-icon-custom">delete</mat-icon>
+                </button>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </mat-card>

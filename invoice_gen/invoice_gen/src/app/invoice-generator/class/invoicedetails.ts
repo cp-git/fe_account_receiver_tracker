@@ -14,4 +14,5 @@ export class Invoicedetails {
     balAmt!: number;
     secondPaidDate!: Date;
     setdays!:any;
+    companyId!:any
 }

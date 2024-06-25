@@ -1,0 +1,92 @@
+<mat-card>
+  <nav class="navbar">
+    <mat-card-content class="title">Update Company Member</mat-card-content>
+    <div style="text-align: right; margin-right: 1rem;">
+      <button mat-raised-button color="primary" (click)="goBack()" class="backButton">
+        <mat-icon>arrow_back</mat-icon> Back
+      </button>
+    </div>
+  </nav>
+
+  <div class="form-container">
+    <form *ngIf="updateForm" [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <!-- First Row -->
+        <div class="form-group mb-3">
+          <label for="memberName">
+            <span class="required">*</span>Member Name
+          </label>
+          <input id="memberName" formControlName="memberName" class="form-control">
+          <div *ngIf="updateForm.get('memberName')?.invalid && updateForm.get('memberName')?.touched" class="text-danger">
+            Member Name is required
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="username">
+            <span class="required">*</span>Username
+          </label>
+          <input id="username" formControlName="username" class="form-control">
+          <div *ngIf="updateForm.get('username')?.invalid && updateForm.get('username')?.touched" class="text-danger">
+            Username is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- Second Row -->
+        <div class="form-group mb-3">
+          <label for="password">
+            <span class="required">*</span>Password
+          </label>
+          <input type="password" id="password" formControlName="password" class="form-control">
+          <div *ngIf="updateForm.get('password')?.invalid && updateForm.get('password')?.touched" class="text-danger">
+            Password is required
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="memberEmail">
+            <span class="required">*</span>Member Email
+          </label>
+          <input id="memberEmail" formControlName="memberEmail" class="form-control">
+          <div *ngIf="updateForm.get('memberEmail')?.invalid && updateForm.get('memberEmail')?.touched" class="text-danger">
+            Valid email is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- Third Row -->
+        <div class="form-group mb-3">
+          <label for="memberContact">
+            <span class="required">*</span>Member Contact
+          </label>
+          <input id="memberContact" formControlName="memberContact" class="form-control">
+          <div *ngIf="updateForm.get('memberContact')?.invalid && updateForm.get('memberContact')?.touched" class="text-danger">
+            Valid 10-digit phone number is required
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="companyId">
+            <span class="required">*</span>Company
+          </label>
+          <select id="companyId" formControlName="companyId" class="form-control">
+            <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyName }}</option>
+          </select>
+          <div *ngIf="updateForm.get('companyId')?.invalid && updateForm.get('companyId')?.touched" class="text-danger">
+            Company is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mb-3 form-check">
+        <input type="checkbox" id="active" formControlName="active" class="form-check-input">
+        <label class="form-check-label" for="active">Active</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary submitfile" [disabled]="updateForm.invalid">Update</button>
+    </form>
+  </div>
+</mat-card>

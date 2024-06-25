@@ -9,7 +9,14 @@
                 <a href="#">About</a>
                 <a href="#">Services</a>
                 <a href="#">Contact</a> -->
+                <button *ngIf="isFinancier" class="login-button" (click)="getCompanyStaff()">
+                    Company Members
+               </button>
+                <button *ngIf="isFinancier" class="login-button" (click)="getCompany()">
+                    Company
+               </button>
                 <button class="login-button" [routerLink]="['/report']">Reports</button>
+            
                 <button class="login-button" (click)="onLogout()"><i class="fa-solid fa-power-off fa-xl"></i></button>
             </div>
         </div>
@@ -75,6 +82,8 @@
                 [disabled]="invoiceNoForSndPaidDate.length===0">
                 Update Second Paid Date
             </button>
+       
+            
         </div>
     </div>
 
@@ -99,6 +108,8 @@
                     <th>Received Date</th>
                     <th>Balance Amount</th>
                     <th>Second Paid Date</th>
+                    <th>Company</th>
+
                     <th>Action</th>
                 </tr>
             </thead>
@@ -154,6 +165,10 @@
 
                         </ng-template>
                     </td>
+                    
+                        <td>{{ companies[invoice.companyId]?.companyName }}</td>
+
+                   
                     <td>
                         <!-- <button class="action-button" (click)="updateInvoiceByInvoiceNo(invoice)">Update</button>
                         &nbsp; -->

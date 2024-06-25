@@ -1,0 +1,131 @@
+
+/* .submitfile {
+  color: #ffffff;
+  background: #121c9c;
+  border-radius: 45px;
+} */
+.submitfile {
+  color: #ffffff;
+  background: #4CAF50;
+  border-radius: 45px;
+  margin-right: 1rem;
+}
+
+.backButton {
+  color: #ffffff;
+  background: #ce0202;
+  border-radius: 45px;
+}
+
+
+.mat-mdc-raised-button.submitfile:not(:disabled) {
+  background-color: #4CAF50;
+}
+
+.mat-mdc-raised-button.backButton:not(:disabled) {
+  background-color: #ce0202;
+}
+
+.mat-mdc-card-content:first-child {
+  padding-top: 0px;
+}
+
+.navbar {
+  background-color: #274cba;
+  color: #fff;
+  padding: 10px 0;
+}
+mat-card {
+  border: none;
+  margin-top: 5px;
+  /* padding: 2rem; */
+}
+
+.title {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.custom-table th,
+.custom-table td {
+  font-size: smaller;
+  padding: 2px;
+  text-align: left;
+  border: 2px solid #7e7e7e;
+}
+
+.custom-table th {
+  font-size: larger;
+  text-align: center;
+  background-color: #5137ba;
+  color: #ffffff;
+}
+
+thead{
+  height: 3rem;
+}
+
+td{
+  height: 2.5rem;
+
+}
+
+.custom-table tbody tr:nth-child(even) {
+  background-color: #cefcff;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #b4ff93;
+}
+
+.custom-table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.action-button {
+  background-color: #b768c6;
+  color: white;
+  padding: 6px 3px;
+  border: none;
+  border-radius: 45px;
+  cursor: pointer;
+  margin: 0 5px; /* Adjust spacing between buttons */
+  height: 2rem;
+  width: 2rem;
+}
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.download-button {
+  background-color: #a66ace;
+  color: #ffffff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 45px;
+  cursor: pointer;
+}
+
+#data1 {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.mat-icon-custom {
+  font-size: 18px; /* Adjust the size as needed */
+}

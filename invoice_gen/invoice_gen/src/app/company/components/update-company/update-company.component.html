@@ -1,0 +1,60 @@
+<mat-card>
+    <nav class="navbar">
+      <mat-card-content class="title">Update Company</mat-card-content>
+      <div style="text-align: right; margin-right: 1rem;">
+        <button mat-raised-button color="#ce0202" (click)="goBack()" class="backButton">
+          <mat-icon>arrow_back</mat-icon>Back
+        </button>
+      </div>
+    </nav>
+  
+    <div class="form-container">
+      <form (submit)="updateCompany()" class="row g-3">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="companyName" class="form-label">
+              <span class="required-asterisk">*</span>
+              Name:
+            </label>
+            <input type="text" id="companyName" class="form-control" [(ngModel)]="company.companyName" name="companyName" required>
+            <div class="invalid-feedback">Name is required.</div>
+          </div>
+  
+          <div class="mb-3">
+            <label for="companyAddress" class="form-label">
+              <span class="required-asterisk">*</span>
+              Address:
+            </label>
+            <input type="text" id="companyAddress" class="form-control" [(ngModel)]="company.companyAddress" name="companyAddress" required>
+            <div class="invalid-feedback">Address is required.</div>
+          </div>
+  
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="active" [(ngModel)]="company.active" name="active">
+            <label class="form-check-label" for="active">Active</label>
+          </div>
+        </div>
+  
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="companyContact" class="form-label">
+              <span class="required-asterisk">*</span>
+              Contact:
+            </label>
+            <input type="text" id="companyContact" class="form-control" [(ngModel)]="company.companyContact" name="companyContact" required>
+            <div class="invalid-feedback">Contact is required.</div>
+          </div>
+  
+          <div class="mb-3">
+            <label for="companyPerson" class="form-label">Person:</label>
+            <input type="text" id="companyPerson" class="form-control" [(ngModel)]="company.companyPerson" name="companyPerson">
+          </div>
+        </div>
+  
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary submitfile">Update</button>
+        </div>
+      </form>
+    </div>
+  </mat-card>
+  

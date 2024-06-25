@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/cp-git/tts_web/issues"
   },
-  "homepage": "https://github.com/cp-git/tts_web#readme"
+  "homepage": "https://github.com/cp-git/tts_web#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.5.2"
+  }
 }

@@ -1,0 +1,100 @@
+<mat-card>
+  <nav class="navbar">
+    <mat-card-content class="title">Add Company Member</mat-card-content>
+    <div style="text-align: right; margin-right: 1rem;">
+      <button mat-raised-button color="primary" (click)="goBack()" class="backButton">
+        <mat-icon>arrow_back</mat-icon> Back
+      </button>
+    </div>
+  </nav>
+
+  <div class="form-container">
+    <form *ngIf="addForm" [formGroup]="addForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="memberName">
+            <span class="required">*</span>Member Name
+          </label>
+          <input id="memberName" formControlName="memberName" class="form-control" autocomplete="random-string-1">
+          <div class="bottom-line"></div>
+          <div *ngIf="addForm.get('memberName')?.invalid && addForm.get('memberName')?.touched" class="text-danger">
+            Member Name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="username">
+            <span class="required">*</span>Username
+          </label>
+          <input id="username" formControlName="username" class="form-control" autocomplete="random-string-2">
+          <div class="bottom-line"></div>
+          <div *ngIf="addForm.get('username')?.invalid && addForm.get('username')?.touched" class="text-danger">
+            Username is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="password">
+            <span class="required">*</span>Password
+          </label>
+          <input type="password" id="password" formControlName="password" class="form-control" autocomplete="new-password">
+          <div class="bottom-line"></div>
+          <div *ngIf="addForm.get('password')?.invalid && addForm.get('password')?.touched" class="text-danger">
+            Password is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="memberEmail">
+            <span class="required">*</span>Member Email
+          </label>
+          <input id="memberEmail" formControlName="memberEmail" class="form-control" autocomplete="random-string-3">
+          <div class="bottom-line"></div>
+          <div *ngIf="addForm.get('memberEmail')?.invalid && addForm.get('memberEmail')?.touched" class="text-danger">
+            Valid email is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="memberContact">
+            <span class="required">*</span>Member Contact
+          </label>
+          <input id="memberContact" formControlName="memberContact" class="form-control" autocomplete="random-string-4">
+          <div class="bottom-line"></div>
+          <div class="text-danger">
+            <div *ngIf="addForm.get('memberContact')?.invalid && addForm.get('memberContact')?.touched">
+              Valid 10-digit phone number is required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="companyId">
+            <span class="required">*</span>Company
+          </label>
+          <div class="select-wrapper">
+            <select id="companyId" formControlName="companyId" class="form-control" autocomplete="random-string-5">
+              <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyName }}</option>
+            </select>
+            <div class="bottom-line"></div>
+            <div class="select-arrow"></div>
+          </div>
+          <div *ngIf="addForm.get('companyId')?.invalid && addForm.get('companyId')?.touched" class="text-danger">
+            Company is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group form-check">
+        <input type="checkbox" id="active" formControlName="active" class="form-check-input">
+        <label class="form-check-label" for="active">Active</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary mt-3 submitfile" [disabled]="addForm.invalid">Save</button>
+    </form>
+  </div>
+</mat-card>

@@ -19,14 +19,19 @@ export const environment = {
   // hiringCompanyUrl: `http://localhost:8090/ttsms/hiringcompany`,
   // benchCandidateUrl: `https://127.0.0.1:8444/ttsms/benchcandidate`,
 
-  countryUrl: `${commonEnv.baseUrl}/country/ttsms/country`,
-  employeeUrl: `${commonEnv.baseUrl}/employee/ttsms`,
-  companyUrl: `${commonEnv.baseUrl}/company/ttsms/company`,
-  reasonUrl: `${commonEnv.baseUrl}/reason/ttsms`,
-  statusURL: `${commonEnv.baseUrl}/status/ttsms`,
-  taskUrl: `${commonEnv.baseUrl}/task/ttsms`,
-  passwordUrl: `${commonEnv.baseUrl}/employee/ttsms/password`,
-  forgotUrl: `${commonEnv.baseUrl}/employee/ttsms/forgotpass`,
-  hiringCompanyUrl: `${commonEnv.baseUrl}/hiringcompany/ttsms/hiringcompany`,
-  benchCandidateUrl: `${commonEnv.baseUrl}/benchcandidate/ttsms/benchcandidate`,
+  // countryUrl: `${commonEnv.baseUrl}/country/ttsms/country`,
+  // employeeUrl: `${commonEnv.baseUrl}/employee/ttsms`,
+  // reasonUrl: `${commonEnv.baseUrl}/reason/ttsms`,
+  // statusURL: `${commonEnv.baseUrl}/status/ttsms`,
+  // taskUrl: `${commonEnv.baseUrl}/task/ttsms`,
+  // passwordUrl: `${commonEnv.baseUrl}/employee/ttsms/password`,
+  // forgotUrl: `${commonEnv.baseUrl}/employee/ttsms/forgotpass`,
+  // hiringCompanyUrl: `${commonEnv.baseUrl}/hiringcompany/ttsms/hiringcompany`,
+  // benchCandidateUrl: `${commonEnv.baseUrl}/benchcandidate/ttsms/benchcandidate`,
+
+
+
+  ///////////////////////////////////////////////////////
+  companyUrl: `${commonEnv.baseUrl8080}`,
+
 };

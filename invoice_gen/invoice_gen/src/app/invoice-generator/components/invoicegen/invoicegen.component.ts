@@ -9,6 +9,8 @@ import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
 import { HttpEventType } from '@angular/common/http';
 import { style } from '@angular/animations';
 import { invoicegen } from '../class/invoicegen';
+import { CompanyService } from 'src/app/company/services/company.service';
+import { Company } from 'src/app/company/classes/company';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-invoicegen',
@@ -31,9 +33,13 @@ export class InvoicegenComponent implements OnInit {
   invoiceNumbers: string[] = [];
   invoiceNumbersForUpdatingRecDate: string[] = [];
   invoiceNoForSndPaidDate: string[] = [];
+  companies: { [key: number]: Company } = {}; // Map to store companies by companyId
+
   constructor(
     private router: Router,
-    private invoiceService: InvoiceService
+    private invoiceService: InvoiceService,
+    private companyService: CompanyService
+
   ) {
     const Financer = sessionStorage.getItem('isFinancier')
     if (Financer !== null) {
@@ -78,6 +84,14 @@ export class InvoicegenComponent implements OnInit {
     }
   }
 
+  getCompanyStaff(){
+    this.router.navigate(['/companymembers']);
+
+  }
+  getCompany(){
+    this.router.navigate(['/company']);
+
+  }
   onCheckboxChange(event: any, invoiceNo: string): void {
     if (event.target.checked) {
       this.invoiceNumbers.push(invoiceNo);
@@ -163,6 +177,8 @@ export class InvoicegenComponent implements OnInit {
       (data: Invoicedetails[]) => {
         this.invoicedetails = data;
         console.log(this.statusId + "============");
+        this.loadCompanies(); // Load companies after fetching invoice details
+
 
         this.invoiceService.getAllInvoiceDataByStatusId(this.statusId).subscribe(
           response => {
@@ -181,6 +197,20 @@ export class InvoicegenComponent implements OnInit {
     )
   }
 
+  loadCompanies(): void {
+    // Collect all unique companyIds from invoice details
+    const uniqueCompanyIds = [...new Set(this.invoicedetails.map(invoice => invoice.companyId))];
+
+    // Fetch companies for each unique companyId
+    uniqueCompanyIds.forEach(companyId => {
+      this.companyService.getCompanyById(companyId)
+        .subscribe((company: Company) => {
+          this.companies[companyId] = company; // Store company details in the map
+        }, error => {
+          console.log(`Error fetching company with ID ${companyId}:`, error);
+        });
+    });
+  }
   addInvoicegen(invoicegenData: invoicegen) {
     this.invoiceService.insertInvoice(invoicegenData).subscribe(
       response => {

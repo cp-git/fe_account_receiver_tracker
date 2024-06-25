@@ -73,6 +73,7 @@ body {
     border: #313131;
     border-radius: 45px;
     cursor: pointer;
+    margin-left: 5px;
 }
 
 /* Media query for responsive design */

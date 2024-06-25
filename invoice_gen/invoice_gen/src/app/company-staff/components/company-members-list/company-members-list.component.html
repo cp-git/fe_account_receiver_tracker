@@ -1,0 +1,54 @@
+<mat-card>
+  <nav class="navbar">
+    <mat-card-content class="title">Company Members List</mat-card-content>
+    <div  style="text-align: right; margin-right: 1rem;">
+      <button mat-raised-button color="#ce0202" (click)="goBack()" class="backButton"><mat-icon>arrow_back</mat-icon>Back</button>
+    </div>
+ </nav>
+
+    <div class="row" id="data1">
+      <div style="text-align: right; margin-right: 1rem;">
+        <button mat-raised-button color="primary" (click)="addCompanyMember()" class="submitfile"><mat-icon>arrow_back</mat-icon>Add Company Member</button>
+      </div>
+ 
+    </div>
+  
+    <div class="table-container">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <!-- <th>Member ID</th> -->
+            <th>Member Name</th>
+            <th>Member Email</th>
+            <th>Member Contact</th>
+            <th>Company</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Active</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let member of companyMembers">
+            <!-- <td>{{ member.memberId }}</td> -->
+            <td>{{ member.memberName }}</td>
+            <td>{{ member.memberEmail }}</td>
+            <td>{{ member.memberContact }}</td>
+            <td>{{ member.company.companyName }}</td>
+            <td>{{ member.username }}</td>
+            <td>{{ member.password }}</td>
+            <td>{{ member.active ? 'Active' : 'Inactive' }}</td>
+            <td class="action-buttons">
+              <button mat-icon-button matTooltip="Edit Member" color="primary" (click)="editCompanyMember(member.memberId)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Delete Member" color="warn" (click)="deleteCompanyMember(member.memberId)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </mat-card>
+  
