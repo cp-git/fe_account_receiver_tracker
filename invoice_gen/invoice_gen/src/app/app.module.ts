@@ -7,6 +7,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { InvoiceGeneratorModule } from './invoice-generator/invoice-generator.module';
 import { HomepageModule } from './homepage/homepage.module';
 import { LoginModule } from './login/login.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogModule } from './dialog/dialog.module';
+
 
 
 @NgModule({
@@ -17,10 +20,12 @@ import { LoginModule } from './login/login.module';
     HttpClientModule,
     HomepageModule,
     LoginModule,
+    DialogModule,
     InvoiceGeneratorModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
 
-  
+
   ],
   providers: [],
   bootstrap: [AppComponent],

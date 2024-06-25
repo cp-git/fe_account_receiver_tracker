@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { DialogService } from 'src/app/dialog/service/dialog.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,8 @@ export class LoginComponent implements OnInit {
   password: string = '';
   isFinancier: boolean = false;
   constructor(
-    private router: Router
+    private router: Router,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit(): void {
@@ -22,16 +24,27 @@ export class LoginComponent implements OnInit {
     if (this.username === 'admin' && this.password === 'pass') {
       // Set session storage for admin
       sessionStorage.setItem('isAdmin', 'true');
-      alert("Admin login successful...");
-      this.router.navigate(['/invoice']);
+      this.dialogService.openDeleteConfirmationDialog("Login successful.").subscribe(result => {
+        if (result === false) {
+          this.router.navigate(['/invoice']);
+        }
+      });
+      // alert("Admin login successful...");
+
     } else if (this.username === 'financier' && this.password === 'pass') {
       // Set session storage for financier
       sessionStorage.setItem('isFinancier', 'true');
-      alert("Financier login successful...");
-      this.router.navigate(['/invoice']);
+      this.dialogService.openDeleteConfirmationDialog("Login successful.").subscribe(result => {
+        if (result === false) {
+          this.router.navigate(['/invoice']);
+        }
+      });
+      // alert("Financier login successful...");
+
     } else {
       // Handle invalid credentials
-      alert("Invalid credentials");
+      this.dialogService.openDeleteConfirmationDialog("Invalid credentials")
+      // alert("Invalid credentials");
     }
   }
 
