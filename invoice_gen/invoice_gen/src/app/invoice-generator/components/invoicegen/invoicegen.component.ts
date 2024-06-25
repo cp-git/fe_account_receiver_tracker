@@ -116,7 +116,7 @@ export class InvoicegenComponent implements OnInit {
   updatePaidDate() {
     this.invoiceService.updatePaidDateAsToday(this.invoiceNumbers).subscribe(
       (respone) => {
-        this.dialogService.openDeleteConfirmationDialog("Due date updated successfully.").subscribe(result => {
+        this.dialogService.openDeleteConfirmationDialog("Paid date updated successfully.").subscribe(result => {
           if (result === false) {
             this.invoiceNumbers = [];
             this.getAllInvoiceDetails();
@@ -221,7 +221,7 @@ export class InvoicegenComponent implements OnInit {
       },
       (error) => {
         console.log(error);
-        this.dialogService.openDeleteConfirmationDialog("Duplicate invoice number.")
+        this.dialogService.openDeleteConfirmationDialog("Duplicate invoice number - " + (invoicegenData.invoiceNo))
       }
 
     )
