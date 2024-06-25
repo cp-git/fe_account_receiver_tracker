@@ -9,8 +9,11 @@ import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
 import { HttpEventType } from '@angular/common/http';
 import { style } from '@angular/animations';
 import { invoicegen } from '../class/invoicegen';
+
 import { CompanyService } from 'src/app/company/services/company.service';
 import { Company } from 'src/app/company/classes/company';
+
+import { DialogService } from 'src/app/dialog/service/dialog.service';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-invoicegen',
@@ -38,8 +41,10 @@ export class InvoicegenComponent implements OnInit {
   constructor(
     private router: Router,
     private invoiceService: InvoiceService,
-    private companyService: CompanyService
+    private companyService: CompanyService,
 
+
+    private dialogService: DialogService
   ) {
     const Financer = sessionStorage.getItem('isFinancier')
     if (Financer !== null) {
@@ -128,12 +133,18 @@ export class InvoicegenComponent implements OnInit {
   updatePaidDate() {
     this.invoiceService.updatePaidDateAsToday(this.invoiceNumbers).subscribe(
       (respone) => {
-        alert("Due date updated Successfully");
-        this.invoiceNumbers = [];
-        this.getAllInvoiceDetails()
+        this.dialogService.openDeleteConfirmationDialog("Due date updated successfully.").subscribe(result => {
+          if (result === false) {
+            this.invoiceNumbers = [];
+            this.getAllInvoiceDetails();
+          }
+        });
+        // alert("Due date updated Successfully");
+        // this.getAllInvoiceDetails()
 
       }, (error) => {
-        alert("update Failed");
+        this.dialogService.openDeleteConfirmationDialog("Failed to update due date.")
+        // alert("update Failed");
       }
     )
 
@@ -141,11 +152,18 @@ export class InvoicegenComponent implements OnInit {
   updateRecDate() {
     this.invoiceService.updateRecDateAsToday(this.invoiceNumbersForUpdatingRecDate).subscribe(
       (response) => {
-        alert("Rec date Updated Successfully");
-        this.invoiceNumbersForUpdatingRecDate = [];
-        this.getAllInvoiceDetails()
+        this.dialogService.openDeleteConfirmationDialog("Received date Updated successfully.").subscribe(result => {
+          if (result === false) {
+            this.invoiceNumbersForUpdatingRecDate = [];
+            this.getAllInvoiceDetails()
+          }
+        });
+        // alert("Rec date Updated Successfully");
+        // this.invoiceNumbersForUpdatingRecDate = [];
+        // this.getAllInvoiceDetails();
       }, (error) => {
-        alert("update Failed");
+        this.dialogService.openDeleteConfirmationDialog("Failed to update received date.")
+        // alert("update Failed");
       }
     )
   }
@@ -153,11 +171,17 @@ export class InvoicegenComponent implements OnInit {
   updateSndPaidDate() {
     this.invoiceService.updateSecondPaidDateAsToday(this.invoiceNoForSndPaidDate).subscribe(
       (response) => {
-        alert("Second Paid Date Updated Successfully.");
-        this.invoiceNoForSndPaidDate = [];
-        this.getAllInvoiceDetails();
+        this.dialogService.openDeleteConfirmationDialog("Second paid date updated successfully.").subscribe(result => {
+          if (result === false) {
+            this.invoiceNoForSndPaidDate = [];
+            this.getAllInvoiceDetails();
+          }
+        });
+        // alert("Second Paid Date Updated Successfully.");
+
       }, (error) => {
-        alert("update Failed");
+        this.dialogService.openDeleteConfirmationDialog("Failed to update second paid date.")
+        // alert("update Failed");
       }
     )
   }
@@ -176,6 +200,7 @@ export class InvoicegenComponent implements OnInit {
     this.invoiceService.getAllInvoiceData().subscribe(
       (data: Invoicedetails[]) => {
         this.invoicedetails = data;
+
         console.log(this.statusId + "============");
         this.loadCompanies(); // Load companies after fetching invoice details
 
@@ -218,20 +243,23 @@ export class InvoicegenComponent implements OnInit {
     });
   }
   addInvoicegen(invoicegenData: invoicegen) {
+
     this.invoiceService.insertInvoice(invoicegenData).subscribe(
       response => {
         console.log(response);
-        alert("added successfully...")
-        location.reload();
+        this.dialogService.openDeleteConfirmationDialog("Invoice added successfully.").subscribe(result => {
+          if (result === false) {
+            this.getAllInvoiceDetails();
+          }
+        });
+
       },
       (error) => {
         console.log(error);
-        alert("Duplicate Name ")
-
+        this.dialogService.openDeleteConfirmationDialog("Duplicate invoice number.")
       }
 
     )
-
   }
   async generateInvoiceByInvoiceNo(invoiceId: any) {
     const invoiceInfo: any = await this.invoiceService

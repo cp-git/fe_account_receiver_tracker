@@ -1,0 +1,32 @@
+<!-- <div class="confirmation-dialog-container">
+    <div class="icon-container">
+
+    </div>
+    <div class="content-container">
+        <h2 class="confirmation-dialog-title">Confirmation</h2>
+        <div class="confirmation-dialog-content">
+            <p><strong>{{ data.message }}</strong></p>
+        </div>
+    </div>
+    <div class="confirmation-dialog-actions">
+        <button mat-button class="cancel-button" (click)="onNoClick()">Cancel</button>
+        <button mat-button class="confirm-button" (click)="onYesClick()">OK</button>
+    </div>
+</div> -->
+
+<div class="confirmation-dialog-container">
+    <div class="icon-container">
+        <i class="fa fa-circle-info fa-2xl"></i>
+
+    </div>
+    <div class="content-container">
+        <h2 class="confirmation-dialog-title">Info</h2>
+        <div class="confirmation-dialog-content">
+            <p class="title">{{ data.message }}</p>
+        </div>
+    </div>
+    <div class="confirmation-dialog-actions">
+        <button mat-button class="cancel-button" (click)="onNoClick()">OK</button>
+        <!-- <button mat-button class="confirm-button" (click)="onYesClick()">OK</button> -->
+    </div>
+</div>

@@ -22,6 +22,10 @@ import { CompanyMembersListComponent } from './company-staff/components/company-
 import { AddCompanyMemberComponent } from './company-staff/components/add-company-member/add-company-member.component';
 import { UpdateCompanyMemberComponent } from './company-staff/components/update-company-member/update-company-member.component';
 
+import { DialogModule } from './dialog/dialog.module';
+
+
+
 
 @NgModule({
   declarations: [AppComponent, CompanyComponent, CreatecompanyComponent, UpdateCompanyComponent,  CompanyMembersListComponent, AddCompanyMemberComponent, UpdateCompanyMemberComponent],
@@ -31,6 +35,7 @@ import { UpdateCompanyMemberComponent } from './company-staff/components/update-
     HttpClientModule,
     HomepageModule,
     LoginModule,
+    DialogModule,
     InvoiceGeneratorModule,
     HttpClientModule,
     FormsModule,
@@ -42,7 +47,9 @@ import { UpdateCompanyMemberComponent } from './company-staff/components/update-
     ReactiveFormsModule,
     RouterModule.forRoot([]),
 
-  
+    BrowserAnimationsModule
+
+
   ],
   providers: [],
   bootstrap: [AppComponent],
