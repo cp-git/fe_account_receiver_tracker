@@ -13,3 +13,6 @@
   .dropdown-btn[_ngcontent-ng-c1411523848] {
   border-radius: 25px !important;
 } */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
