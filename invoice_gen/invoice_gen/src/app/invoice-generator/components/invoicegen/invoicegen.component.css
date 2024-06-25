@@ -16,10 +16,12 @@
 }
 
 mat-card {
-    border: 2px solid #ccc;
-    margin-top: 5px;
-    ;
-    /* Add a 1px solid border with a light gray color */
+    border: 2px solid #6e6e6e;
+    margin-top: 3px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+
 }
 
 
@@ -32,7 +34,8 @@ body {
 .navbar {
     background-color: #274cba;
     color: #fff;
-    padding: 10px 0;
+    padding: 10px 5px;
+
 }
 
 .container {
@@ -50,11 +53,6 @@ body {
     font-size: 24px;
 }
 
-.navbar-links a {
-    color: #fff;
-    text-decoration: none;
-    margin-right: 20px;
-}
 
 .toggle-button {
     background-color: transparent;
@@ -69,40 +67,12 @@ body {
     /* margin-left: 100%; */
     background-color: #ce0202;
     color: white;
-    padding: 10px 20px;
+    padding: 10px 15px;
+
     border: #313131;
     border-radius: 45px;
     cursor: pointer;
     margin-left: 5px;
-}
-
-/* Media query for responsive design */
-@media only screen and (max-width: 768px) {
-    .navbar-links {
-        display: none;
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-        padding: 10px 0;
-    }
-
-    .navbar-links a {
-        margin: 10px 0;
-    }
-
-    .toggle-button {
-        display: block;
-    }
-}
-
-
-
-.material-symbols-outlined {
-    font-variation-settings:
-        'FILL' 0,
-        'wght' 400,
-        'GRAD' 0,
-        'opsz' 24
 }
 
 
@@ -169,17 +139,19 @@ label {
 .custom-table td {
     font-size: smaller;
     padding: 2px;
-    text-align: left;
+    text-align: center;
     border: 2px solid #7e7e7e;
     /* Add borders for cells */
 }
 
 .custom-table th {
     font-size: larger;
+    text-decoration: none;
+
     text-align: center;
-    background-color: #5137ba;
+    background-color: #274cba;
     color: #ffffff;
-    /* font-weight: bold; */
+    font-weight: 100;
 }
 
 .custom-table tbody tr:nth-child(even) {
@@ -221,15 +193,17 @@ label {
 
 
 .checkbox {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    margin-left: 4px;
 
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    margin-left: 30px;
-    vertical-align: center;
 }
 
+.checkbox:disabled {
+    background-color: red;
+    /* Additional styles as needed */
+}
 
 
 
@@ -307,12 +281,12 @@ input {
     cursor: pointer;
 }
 
-#data1{
+#data1 {
     margin-top: 20px;
-    margin-left: 70%;
+    margin-left: 69%;
 }
 
-#status{
+#status {
     width: 300px;
     margin-left: 80px;
     height: 40px;

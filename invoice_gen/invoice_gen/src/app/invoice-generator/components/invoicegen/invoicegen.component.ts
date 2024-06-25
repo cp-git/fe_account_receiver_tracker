@@ -183,8 +183,14 @@ export class InvoicegenComponent implements OnInit {
         this.invoiceService.getAllInvoiceDataByStatusId(this.statusId).subscribe(
           response => {
             console.log(response);
-            this.deatailsData = response;
-            this.invoicedetails = this.deatailsData;
+
+            if (this.statusId != 4) {
+              console.log("In Status Column Data...");
+              this.deatailsData = response;
+              this.invoicedetails = this.deatailsData;
+
+            }
+
 
           }
         )
@@ -227,7 +233,6 @@ export class InvoicegenComponent implements OnInit {
     )
 
   }
-
   async generateInvoiceByInvoiceNo(invoiceId: any) {
     const invoiceInfo: any = await this.invoiceService
       .getInvoiceByInvoiceId(invoiceId)
@@ -311,12 +316,13 @@ export class InvoicegenComponent implements OnInit {
       // { text: 'Second Paid Date', style: invoiceHeaderStyle },
     ];
 
-    const invoiceAmt = parseFloat(invoiceInfo.invoiceAmt).toFixed(2);
-    const financedAmount = parseFloat(invoiceInfo.financedAmount).toFixed(2);
-    const setup = parseFloat(invoiceInfo.setup).toFixed(2);
-    const paidAmt = parseFloat(invoiceInfo.paidAmt || 0).toFixed(2);
-    const interest = parseFloat(invoiceInfo.interest || 0).toFixed(2);
-    const totalAmount = parseFloat(invoiceInfo.invoiceAmt).toFixed(2);
+    const invoiceAmt = parseFloat(invoiceInfo.invoiceAmt);
+    const financedAmount = parseFloat(invoiceInfo.financedAmount);
+    const setup = parseFloat(invoiceInfo.setup);
+    const paidAmt = parseFloat(invoiceInfo.paidAmt || 0);
+    const interest = parseFloat(invoiceInfo.interest || 0);
+    const totalAmount = parseFloat(invoiceInfo.invoiceAmt);
+
     const invoiceDataRow = [
       { text: '1' },
       // { text: 'Equinix ( US) Enterprises, Inc' },
@@ -383,41 +389,36 @@ export class InvoicegenComponent implements OnInit {
       style: { fontSize: 12, },
     };
 
-    // Block with calculations
-    const calculationsBlock = {
-      text: `Invoice Amount    : ${invoiceAmt}
-      
-      Financed Amount: ${financedAmount}
-      Setup                      : ${setup}
-      Intrest                     : ${interest}\n
-
-      Net Advance          : ${paidAmt}`,
-      margin: [5, 5, 5, 5],
-      alignment: 'left',
-      border: [true, true, true, true], // Add borders if needed
-      width: 'auto', // Adjust width as needed
-      style: { fontSize: 12 },
-    };
 
 
-    pdfContent.push({ text: ' ', style: lineHeight })
-    // pdfContent.push({
-    //   table: {
-    //     widths: ['70%', '30%'], // Equal width for both blocks
-    //     body: [[calculationsBlock]],
-    //   },
 
-    //   // layout: 'noBorders', // Optionally remove table borders
-    // });
 
-    pdfContent.push({
-      table: {
-        widths: ['70%', '30%'], // Widths of the columns
-        body: [
-          [{ text: '', style: lineHeight }, { text: calculationsBlock, alignment: 'right' }]
-        ],
-      },
-    });
+    const calculationsBlock = [
+      [{ text: 'Invoice Amount', alignment: 'left', color: 'black' }, { text: `$${invoiceAmt.toFixed(2)}`, alignment: 'right', color: 'black' }],
+      [{ text: 'Financed Amount', alignment: 'left', color: 'black' }, { text: `$${financedAmount.toFixed(2)}`, alignment: 'right', color: 'black' }],
+      [{ text: 'Setup', alignment: 'left', color: 'black' }, { text: `$${setup.toFixed(2)}`, alignment: 'right', color: 'black' }],
+      [{ text: 'Interest', alignment: 'left', color: 'black' }, { text: `$${interest.toFixed(2)}`, alignment: 'right', color: 'black' }],
+      [{ text: 'Net Advance', alignment: 'left', color: 'red' }, { text: `$${paidAmt.toFixed(2)}`, alignment: 'right', color: 'red' }]
+    ];
+
+    pdfContent.push(
+      { text: ' ', style: lineHeight },
+    )
+    pdfContent.push(
+      // { text: ' ', style: lineHeight },
+      {
+        // alignment: 'center',
+        // layout: 'noBorders',
+        margin: [0, 0, 50, 0],
+        table: {
+          widths: ['30%', '20%'], // Adjust widths as needed
+          body: calculationsBlock,
+
+        },
+      }
+    );
+
+
 
     // pdfContent.push(
     //   { text: " " },
@@ -462,5 +463,4 @@ export class InvoicegenComponent implements OnInit {
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
     pdfDocGenerator.open();
   }
-
 }

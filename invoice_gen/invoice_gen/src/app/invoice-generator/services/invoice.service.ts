@@ -11,7 +11,8 @@ import { invoicegen } from '../components/class/invoicegen';
 export class InvoiceService {
 
 
-  private invoiceUrl: string = `http://localhost:8090/excel`;
+  private invoiceUrl: string = `http://localhost:8090/invoice/excel`;
+  // private invoiceUrl: string = `http://localhost:8090/excel`;
   private countryUrl: any;
   private companyUrl: any;
 
@@ -61,7 +62,7 @@ export class InvoiceService {
 
 
 
-  getAllInvoiceDataByStatusId(setdays:number): Observable<Invoicedetails[]> {
+  getAllInvoiceDataByStatusId(setdays: number): Observable<Invoicedetails[]> {
     // alert(this.getAllEmployees)
     // Send a GET request to the API to retrieve a list of all employees
     return this._http.get<Invoicedetails[]>(`${this.invoiceUrl}/invoiceProgress/${setdays}`);
