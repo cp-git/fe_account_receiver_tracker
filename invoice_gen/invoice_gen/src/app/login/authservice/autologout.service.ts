@@ -5,6 +5,9 @@ import { Subject, takeUntil, timer } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
+// Timeout interval - This is the function where the auto logout
+// time interval is set in milliseconds
 export class AutologoutService {
   private userActivity$: Subject<void> = new Subject<void>();
   private timeout: number = 900000; // Provide a default value
