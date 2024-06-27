@@ -16,6 +16,7 @@
 }
 
 mat-card {
+    background-color: #f4f8ff;
     border: 2px solid #6e6e6e;
     margin-top: 3px;
     max-width: 100%;
@@ -31,7 +32,9 @@ body {
 }
 
 /* Navbar styles */
+
 .navbar {
+    position: static;
     background-color: #274cba;
     color: #fff;
     padding: 10px 5px;

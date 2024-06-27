@@ -19,7 +19,7 @@ import { DialogService } from 'src/app/dialog/service/dialog.service';
 export class InvoicegenComponent implements OnInit {
 
 
-  statusId!: number;
+  statusId: number = 4;
   selectedFile!: File;
   invoicedetails: Invoicedetails[] = [];
   deatailsData: Invoicedetails[] = [];
