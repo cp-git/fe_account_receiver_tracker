@@ -37,7 +37,7 @@ export class InvoicegenComponent implements OnInit {
   pageSize = 10; // Number of items per page
   pageSizeOptions: number[] = [10, 12, 20]; // Options for page size
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
+  showAddScreen: boolean = false;
   constructor(
     private router: Router,
     private invoiceService: InvoiceService,
@@ -49,6 +49,13 @@ export class InvoicegenComponent implements OnInit {
     }
   }
 
+  showAddInvoice() {
+    if (this.showAddScreen == false) {
+      this.showAddScreen = true;
+    } else {
+      this.showAddScreen = false;
+    }
+  }
   ngOnInit(): void {
     this.getAllInvoiceDetails();
     // alert(this.isFinancier)
@@ -71,6 +78,8 @@ export class InvoicegenComponent implements OnInit {
     console.log(startIndex + "************");
     const endIndex = startIndex + event.pageSize;
     this.paginatedInvoices = this.invoicedetails.slice(startIndex, endIndex);
+
+
   }
 
 
