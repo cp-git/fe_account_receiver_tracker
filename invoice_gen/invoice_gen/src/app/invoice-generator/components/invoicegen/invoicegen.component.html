@@ -8,8 +8,13 @@
                 <a href="#">About</a>
                 <a href="#">Services</a>
                 <a href="#">Contact</a> -->
+            <button class="login-button" *ngIf="!isFinancier" (click)="showAddInvoice()"><i
+                    class="fa-solid fa-plus fa-xl">
+                </i></button>
+            &nbsp;
             <button class="login-button" [routerLink]="['/report']">Reports</button>
             &nbsp;
+
             <button class="login-button" (click)="onLogout()"><i class="fa-solid fa-power-off fa-xl"></i></button>
         </div>
     </div>
@@ -27,7 +32,7 @@
 <!-- <app-invoicedatereport></app-invoicedatereport> -->
 
 &nbsp;
-<mat-card *ngIf="!isFinancier" class="mat-elevation-z3 centered-card">
+<mat-card *ngIf="!isFinancier &&showAddScreen" class="mat-elevation-z3 centered-card">
     <mat-card-content class="title"> Add Invoice Details</mat-card-content>
     <form #benchForm="ngForm" (ngSubmit)="addInvoicegen(invoicegenData)" novalidate>
         <input type="text" placeholder="Invoice Number" id="invoiceNo" name="invoiceNo"
@@ -38,6 +43,7 @@
             [(ngModel)]="invoicegenData.invoiceAmt" required>
         <!-- <input type="email" placeholder="Email Address"> -->
         <input type="submit" value="Add Invoice" [disabled]="benchForm.invalid">
+
     </form>
 </mat-card>
 
@@ -179,7 +185,7 @@
             </tbody>
         </table>
     </div>
-    <mat-paginator [length]="invoicedetails.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-        (page)="onPageChange($event)">
+    <mat-paginator class="mat-paginator" [length]="invoicedetails.length" [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
     </mat-paginator>
 </mat-card>
