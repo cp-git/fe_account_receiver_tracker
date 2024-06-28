@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Invoicedetails } from '../../class/invoicedetails';
@@ -10,6 +10,7 @@ import { HttpEventType } from '@angular/common/http';
 import { style } from '@angular/animations';
 import { invoicegen } from '../class/invoicegen';
 import { DialogService } from 'src/app/dialog/service/dialog.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-invoicegen',
@@ -32,6 +33,11 @@ export class InvoicegenComponent implements OnInit {
   invoiceNumbers: string[] = [];
   invoiceNumbersForUpdatingRecDate: string[] = [];
   invoiceNoForSndPaidDate: string[] = [];
+  paginatedInvoices: Invoicedetails[] = []; // Initialize paginated countries array
+  pageSize = 10; // Number of items per page
+  pageSizeOptions: number[] = [10, 12, 20]; // Options for page size
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   constructor(
     private router: Router,
     private invoiceService: InvoiceService,
@@ -59,6 +65,15 @@ export class InvoicegenComponent implements OnInit {
       this.selectedFile = file;
     }
   }
+
+  onPageChange(event: PageEvent) {
+    const startIndex = event.pageIndex * event.pageSize;
+    console.log(startIndex + "************");
+    const endIndex = startIndex + event.pageSize;
+    this.paginatedInvoices = this.invoicedetails.slice(startIndex, endIndex);
+  }
+
+
   uploadFile(): void {
     if (this.selectedFile) {
       const formData: FormData = new FormData();
@@ -192,20 +207,24 @@ export class InvoicegenComponent implements OnInit {
               console.log("In Status Column Data...");
               this.deatailsData = response;
               this.invoicedetails = this.deatailsData;
+              this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize); // Initialize paginatedCountries with first page data
 
+              // Navigate to the first page
+              this.paginator.pageIndex = 0;
+              this.paginator.page.emit({ pageIndex: 0, pageSize: this.pageSize, length: this.invoicedetails.length });
             }
 
-
+            this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize);
           }
         )
         console.log(this.invoicedetails);
-
+        this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize);
       }, (erro) => {
         console.log("fail to get all");
-
       }
     )
   }
+
 
   addInvoicegen(invoicegenData: invoicegen) {
 

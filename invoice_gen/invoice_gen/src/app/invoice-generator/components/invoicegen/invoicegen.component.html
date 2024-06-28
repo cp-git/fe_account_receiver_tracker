@@ -20,6 +20,10 @@
 
 
 
+
+
+
+
 <!-- <app-invoicedatereport></app-invoicedatereport> -->
 
 &nbsp;
@@ -39,11 +43,9 @@
 
 &nbsp;
 <mat-card>
-
-    <div class="row" *ngIf="!isFinancier" id="data1">
+    <!-- <div class="row" *ngIf="!isFinancier" id="data1">
         <div class="col-md-2">
             <a style="margin-left: 80px;font-size: 22px;">Filter</a>
-
         </div>
         <div class="col-md-8">
             <select id="status" name="status" [(ngModel)]="statusId" (change)="getAllInvoiceDetails()">
@@ -53,10 +55,8 @@
                 <option value=2>Received Date</option>
                 <option value=3>Second Paid Date</option>
             </select>
-
         </div>
-
-    </div>
+    </div> -->
 
 
     <!-- <mat-card-content class="title">Invoice Details</mat-card-content>
@@ -76,9 +76,18 @@
                 [disabled]="invoiceNoForSndPaidDate.length===0">
                 Update Second Paid Date
             </button>
+            <label class="invoicefilter">Filter invoices :</label>
+            <select id="status" name="status" [(ngModel)]="statusId" (change)="getAllInvoiceDetails()">
+                <option value=4>All Data</option>
+                <option value=0>Invoice Date</option>
+                <option value=1>Paid Date</option>
+                <option value=2>Received Date</option>
+                <option value=3>Second Paid Date</option>
+            </select>
+            <!-- <a class="change">Filter : </a> -->
+
         </div>
     </div>
-
 
 
 
@@ -104,7 +113,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let invoice of invoicedetails">
+                <tr *ngFor="let invoice of paginatedInvoices">
                     <td>{{ invoice.invoiceNo }}</td>
                     <td>{{ invoice.invoiceDate | date }}</td>
                     <td>{{ invoice.invoiceAmt | currency:'USD':'symbol':'1.2-2' }}</td>
@@ -170,4 +179,7 @@
             </tbody>
         </table>
     </div>
+    <mat-paginator [length]="invoicedetails.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChange($event)">
+    </mat-paginator>
 </mat-card>
