@@ -50,7 +50,7 @@ export class UpdateinvoiceComponent implements OnInit {
   updateInvoice(invoiceDetails: Invoicedetails) {
     this.invoiceService.updateInvoiceByInvoiceNo(invoiceDetails.invoiceNo, invoiceDetails).subscribe(
       (response) => {
-        alert("Updated Successfully" + response);
+        // alert("Updated Successfully" + response);
         location.reload();
       },
       error => {
