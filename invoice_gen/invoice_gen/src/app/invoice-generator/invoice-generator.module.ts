@@ -16,10 +16,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { UpdateinvoiceComponent } from './components/updateinvoice/updateinvoice.component';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     InvoicegenComponent,
-    InvoicedatereportComponent
+    InvoicedatereportComponent,
+    UpdateinvoiceComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +41,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatInputModule,
     MatTableModule,
     MatIconModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDialogModule
 
 
 

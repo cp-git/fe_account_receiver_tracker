@@ -11,6 +11,8 @@ import { style } from '@angular/animations';
 import { invoicegen } from '../class/invoicegen';
 import { DialogService } from 'src/app/dialog/service/dialog.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { UpdateinvoiceComponent } from '../updateinvoice/updateinvoice.component';
+import { MatDialog } from '@angular/material/dialog';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-invoicegen',
@@ -41,7 +43,8 @@ export class InvoicegenComponent implements OnInit {
   constructor(
     private router: Router,
     private invoiceService: InvoiceService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private dialog: MatDialog
   ) {
     const Financer = sessionStorage.getItem('isFinancier')
     if (Financer !== null) {
@@ -61,6 +64,17 @@ export class InvoicegenComponent implements OnInit {
     // alert(this.isFinancier)
 
   }
+
+  openUpdateDialog(invoice: Invoicedetails): void {
+    const dialogRef = this.dialog.open(UpdateinvoiceComponent, {
+      data: { invoice: invoice }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // Handle the result if needed
+    });
+  }
   onLogout() {
     sessionStorage.removeItem('isAdmin');
     sessionStorage.removeItem('isFinancier');
@@ -78,8 +92,6 @@ export class InvoicegenComponent implements OnInit {
     console.log(startIndex + "************");
     const endIndex = startIndex + event.pageSize;
     this.paginatedInvoices = this.invoicedetails.slice(startIndex, endIndex);
-
-
   }
 
 
