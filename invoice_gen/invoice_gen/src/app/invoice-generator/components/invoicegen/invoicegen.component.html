@@ -70,7 +70,7 @@
     <div class="header-container">
         <mat-card-content class="title">Invoice Details</mat-card-content>
         <div class="buttons-container">
-            <button *ngIf="isFinancier" class="action-button" (click)="updatePaidDate()"
+            <!-- <button *ngIf="isFinancier" class="action-button" (click)="updatePaidDate()"
                 [disabled]="invoiceNumbers.length==0">
                 Update Paid Date
             </button>
@@ -81,15 +81,19 @@
             <button *ngIf="isFinancier" class="action-button" (click)="updateSndPaidDate()"
                 [disabled]="invoiceNoForSndPaidDate.length===0">
                 Update Second Paid Date
-            </button>
-            <label class="invoicefilter">Filter invoices :</label>
-            <select id="status" name="status" [(ngModel)]="statusId" (change)="getAllInvoiceDetails()">
-                <option value=4>All Data</option>
-                <option value=0>Invoice Date</option>
-                <option value=1>Paid Date</option>
-                <option value=2>Received Date</option>
-                <option value=3>Second Paid Date</option>
-            </select>
+            </button> -->
+            <div class="buttons-container" style="display: flex; align-items: center;">
+                <label class="invoicefilter" style="margin-right: 0px;">Filter invoices :</label>
+                <select id="status" name="status" [(ngModel)]="statusId" (change)="getAllInvoiceDetails()"
+                    class="form-control">
+                    <option value="4">All Data</option>
+                    <option value="0">Invoice Date</option>
+                    <option value="1">Paid Date</option>
+                    <option value="2">Received Date</option>
+                    <option value="3">Second Paid Date</option>
+                </select>
+            </div>
+
             <!-- <a class="change">Filter : </a> -->
 
         </div>
@@ -175,6 +179,9 @@
                         &nbsp; -->
                         <!-- <button class="action-button"
                             (click)="generateInvoiceByInvoiceNo(invoice.invoiceNo)">Download</button> -->
+                        <button class="download-button" (click)="openUpdateDialog(invoice)"><i
+                                class="fa-solid fa-pen-to-square"></i></button>
+                        <!-- &nbsp; -->
                         <button class="download-button" (click)="generateInvoiceByInvoiceNo(invoice.invoiceNo)"><i
                                 class="fa fa-download"></i></button>
 

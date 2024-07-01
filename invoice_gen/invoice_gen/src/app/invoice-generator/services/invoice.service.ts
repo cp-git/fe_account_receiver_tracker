@@ -11,8 +11,8 @@ import { invoicegen } from '../components/class/invoicegen';
 export class InvoiceService {
 
 
-  private invoiceUrl: string = `http://localhost:8090/invoice/excel`;
-  // private invoiceUrl: string = `http://localhost:8090/excel`;
+  // private invoiceUrl: string = `http://localhost:8090/invoice/excel`;
+  private invoiceUrl: string = `http://localhost:8090/excel`;
   private countryUrl: any;
   private companyUrl: any;
 
@@ -91,6 +91,9 @@ export class InvoiceService {
     };
   }
 
+  updateInvoiceByInvoiceNo(invoiceNo: string, invoiceDetails: Invoicedetails): Observable<Invoicedetails> {
+    return this._http.put<Invoicedetails>(`${this.invoiceUrl}/updateInvoice/${invoiceNo}`, invoiceDetails);
+  }
 
 
 }
