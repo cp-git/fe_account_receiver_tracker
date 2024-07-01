@@ -24,7 +24,9 @@
             <th>Company</th>
             <th>Username</th>
             <th>Password</th>
+            <th>Role</th>
             <th>Active</th>
+            
             <th>Actions</th>
           </tr>
         </thead>
@@ -35,8 +37,10 @@
             <td>{{ member.memberEmail }}</td>
             <td>{{ member.memberContact }}</td>
             <td>{{ member.company.companyName }}</td>
-            <td>{{ member.username }}</td>
-            <td>{{ member.password }}</td>
+            <td>{{ member.loginDetails.username }}</td>
+            <td>{{ member.loginDetails.password }}</td>
+            <td>{{ member.loginDetails.role.roleName }}</td>
+
             <td>{{ member.active ? 'Active' : 'Inactive' }}</td>
             <td class="action-buttons">
               <button mat-icon-button matTooltip="Edit Member" color="primary" (click)="editCompanyMember(member.memberId)">

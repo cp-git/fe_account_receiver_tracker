@@ -62,4 +62,9 @@ export class CompanyStaffService {
         catchError(this.handleError)
       );
   }
+  fetchCompanyIdByLoginId(loginDetailsId: number): Observable<any> {
+    // Assuming you have an endpoint to fetch companyId based on loginDetailsId
+    const url = `${this.baseUrl}/by-login-details/${loginDetailsId}`;
+    return this.http.get<number>(url);
+  }
 }

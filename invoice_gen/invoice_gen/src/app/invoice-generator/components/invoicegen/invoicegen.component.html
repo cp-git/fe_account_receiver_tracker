@@ -2,6 +2,7 @@
     <div class="container">
         <a href="#" class="logo">
             Accounts Receivable Details</a>
+          
         <button class="toggle-button">&#9776;</button>
         <div class="navbar-links">
             <!-- <a href="#">Range Voice</a>
@@ -10,6 +11,7 @@
                 <a href="#">Contact</a> -->
 
                 <button *ngIf="isFinancier" class="login-button" (click)="getCompanyStaff()">
+                  
                     Company Members
                </button>
                 <button *ngIf="isFinancier" class="login-button" (click)="getCompany()">

@@ -14,6 +14,8 @@ import { CompanyService } from 'src/app/company/services/company.service';
 import { Company } from 'src/app/company/classes/company';
 
 import { DialogService } from 'src/app/dialog/service/dialog.service';
+import { CompanyStaffService } from 'src/app/company-staff/services/company-staff.service';
+import { CompanyMembers } from 'src/app/company-staff/classes/company-members';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-invoicegen',
@@ -37,26 +39,74 @@ export class InvoicegenComponent implements OnInit {
   invoiceNumbersForUpdatingRecDate: string[] = [];
   invoiceNoForSndPaidDate: string[] = [];
   companies: { [key: number]: Company } = {}; // Map to store companies by companyId
-
+  companyId!: number; // Define companyId property
   constructor(
     private router: Router,
     private invoiceService: InvoiceService,
     private companyService: CompanyService,
+    private companyMemService: CompanyStaffService,
 
 
     private dialogService: DialogService
   ) {
-    const Financer = sessionStorage.getItem('isFinancier')
-    if (Financer !== null) {
-      this.isFinancier = Financer === 'true'; // Convert string to boolean
-    }
+    // const Financer = sessionStorage.getItem('isFinancier')
+    // if (Financer !== null) {
+    //   this.isFinancier = Financer === 'true'; // Convert string to boolean
+    // }
   }
 
   ngOnInit(): void {
-    this.getAllInvoiceDetails();
+    // this.getAllInvoiceDetails();
     // alert(this.isFinancier)
+    const isFinancier = sessionStorage.getItem('isFinancier') === 'true';
+    this.isFinancier = isFinancier; // Set the component property
+   
+   
+    // const isAdmin = sessionStorage.getItem('isFinancier') === 'true';
+    if (isFinancier) {
+      // Logic for financier role
+      this.companyId = 0 ; // Reset companyId for financiers
+      this.getAllInvoiceDetails();
+    } else {
+      // Logic for company members
+      this.fetchCompanyIdForCompanyMember();
+    }
 
   }
+  fetchCompanyIdForCompanyMember(): void {
+    const loginDetailsId = sessionStorage.getItem('loginDetailsId');
+  
+    if (loginDetailsId) {
+      const id = parseInt(loginDetailsId, 10);
+  
+      this.companyMemService.fetchCompanyIdByLoginId(id).subscribe(
+        (companyMember: CompanyMembers) => {
+          if (companyMember && companyMember.company && companyMember.company.companyId) {
+            this.companyId = companyMember.company.companyId;
+  
+            // Call service to get invoice details based on companyId
+            this.invoiceService.getInvoiceDetailsByCompanyId(this.companyId).subscribe(
+              (invoiceDetails: Invoicedetails[]) => {
+                this.invoicedetails = invoiceDetails;
+                console.log('Invoice details:', invoiceDetails);
+              },
+              (error) => {
+                console.error('Failed to fetch invoice details:', error);
+              }
+            );
+          } else {
+            console.error('Company or companyId not found in companyMember:', companyMember);
+          }
+        },
+        (error) => {
+          console.error('Failed to fetch company ID:', error);
+        }
+      );
+    } else {
+      console.error('No loginDetailsId found in session storage.');
+    }
+  }
+  
   onLogout() {
     sessionStorage.removeItem('isAdmin');
     sessionStorage.removeItem('isFinancier');

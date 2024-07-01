@@ -91,6 +91,10 @@ export class InvoiceService {
     };
   }
 
+  getInvoiceDetailsByCompanyId(companyId: number): Observable<Invoicedetails[]> {
+    const url = `${this.invoiceUrl}/company/${companyId}`;
+    return this._http.get<Invoicedetails[]>(url);
+  }
 
 
 }

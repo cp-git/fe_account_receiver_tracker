@@ -21,6 +21,7 @@ export class CompanyMembersListComponent {
     this.companyMembersService.getAllCompanyMembers()
       .subscribe(
         (data: CompanyMembers[]) => {
+          console.log(data)
           // Sort companyMembers array by memberId in ascending order
           this.companyMembers = data.sort((a, b) => a.memberId - b.memberId);
         },
@@ -35,9 +36,12 @@ export class CompanyMembersListComponent {
       this.companyMembersService.deleteCompanyMember(memberId)
         .subscribe(
           () => {
+
             // Remove the deleted member from the array
             this.companyMembers = this.companyMembers.filter(member => member.memberId !== memberId);
+           
             console.log('Company member deleted successfully.');
+
           },
           (          error: any) => {
             console.log('Error deleting company member:', error);
