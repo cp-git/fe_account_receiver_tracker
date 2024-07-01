@@ -39,7 +39,7 @@ export class UpdateinvoiceComponent implements OnInit {
   onSubmit() {
     this.invoiceService.updateInvoiceByInvoiceNo(this.invoiceDetails.invoiceNo, this.invoiceDetails).subscribe(
       (response) => {
-        alert("Updated Successfully");
+        // alert("Updated Successfully");
       },
       error => {
         alert("failed to update");
