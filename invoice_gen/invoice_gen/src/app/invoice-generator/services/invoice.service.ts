@@ -96,6 +96,10 @@ export class InvoiceService {
     return this._http.put<Invoicedetails>(`${this.invoiceUrl}/updateInvoice/${invoiceNo}`, invoiceDetails);
   }
 
+  updateInvoiceById(id: number, invoiceDetails: Invoicedetails): Observable<Invoicedetails> {
+    return this._http.put<Invoicedetails>(`${this.invoiceUrl}/updateInvoiceById/${id}`, invoiceDetails);
+  }
+
 
 }
 

@@ -48,7 +48,7 @@ export class AdminupdateinvoiceComponent {
     );
   }
   updateInvoice(invoiceDetails: Invoicedetails) {
-    this.invoiceService.updateInvoiceByInvoiceNo(invoiceDetails.invoiceNo, invoiceDetails).subscribe(
+    this.invoiceService.updateInvoiceById(invoiceDetails.id, invoiceDetails).subscribe(
       (response) => {
         // alert("Updated Successfully" + response);
         location.reload();
