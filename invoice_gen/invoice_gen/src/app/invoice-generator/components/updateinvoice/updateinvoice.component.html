@@ -64,11 +64,28 @@
                                     class="form-control" disabled required>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" id="datepaid">
                             <div class="form-group">
-                                <label class="label" for="paidDate">Paid Date</label>
+                                
+                        <label class="label" for="paidDate">Paid Date</label>
+                        <div class="col-md-4">
+                         <mat-form-field>
+                         
+                                    <input type="date" matInput [matDatepicker]="picker"  id="paidDate" [(ngModel)]="invoiceDetails.paidDate" name="paidDate"
+                                    class="form-control" [max]="today" placeholder="Choose a date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-icon (click)="reset()">close</mat-icon>
+                                    <!-- <button (click)="reset()">Reset</button> -->
+                                    <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                         
+                            
+
+
+                                <!-- <label class="label" for="paidDate">Paid Date</label>
                                 <input type="date" id="paidDate" [(ngModel)]="invoiceDetails.paidDate" name="paidDate"
-                                    class="form-control" [max]="today" required>
+                                    class="form-control" [max]="today" required> -->
                             </div>
                         </div>
                         <div class="col-md-4">

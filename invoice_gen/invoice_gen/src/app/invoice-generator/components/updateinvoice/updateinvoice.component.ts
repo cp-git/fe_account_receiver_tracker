@@ -1,9 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InvoiceService } from '../../services/invoice.service';
 import { Invoicedetails } from '../../class/invoicedetails';
 import { Location } from '@angular/common';
 import { DatePipe } from '@angular/common';
+import { MatInput } from '@angular/material/input';
 @Component({
   selector: 'app-updateinvoice',
   templateUrl: './updateinvoice.component.html',
@@ -15,6 +16,8 @@ export class UpdateinvoiceComponent implements OnInit {
   invoiceDetails!: Invoicedetails
   today: string;
   cloneInvoiceDetails!: Invoicedetails;
+
+  @ViewChild('input', { read: MatInput}) input!: MatInput;
 
   constructor(
     private invoiceService: InvoiceService,
@@ -48,6 +51,10 @@ export class UpdateinvoiceComponent implements OnInit {
     this.dialogRef.close(false);
   }
 
+  reset() {
+    this.input.value = '';
+    this.invoiceDetails.paidDate=null;
+  }
   onSubmit() {
     this.invoiceService.updateInvoiceByInvoiceNo(this.invoiceDetails.invoiceNo, this.invoiceDetails).subscribe(
       (response) => {
@@ -60,8 +67,10 @@ export class UpdateinvoiceComponent implements OnInit {
     );
   }
   updateInvoice(invoiceDetails: Invoicedetails) {
+    
     this.invoiceService.updateInvoiceByInvoiceNo(invoiceDetails.invoiceNo, invoiceDetails).subscribe(
       (response) => {
+
         // alert("Updated Successfully" + response);
         location.reload();
       },
