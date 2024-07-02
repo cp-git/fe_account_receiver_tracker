@@ -26,10 +26,22 @@ export class UpdateinvoiceComponent implements OnInit {
     this.today = this.datePipe.transform(new Date(), 'yyyy-MM-dd') || '';
     dialogRef.disableClose = true;
   }
+
+
   ngOnInit(): void {
     this.invoiceDetails = this.data.invoice
     this.cloneInvoiceDetails = JSON.parse(JSON.stringify(this.invoiceDetails));
     // throw new Error('Method not implemented.');
+    this.checkAmt();
+  }
+  isFinanceAndInvoiceAmtSame: boolean = false
+  checkAmt() {
+    if (this.invoiceDetails.invoiceAmt === this.invoiceDetails.financedAmount) {
+
+
+      this.isFinanceAndInvoiceAmtSame = true
+      console.log(this.isFinanceAndInvoiceAmtSame + "****");
+    }
   }
 
   onNoClick(): void {
