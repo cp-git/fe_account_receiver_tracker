@@ -93,7 +93,8 @@
                             <div class="form-group">
                                 <label class="label" for="recdDate">Received Date</label>
                                 <input type="date" id="recdDate" [(ngModel)]="invoiceDetails.recdDate" name="recdDate"
-                                    class="form-control" [disabled]="!cloneInvoiceDetails.paidDate" required>
+                                    class="form-control" [disabled]="!cloneInvoiceDetails.paidDate" [max]="today"
+                                    required>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -111,8 +112,8 @@
                         <div class="form-group">
                             <label class="label" for="dueDate">Second Paid Date</label>
                             <input type="date" id="secondPaidDate" [(ngModel)]="invoiceDetails.secondPaidDate"
-                                name="secondPaidDate" class="form-control" [disabled]="!cloneInvoiceDetails.recdDate"
-                                required>
+                                name="secondPaidDate" class="form-control" [max]="today"
+                                [disabled]="!cloneInvoiceDetails.recdDate" required>
                         </div>
                     </div>
 
