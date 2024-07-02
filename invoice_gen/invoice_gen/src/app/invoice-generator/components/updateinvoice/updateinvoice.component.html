@@ -116,15 +116,18 @@
                                 [disabled]="!cloneInvoiceDetails.recdDate" required>
                         </div>
                     </div>
+                    <div class="col-md-8" style="margin-top: 10px;">
+                        <mat-dialog-actions align="end">
+                            <div class="confirmation-dialog-actions">
+                                <button class="button-18" (click)="onNoClick()">Cancel</button>
+                                &nbsp;
+                                <button class="button-18" (click)="updateInvoice(invoiceDetails)">Update</button>
+                            </div>
+                        </mat-dialog-actions>
+                    </div>
 
                 </div>
-                <mat-dialog-actions align="end">
-                    <div class="confirmation-dialog-actions">
-                        <button class="button-18" (click)="onNoClick()">Cancel</button>
-                        &nbsp;
-                        <button class="button-18" (click)="updateInvoice(invoiceDetails)">Update</button>
-                    </div>
-                </mat-dialog-actions>
+
             </div>
 
         </div>
