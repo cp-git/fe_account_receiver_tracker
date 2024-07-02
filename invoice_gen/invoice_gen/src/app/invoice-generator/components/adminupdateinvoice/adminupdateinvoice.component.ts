@@ -28,7 +28,15 @@ export class AdminupdateinvoiceComponent {
   ngOnInit(): void {
     this.invoiceDetails = this.data.invoice
     this.cloneInvoiceDetails = JSON.parse(JSON.stringify(this.invoiceDetails));
+    this.checkAmt();
     // throw new Error('Method not implemented.');
+  }
+
+  isFinanceAndInvoiceAmtSame: boolean = false
+  checkAmt() {
+    if (this.invoiceDetails.invoiceAmt === this.invoiceDetails.financedAmount) {
+      this.isFinanceAndInvoiceAmtSame = true
+    }
   }
 
   onNoClick(): void {
@@ -48,7 +56,7 @@ export class AdminupdateinvoiceComponent {
     );
   }
   updateInvoice(invoiceDetails: Invoicedetails) {
-    this.invoiceService.updateInvoiceByInvoiceNo(invoiceDetails.invoiceNo, invoiceDetails).subscribe(
+    this.invoiceService.updateInvoiceById(invoiceDetails.id, invoiceDetails).subscribe(
       (response) => {
         // alert("Updated Successfully" + response);
         location.reload();
