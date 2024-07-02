@@ -19,6 +19,8 @@ export class UpdateinvoiceComponent implements OnInit {
 
   @ViewChild('input', { read: MatInput}) input!: MatInput;
 
+
+
   constructor(
     private invoiceService: InvoiceService,
     private location: Location,
@@ -52,8 +54,18 @@ export class UpdateinvoiceComponent implements OnInit {
   }
 
   reset() {
-    this.input.value = '';
+  
     this.invoiceDetails.paidDate=null;
+  }
+
+  reset1(){
+  
+    this.invoiceDetails.recdDate=null;
+  }
+
+  reset2(){
+  
+    this.invoiceDetails.secondPaidDate=null;
   }
   onSubmit() {
     this.invoiceService.updateInvoiceByInvoiceNo(this.invoiceDetails.invoiceNo, this.invoiceDetails).subscribe(

@@ -64,30 +64,24 @@
                                     class="form-control" disabled required>
                             </div>
                         </div>
-                        <div class="col-md-4" id="datepaid">
-                            <div class="form-group">
+                        
                                 
-                        <label class="label" for="paidDate">Paid Date</label>
-                        <div class="col-md-4">
-                         <mat-form-field>
-                         
-                                    <input type="date" matInput [matDatepicker]="picker"  id="paidDate" [(ngModel)]="invoiceDetails.paidDate" name="paidDate"
-                                    class="form-control" [max]="today" placeholder="Choose a date">
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-icon (click)="reset()">close</mat-icon>
-                                    <!-- <button (click)="reset()">Reset</button> -->
-                                    <mat-datepicker #picker></mat-datepicker>
-                            </mat-form-field>
-                        </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="label" for="paidDate">Paid Date</label>
+                                        <input type="date" id="paidDate" [(ngModel)]="invoiceDetails.paidDate" name="paidDate"
+                                            class="form-control" [max]="today" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <i class="fa-regular fa-circle-xmark fa-xl" (click)="reset()"
+                                    style="margin-top: 42px;"></i>
+                                </div>
+                        
                          
                             
 
 
-                                <!-- <label class="label" for="paidDate">Paid Date</label>
-                                <input type="date" id="paidDate" [(ngModel)]="invoiceDetails.paidDate" name="paidDate"
-                                    class="form-control" [max]="today" required> -->
-                            </div>
-                        </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="label" for="creditDays">Credit Days</label>
@@ -106,15 +100,21 @@
                                     class="form-control" disabled required>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label class="label" for="recdDate">Received Date</label>
-                                <input type="date" id="recdDate" [(ngModel)]="invoiceDetails.recdDate" name="recdDate"
+                                <label class="label" for="paidDate">Paid Date</label>
+                                 <input type="date" id="recdDate" [(ngModel)]="invoiceDetails.recdDate" name="recdDate"
                                     class="form-control"
                                     [disabled]="!cloneInvoiceDetails.paidDate || isFinanceAndInvoiceAmtSame"
-                                    [max]="today" required>
+                                    [max]="today" required> 
                             </div>
                         </div>
+                        <div class="col-md-1">
+                            <i class="fa-regular fa-circle-xmark fa-xl" (click)="reset1()"
+                            style="margin-top: 42px;"></i>
+                        </div>
+                              
+                      
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="label" for="balAmt">Balance Amount</label>
@@ -126,14 +126,21 @@
                 </div>
                 <div class="row">
 
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="label" for="dueDate">Second Paid Date</label>
-                            <input type="date" id="secondPaidDate" [(ngModel)]="invoiceDetails.secondPaidDate"
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="label" for="paidDate">Paid Date</label>
+                                        <input type="date" id="secondPaidDate" [(ngModel)]="invoiceDetails.secondPaidDate"
                                 name="secondPaidDate" class="form-control" [max]="today"
-                                [disabled]="!cloneInvoiceDetails.recdDate && isFinanceAndInvoiceAmtSame" required>
-                        </div>
-                    </div>
+                                [disabled]="!cloneInvoiceDetails.recdDate || isFinanceAndInvoiceAmtSame" required> 
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <i class="fa-regular fa-circle-xmark fa-xl" (click)="reset2()"
+                                style="margin-top: 42px;"></i>
+                            </div>
+                       
+               
                     <div class="col-md-8" style="margin-top: 10px;">
                         <mat-dialog-actions align="end">
                             <div class="confirmation-dialog-actions">
