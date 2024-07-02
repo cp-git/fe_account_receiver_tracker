@@ -34,7 +34,7 @@
 &nbsp;
 <mat-card *ngIf="!isFinancier &&showAddScreen" class="mat-elevation-z3 centered-card">
     <mat-card-content class="title"> Add Invoice Details</mat-card-content>
-    <form #benchForm="ngForm" (ngSubmit)="addInvoicegen(invoicegenData)" novalidate>
+    <form name="benchForm" #benchForm="ngForm"  (ngSubmit)="addInvoicegen(invoicegenData)" novalidate>
         <input type="text" placeholder="Invoice Number" id="invoiceNo" name="invoiceNo"
             [(ngModel)]="invoicegenData.invoiceNo" required>
         <input type="date" placeholder="Invoice Date" id="invoiceDate" name="invoiceDate"

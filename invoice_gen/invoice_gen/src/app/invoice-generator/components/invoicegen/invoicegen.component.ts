@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Invoicedetails } from '../../class/invoicedetails';
 import { InvoiceService } from '../../services/invoice.service';
@@ -40,6 +40,8 @@ export class InvoicegenComponent implements OnInit {
   pageSizeOptions: number[] = [10, 12, 20]; // Options for page size
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   showAddScreen: boolean = false;
+
+  @ViewChild('benchForm', {static: false}) benchForm!: NgForm;
   constructor(
     private router: Router,
     private invoiceService: InvoiceService,
@@ -257,6 +259,7 @@ export class InvoicegenComponent implements OnInit {
             this.getAllInvoiceDetails();
           }
         });
+        this.benchForm.resetForm();
 
       },
       (error) => {
