@@ -13,6 +13,7 @@ import { DialogService } from 'src/app/dialog/service/dialog.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { UpdateinvoiceComponent } from '../updateinvoice/updateinvoice.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AdminupdateinvoiceComponent } from '../adminupdateinvoice/adminupdateinvoice.component';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-invoicegen',
@@ -66,14 +67,25 @@ export class InvoicegenComponent implements OnInit {
   }
 
   openUpdateDialog(invoice: Invoicedetails): void {
-    const dialogRef = this.dialog.open(UpdateinvoiceComponent, {
-      data: { invoice: invoice }
-    });
+    if (this.isFinancier == true) {
+      const dialogRef = this.dialog.open(UpdateinvoiceComponent, {
+        data: { invoice: invoice }
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      // Handle the result if needed
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        // Handle the result if needed
+      });
+    } else {
+      const dialogRef = this.dialog.open(AdminupdateinvoiceComponent, {
+        data: { invoice: invoice }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        // Handle the result if needed
+      });
+    }
   }
   onLogout() {
     sessionStorage.removeItem('isAdmin');

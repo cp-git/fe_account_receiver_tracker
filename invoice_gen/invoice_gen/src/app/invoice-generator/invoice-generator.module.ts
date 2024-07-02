@@ -18,11 +18,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { UpdateinvoiceComponent } from './components/updateinvoice/updateinvoice.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AdminupdateinvoiceComponent } from './components/adminupdateinvoice/adminupdateinvoice.component';
 @NgModule({
   declarations: [
     InvoicegenComponent,
     InvoicedatereportComponent,
-    UpdateinvoiceComponent
+    UpdateinvoiceComponent,
+    AdminupdateinvoiceComponent
   ],
   imports: [
     CommonModule,
