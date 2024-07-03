@@ -111,7 +111,7 @@ export class InvoicedatereportComponent implements OnInit {
     const invoiceHeaderRow = [
       { text: ' ', style: invoiceHeaderStyle },
       { text: 'Invoice #', style: invoiceHeaderStyle },
-      { text: 'PO #', style: invoiceHeaderStyle },
+      { text: 'Paid Date #', style: invoiceHeaderStyle },
       { text: 'Invoice Date', style: invoiceHeaderStyle },
       { text: 'Invoice Amt', style: invoiceHeaderStyle },
     ];
@@ -141,7 +141,7 @@ export class InvoicedatereportComponent implements OnInit {
       const invoiceDataRow = [
         { text: (index + 1).toString(), style: invoiceHeaderStyle },
         { text: invoice.invoiceNo, style: invoiceHeaderStyle },
-        { text: '', style: invoiceHeaderStyle },
+        { text: formatDate(new Date(invoice.dueDate)), style: invoiceHeaderStyle },
         { text: formatDate(new Date(invoice.invoiceDate)), style: invoiceHeaderStyle },
         { text: totalAmount, style: invoiceHeaderStyle },
       ];
@@ -302,7 +302,7 @@ Factoring Group, LLC.`;
       const invoiceHeaderRow = [
         { text: ' ', style: invoiceHeaderStyle },
         { text: 'Invoice #', style: invoiceHeaderStyle },
-        { text: 'PO #', style: invoiceHeaderStyle },
+        { text: 'Paid Date', style: invoiceHeaderStyle },
         { text: 'Invoice Date', style: invoiceHeaderStyle },
         { text: 'Invoice Amt', style: invoiceHeaderStyle },
       ];
@@ -310,8 +310,10 @@ Factoring Group, LLC.`;
       const invoiceDataRow = [
         { text: (index + 1).toString() },
         { text: invoice.invoiceNo },
-        { text: '' },
-        { text: formatDate(new Date(invoice.invoiceDate)) },
+        { text: invoice.invoiceDate },
+        { text: invoice.invoiceDate },
+        // { text: formatDate(new Date(invoice.invoiceDate)) },
+        // { text: formatDate(new Date(invoice.invoiceDate)) },
         { text: totalAmount },
       ];
 
