@@ -51,6 +51,7 @@ export class UpdateinvoiceComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close(false);
+    window.location.reload();
   }
 
   reset() {
