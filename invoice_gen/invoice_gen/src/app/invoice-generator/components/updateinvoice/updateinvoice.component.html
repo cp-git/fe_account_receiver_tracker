@@ -102,7 +102,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label class="label" for="paidDate">Paid Date</label>
+                                <label class="label" for="paidDate">Received  Date</label>
                                  <input type="date" id="recdDate" [(ngModel)]="invoiceDetails.recdDate" name="recdDate"
                                     class="form-control"
                                     [disabled]="!cloneInvoiceDetails.paidDate || isFinanceAndInvoiceAmtSame"
@@ -129,7 +129,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="label" for="paidDate">Paid Date</label>
+                                    <label class="label" for="paidDate">SecondPaid Date</label>
                                         <input type="date" id="secondPaidDate" [(ngModel)]="invoiceDetails.secondPaidDate"
                                 name="secondPaidDate" class="form-control" [min]="invoiceDetails.recdDate"
                                 [disabled]="!cloneInvoiceDetails.recdDate || isFinanceAndInvoiceAmtSame" required> 
