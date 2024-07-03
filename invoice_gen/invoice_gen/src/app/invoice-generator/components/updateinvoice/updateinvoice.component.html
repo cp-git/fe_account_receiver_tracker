@@ -106,7 +106,7 @@
                                  <input type="date" id="recdDate" [(ngModel)]="invoiceDetails.recdDate" name="recdDate"
                                     class="form-control"
                                     [disabled]="!cloneInvoiceDetails.paidDate || isFinanceAndInvoiceAmtSame"
-                                    [max]="today" required> 
+                                    [min]="invoiceDetails.paidDate" required> 
                             </div>
                         </div>
                         <div class="col-md-1">
@@ -131,7 +131,7 @@
                                 <div class="form-group">
                                     <label class="label" for="paidDate">Paid Date</label>
                                         <input type="date" id="secondPaidDate" [(ngModel)]="invoiceDetails.secondPaidDate"
-                                name="secondPaidDate" class="form-control" [max]="today"
+                                name="secondPaidDate" class="form-control" [min]="invoiceDetails.recdDate"
                                 [disabled]="!cloneInvoiceDetails.recdDate || isFinanceAndInvoiceAmtSame" required> 
                                 </div>
                             </div>
