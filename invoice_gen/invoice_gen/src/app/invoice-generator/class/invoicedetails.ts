@@ -10,8 +10,8 @@ export class Invoicedetails {
     paidDate!: Date | null;
     creditDays!: number;
     dueDate!: Date;
-    recdDate!: Date;
+    recdDate!: Date | null;
     balAmt!: number;
-    secondPaidDate!: Date;
+    secondPaidDate!: Date |null;
     setdays!:any;
 }
