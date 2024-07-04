@@ -9,113 +9,105 @@
                 <div class="confirmation-dialog-content">
                     <div class="row">
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="label" for="invoiceNo">Invoice No</label>
                                 <input type="text" id="invoiceNo" [(ngModel)]="invoiceDetails.invoiceNo"
                                     name="invoiceNo" class="form-control" disabled required>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="label" for="invoiceDate">Invoice Date</label>
                                 <input type="date" id="invoiceDate" [(ngModel)]="invoiceDetails.invoiceDate"
                                     name="invoiceDate" class="form-control" disabled required>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="label" for="invoiceAmt">Invoice Amount</label>
                                 <input type="number" id="invoiceAmt" [(ngModel)]="invoiceDetails.invoiceAmt"
                                     name="invoiceAmt" class="form-control" disabled required>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="label" for="financedAmount">Financed Amount</label>
-                                <input type="number" id="financedAmount" [(ngModel)]="invoiceDetails.financedAmount"
-                                    name="financedAmount" class="form-control" disabled required>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="label" for="setup">Setup Charges</label>
-                                <input type="number" id="setup" [(ngModel)]="invoiceDetails.setup" name="setup"
-                                    class="form-control" disabled required>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="label" for="interest">Interest</label>
-                                <input type="number" id="interest" [(ngModel)]="invoiceDetails.interest" name="interest"
-                                    class="form-control" disabled required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="label" for="paidAmt">Paid Amount</label>
-                                <input type="number" id="paidAmt" [(ngModel)]="invoiceDetails.paidAmt" name="paidAmt"
-                                    class="form-control" disabled required>
-                            </div>
-                        </div>
-                        
-                                
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label class="label" for="paidDate">Paid Date</label>
-                                        <input type="date" id="paidDate" [(ngModel)]="invoiceDetails.paidDate" name="paidDate"
-                                            class="form-control" [max]="today" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <i class="fa-regular fa-circle-xmark fa-xl" (click)="reset()"
-                                    style="margin-top: 42px;"></i>
-                                </div>
-                        
-                         
-                            
-
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="label" for="creditDays">Credit Days</label>
-                                <input type="number" id="creditDays" [(ngModel)]="invoiceDetails.creditDays"
-                                    name="creditDays" class="form-control" disabled required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="label" for="dueDate">Due Date</label>
                                 <input type="date" id="dueDate" [(ngModel)]="invoiceDetails.dueDate" name="dueDate"
                                     class="form-control" disabled required>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label class="label" for="paidDate">Received  Date</label>
-                                 <input type="date" id="recdDate" [(ngModel)]="invoiceDetails.recdDate" name="recdDate"
-                                    class="form-control"
-                                    [disabled]="!cloneInvoiceDetails.paidDate || isFinanceAndInvoiceAmtSame"
-                                    [min]="invoiceDetails.paidDate" required> 
+                                <label class="label" for="financedAmount">Financed Amount</label>
+                                <input type="number" id="financedAmount" [(ngModel)]="invoiceDetails.financedAmount"
+                                    name="financedAmount" class="form-control" disabled required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="label" for="setup">Setup Charges</label>
+                                <input type="number" id="setup" [(ngModel)]="invoiceDetails.setup" name="setup"
+                                    class="form-control" disabled required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="label" for="interest">Interest</label>
+                                <input type="number" id="interest" [(ngModel)]="invoiceDetails.interest" name="interest"
+                                    class="form-control" disabled required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="label" for="paidAmt">Paid Amount</label>
+                                <input type="number" id="paidAmt" [(ngModel)]="invoiceDetails.paidAmt" name="paidAmt"
+                                    class="form-control" disabled required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="label" for="paidDate">Paid Date</label>
+                                <input type="date" id="paidDate" [(ngModel)]="invoiceDetails.paidDate" name="paidDate"
+                                    class="form-control" [max]="today" required>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa-regular fa-circle-xmark fa-xl" (click)="reset()" style="margin-top: 42px;"></i>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="label" for="paidDate">Received Date</label>
+                                <input type="date" id="recdDate" [(ngModel)]="invoiceDetails.recdDate" name="recdDate"
+                                    class="form-control" [disabled]="!cloneInvoiceDetails.paidDate"
+                                    [min]="invoiceDetails.paidDate" required>
                             </div>
                         </div>
                         <div class="col-md-1">
                             <i class="fa-regular fa-circle-xmark fa-xl" (click)="reset1()"
-                            style="margin-top: 42px;"></i>
+                                style="margin-top: 42px;"></i>
                         </div>
-                              
-                      
-                        <div class="col-md-4">
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="label" for="paidDate">Sec Paid Date</label>
+                                <input type="date" id="secondPaidDate" [(ngModel)]="invoiceDetails.secondPaidDate"
+                                    name="secondPaidDate" class="form-control" [min]="invoiceDetails.recdDate"
+                                    [disabled]="!cloneInvoiceDetails.recdDate || isFinanceAndInvoiceAmtSame" required>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa-regular fa-circle-xmark fa-xl" (click)="reset2()"
+                                style="margin-top: 42px;"></i>
+                        </div>
+
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="label" for="balAmt">Balance Amount</label>
                                 <input type="number" id="balAmt" [(ngModel)]="invoiceDetails.balAmt" name="balAmt"
@@ -125,36 +117,41 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="label" for="balAmt">Financed Percentage % </label>
+                            <select id="financedPercentage" name="financedPercentage"
+                                [(ngModel)]="intrestData.finance_percent" class="form-control">
+                                <option value="100">100%</option>
+                                <option value="90">90%</option>
+                                <option value="80">80%</option>
+                                <option value="70">70%</option>
 
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="label" for="creditDays">Credit Days</label>
+                            <input type="number" id="creditDays" [(ngModel)]="invoiceDetails.creditDays"
+                                name="creditDays" class="form-control" disabled required>
+                        </div>
+                    </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="label" for="paidDate">SecondPaid Date</label>
-                                        <input type="date" id="secondPaidDate" [(ngModel)]="invoiceDetails.secondPaidDate"
-                                name="secondPaidDate" class="form-control" [min]="invoiceDetails.recdDate"
-                                [disabled]="!cloneInvoiceDetails.recdDate || isFinanceAndInvoiceAmtSame" required> 
-                                </div>
-                            </div>
-                            <div class="col-md-1">
-                                <i class="fa-regular fa-circle-xmark fa-xl" (click)="reset2()"
-                                style="margin-top: 42px;"></i>
-                            </div>
-                       
-               
+                </div>
+                <div class="row">
                     <div class="col-md-8" style="margin-top: 10px;">
                         <mat-dialog-actions align="end">
                             <div class="confirmation-dialog-actions">
                                 <button class="button-18" (click)="onNoClick()">Cancel</button>
                                 &nbsp;
-                                <button class="button-18" (click)="updateInvoice(invoiceDetails)">Update</button>
+                                <button class="button-18"
+                                    (click)="updateInvoiceAndFinancedPercentageById(invoiceDetails)">Update</button>
                             </div>
                         </mat-dialog-actions>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
         <!-- </form> -->
     </mat-dialog-content>

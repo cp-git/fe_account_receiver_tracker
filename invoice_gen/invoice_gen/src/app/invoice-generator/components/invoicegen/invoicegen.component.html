@@ -34,13 +34,15 @@
 &nbsp;
 <mat-card *ngIf="!isFinancier &&showAddScreen" class="mat-elevation-z3 centered-card">
     <mat-card-content class="title"> Add Invoice Details</mat-card-content>
-    <form name="benchForm" #benchForm="ngForm"  (ngSubmit)="addInvoicegen(invoicegenData)" novalidate>
+    <form name="benchForm" #benchForm="ngForm" (ngSubmit)="addInvoicegen(invoicegenData)" novalidate>
         <input type="text" placeholder="Invoice Number" id="invoiceNo" name="invoiceNo"
             [(ngModel)]="invoicegenData.invoiceNo" required>
         <input type="date" placeholder="Invoice Date" id="invoiceDate" name="invoiceDate"
             [(ngModel)]="invoicegenData.invoiceDate" required>
         <input type="number" placeholder="Invoice Amount" id="invoiceAmt" name="invoiceAmt"
             [(ngModel)]="invoicegenData.invoiceAmt" required>
+        <input type="date" placeholder="Due Date" id="dueDate" name="dueDate" [(ngModel)]="invoicegenData.dueDate"
+            required>
         <!-- <input type="email" placeholder="Email Address"> -->
         <input type="submit" value="Add Invoice" [disabled]="benchForm.invalid">
 
@@ -109,13 +111,14 @@
                     <th>Invoice No.</th>
                     <th>Invoice Date</th>
                     <th>Invoice Amount</th>
+                    <th>Due Date</th>
                     <th>Financed Amount</th>
                     <th>Setup</th>
                     <th>Interest</th>
                     <th>Paid Amount</th>
                     <th>Paid Date</th>
                     <th>Credit Days</th>
-                    <th>Due Date</th>
+
                     <th>Received Date</th>
                     <th>Balance Amount</th>
                     <th>Second Paid Date</th>
@@ -127,6 +130,7 @@
                     <td>{{ invoice.invoiceNo }}</td>
                     <td>{{ invoice.invoiceDate | date }}</td>
                     <td>{{ invoice.invoiceAmt | currency:'USD':'symbol':'1.2-2' }}</td>
+                    <td>{{ invoice.dueDate | date }}</td>
                     <td>{{ invoice.financedAmount | currency:'USD':'symbol':'1.2-2' }}</td>
                     <td>{{ invoice.setup | currency:'USD':'symbol':'1.2-2' }}</td>
                     <td>{{ invoice.interest | currency:'USD':'symbol':'1.2-2' }}</td>
@@ -148,7 +152,7 @@
                         <input type="checkbox" (change)="onCheckboxChange($event, invoice.invoiceNo)">
                     </td> -->
                     <td>{{ invoice.creditDays }}</td>
-                    <td>{{ invoice.dueDate | date }}</td>
+
                     <td *ngIf="!isFinancier">{{ invoice.recdDate | date }}</td>
                     <td *ngIf="isFinancier">
                         <ng-container *ngIf="invoice.recdDate; else showCheckbox">

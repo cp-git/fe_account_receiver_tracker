@@ -42,7 +42,7 @@ export class InvoicegenComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   showAddScreen: boolean = false;
 
-  @ViewChild('benchForm', {static: false}) benchForm!: NgForm;
+  @ViewChild('benchForm', { static: false }) benchForm!: NgForm;
   constructor(
     private router: Router,
     private invoiceService: InvoiceService,
@@ -348,9 +348,9 @@ export class InvoicegenComponent implements OnInit {
     const invoiceHeaderRow = [
       { text: ' ', style: invoiceHeaderStyle },
       // { text: 'Customer', style: invoiceHeaderStyle },
-      { text: 'Invoice #', style: invoiceHeaderStyle },
-      { text: 'PO #', style: invoiceHeaderStyle },
+      { text: 'Invoice No', style: invoiceHeaderStyle },
       { text: 'Invoice Date', style: invoiceHeaderStyle },
+      { text: 'Paid Date', style: invoiceHeaderStyle },
       { text: 'Invoice Amt', style: invoiceHeaderStyle },
       // { text: 'Financed Amount', style: invoiceHeaderStyle },
       // { text: 'Setup', style: invoiceHeaderStyle },
@@ -375,8 +375,8 @@ export class InvoicegenComponent implements OnInit {
       { text: '1' },
       // { text: 'Equinix ( US) Enterprises, Inc' },
       { text: invoiceInfo.invoiceNo },
-      { text: '' },
       { text: formatDate(invoiceInfo.invoiceDate) },
+      { text: formatDate(invoiceInfo.paidDate) },
       { text: totalAmount },
 
       // { text: invoiceInfo.financedAmount },
