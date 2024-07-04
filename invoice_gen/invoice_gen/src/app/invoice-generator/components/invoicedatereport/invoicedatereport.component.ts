@@ -141,7 +141,7 @@ export class InvoicedatereportComponent implements OnInit {
       const invoiceDataRow = [
         { text: (index + 1).toString(), style: invoiceHeaderStyle },
         { text: invoice.invoiceNo, style: invoiceHeaderStyle },
-        { text: formatDate(new Date(invoice.dueDate)), style: invoiceHeaderStyle },
+        { text: formatDate(new Date(invoice.paidDate)), style: invoiceHeaderStyle },
         { text: formatDate(new Date(invoice.invoiceDate)), style: invoiceHeaderStyle },
         { text: totalAmount, style: invoiceHeaderStyle },
       ];
@@ -310,7 +310,7 @@ Factoring Group, LLC.`;
       const invoiceDataRow = [
         { text: (index + 1).toString() },
         { text: invoice.invoiceNo },
-        { text: invoice.invoiceDate },
+        { text: invoice.paidDate },
         { text: invoice.invoiceDate },
         // { text: formatDate(new Date(invoice.invoiceDate)) },
         // { text: formatDate(new Date(invoice.invoiceDate)) },
