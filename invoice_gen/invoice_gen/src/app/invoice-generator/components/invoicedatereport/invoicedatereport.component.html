@@ -77,13 +77,14 @@
                     <th>Invoice No.</th>
                     <th>Invoice Date</th>
                     <th>Invoice Amount</th>
+                    <th>Due Date</th>
                     <th>Financed Amount</th>
                     <th>Setup</th>
                     <th>Interest</th>
                     <th>Paid Amount</th>
                     <th>Paid Date</th>
                     <th>Credit Days</th>
-                    <th>Due Date</th>
+
                     <th>Received Date</th>
                     <th>Balance Amount</th>
                     <th>Second Paid Date</th>
@@ -95,6 +96,7 @@
                     <td>{{ invoice.invoiceNo }}</td>
                     <td>{{ invoice.invoiceDate | date }}</td>
                     <td>{{ invoice.invoiceAmt | currency:'USD':'symbol':'1.2-2' }}</td>
+                    <td>{{ invoice.dueDate | date }}</td>
                     <td>{{ invoice.financedAmount | currency:'USD':'symbol':'1.2-2' }}</td>
                     <td>{{ invoice.setup | currency:'USD':'symbol':'1.2-2' }}</td>
                     <td>{{ invoice.interest | currency:'USD':'symbol':'1.2-2' }}</td>
@@ -103,7 +105,7 @@
 
 
                     <td>{{ invoice.creditDays }}</td>
-                    <td>{{ invoice.dueDate | date }}</td>
+
                     <td>{{ invoice.recdDate | date }}</td>
 
                     <td>{{ invoice.balAmt | currency:'USD':'symbol':'1.2-2' }}</td>

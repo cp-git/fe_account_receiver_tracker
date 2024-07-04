@@ -7,11 +7,11 @@ export class Invoicedetails {
     setup!: number;
     interest!: number;
     paidAmt!: number;
-    paidDate!: Date | null;
+    paidDate!: any;
     creditDays!: number;
     dueDate!: Date;
     recdDate!: Date | null;
     balAmt!: number;
-    secondPaidDate!: Date |null;
-    setdays!:any;
+    secondPaidDate!: Date | null;
+    setdays!: any;
 }
