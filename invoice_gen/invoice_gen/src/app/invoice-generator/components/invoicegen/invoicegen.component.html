@@ -14,7 +14,6 @@
             &nbsp;
             <button class="login-button" [routerLink]="['/report']">Reports</button>
             &nbsp;
-
             <button class="login-button" (click)="onLogout()"><i class="fa-solid fa-power-off fa-xl"></i></button>
         </div>
     </div>
@@ -35,19 +34,33 @@
 <mat-card *ngIf="!isFinancier &&showAddScreen" class="mat-elevation-z3 centered-card">
     <mat-card-content class="title"> Add Invoice Details</mat-card-content>
     <form name="benchForm" #benchForm="ngForm" (ngSubmit)="addInvoicegen(invoicegenData)" novalidate>
-        <input type="text" placeholder="Invoice Number" id="invoiceNo" name="invoiceNo"
-            [(ngModel)]="invoicegenData.invoiceNo" required>
-        <input type="date" placeholder="Invoice Date" id="invoiceDate" name="invoiceDate"
-            [(ngModel)]="invoicegenData.invoiceDate" required>
-        <input type="number" placeholder="Invoice Amount" id="invoiceAmt" name="invoiceAmt"
-            [(ngModel)]="invoicegenData.invoiceAmt" required>
-        <input type="date" placeholder="Due Date" id="dueDate" name="dueDate" [(ngModel)]="invoicegenData.dueDate"
-            required>
-        <!-- <input type="email" placeholder="Email Address"> -->
-        <input type="submit" value="Add Invoice" [disabled]="benchForm.invalid">
+
+        <div>
+            <label for="invoiceNo">Invoice Number</label>
+            <input type="text" id="invoiceNo" name="invoiceNo" [(ngModel)]="invoicegenData.invoiceNo" required>
+        </div>
+        <div>
+            <label for="invoiceDate">Invoice Date</label>
+            <input type="date" id="invoiceDate" name="invoiceDate" [(ngModel)]="invoicegenData.invoiceDate" required>
+        </div>
+        <div>
+            <label for="invoiceAmt">Invoice Amount</label>
+            <input type="number" id="invoiceAmt" name="invoiceAmt" [(ngModel)]="invoicegenData.invoiceAmt" required>
+        </div>
+        <div>
+            <label for="dueDate">Due Date</label>
+            <input type="date" id="dueDate" name="dueDate" [(ngModel)]="invoicegenData.dueDate"
+                [min]="invoicegenData.invoiceDate" required>
+        </div>
+        <div>
+            <input type="submit" value="Add Invoice" [disabled]="benchForm.invalid">
+        </div>
+
 
     </form>
 </mat-card>
+
+
 
 &nbsp;
 <mat-card>
@@ -112,14 +125,18 @@
                     <th>Invoice Date</th>
                     <th>Invoice Amount</th>
                     <th>Due Date</th>
+                    <th>Financed percent</th>
                     <th>Financed Amount</th>
                     <th>Setup</th>
                     <th>Interest</th>
+
+
                     <th>Paid Amount</th>
                     <th>Paid Date</th>
                     <th>Credit Days</th>
 
                     <th>Received Date</th>
+                    <th>Additional Interest</th>
                     <th>Balance Amount</th>
                     <th>Second Paid Date</th>
                     <th>Action</th>
@@ -131,9 +148,11 @@
                     <td>{{ invoice.invoiceDate | date }}</td>
                     <td>{{ invoice.invoiceAmt | currency:'USD':'symbol':'1.2-2' }}</td>
                     <td>{{ invoice.dueDate | date }}</td>
+                    <td>{{ invoice.financePercent }} %</td>
                     <td>{{ invoice.financedAmount | currency:'USD':'symbol':'1.2-2' }}</td>
                     <td>{{ invoice.setup | currency:'USD':'symbol':'1.2-2' }}</td>
                     <td>{{ invoice.interest | currency:'USD':'symbol':'1.2-2' }}</td>
+
                     <td>{{ invoice.paidAmt | currency:'USD':'symbol':'1.2-2' }}</td>
                     <td *ngIf="!isFinancier"> {{ invoice.paidDate | date }}</td>
                     <td *ngIf="isFinancier">
@@ -164,6 +183,7 @@
                                 [disabled]="!invoice.paidDate"> -->
                         </ng-template>
                     </td>
+                    <td>{{0}}</td>
                     <td>{{ invoice.balAmt | currency:'USD':'symbol':'1.2-2' }}</td>
                     <!-- <td>{{ invoice.secondPaidDate | date }}</td> -->
                     <td *ngIf="!isFinancier">{{ invoice.secondPaidDate | date }}</td>

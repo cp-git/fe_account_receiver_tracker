@@ -6,6 +6,7 @@
         <div class="confirmation-dialog-container">
             <!-- {{invoiceDetails |json}} -->
             <div class="content-container">
+                {{invoiceDetails |json}}
                 <div class="confirmation-dialog-content">
                     <div class="row">
 
@@ -116,17 +117,17 @@
                         </div>
                     </div>
                 </div>
+                {{intrestData.financePercent}}
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="label" for="balAmt">Financed Percentage % </label>
-                            <select id="financedPercentage" name="financedPercentage"
-                                [(ngModel)]="intrestData.finance_percent" class="form-control">
+                            <label for="financePercent">Financed Percentage %</label>
+                            <select id="financePercent" name="financePercent"
+                                [(ngModel)]="invoiceDetails.financePercent" class="form-control">
                                 <option value="100">100%</option>
                                 <option value="90">90%</option>
                                 <option value="80">80%</option>
                                 <option value="70">70%</option>
-
                             </select>
                         </div>
                     </div>

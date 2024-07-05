@@ -262,7 +262,8 @@ export class InvoicegenComponent implements OnInit {
 
 
   addInvoicegen(invoicegenData: invoicegen) {
-
+    // alert(this.todayDate);
+    this.invoicegenData.invoiceAddedDate = this.todayDate;
     this.invoiceService.insertInvoice(invoicegenData).subscribe(
       response => {
         console.log(response);

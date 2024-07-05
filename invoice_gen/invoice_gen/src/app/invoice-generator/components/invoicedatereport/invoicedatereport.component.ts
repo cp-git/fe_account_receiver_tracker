@@ -43,7 +43,6 @@ export class InvoicedatereportComponent implements OnInit {
 
 
   generateReports() {
-    alert("IN")
     const formatDate = (date: Date): string => {
       const month = (date.getMonth() + 1).toString().padStart(2, '0');
       const day = date.getDate().toString().padStart(2, '0');
@@ -125,25 +124,27 @@ export class InvoicedatereportComponent implements OnInit {
     let totalIntrestAmount = 0;
     let totalSetup = 0;
     let totalPaidAmount = 0;
+
     // Iterate over each invoice and add its data row to the table body
     this.invoices.forEach((invoice, index) => {
-      const invoiceAmt = invoice.invoiceAmt.toFixed(2);
-      totalInvoiceAmount += invoice.invoiceAmt;
-      const financedAmount = invoice.financedAmount.toFixed(2);
-      totalFinancedAmount += invoice.financedAmount;
-      const setup = invoice.setup.toFixed(2);
-      totalSetup += invoice.setup
+      const invoiceAmt = (invoice.invoiceAmt || 0).toFixed(2);
+      totalInvoiceAmount += invoice.invoiceAmt || 0;
+      const financedAmount = (invoice.financedAmount || 0).toFixed(2);
+      totalFinancedAmount += invoice.financedAmount || 0;
+      const setup = (invoice.setup || 0).toFixed(2);
+      totalSetup += invoice.setup || 0;
       const paidAmt = (invoice.paidAmt || 0).toFixed(2);
-      totalPaidAmount += invoice.paidAmt;
+      totalPaidAmount += invoice.paidAmt || 0;
       const interest = (invoice.interest || 0).toFixed(2);
-      totalIntrestAmount += invoice.interest;
-      const totalAmount = invoice.invoiceAmt.toFixed(2);
+      totalIntrestAmount += invoice.interest || 0;
+      const totalAmount = (invoice.invoiceAmt || 0).toFixed(2);
 
       const invoiceDataRow = [
         { text: (index + 1).toString(), style: invoiceHeaderStyle },
         { text: invoice.invoiceNo, style: invoiceHeaderStyle },
-        { text: formatDate(new Date(invoice.invoiceDate)), style: invoiceHeaderStyle },
-        { text: formatDate(new Date(invoice.paidDate)), style: invoiceHeaderStyle },
+        // { text: formatDate(new Date(invoice.invoiceDate)), style: invoiceHeaderStyle },
+        { text: invoice.invoiceDate, style: invoiceHeaderStyle },
+        { text: invoice.paidDate, style: invoiceHeaderStyle },
         { text: totalAmount, style: invoiceHeaderStyle },
       ];
 
@@ -161,32 +162,15 @@ export class InvoicedatereportComponent implements OnInit {
 
     const certificationText =
       `This is to certify that the parties named above are indebted to
-the undersigned in the sums set opposite their respective
-names,for merchandise sold and delivered or for work and  
-labor done and accepted.The undersigned hereby sells,assigns 
-and transfers all of its right, title and interest  in the
-above listed accounts receivable ('Invoices') to Excel Factoring 
-Group, LLC pursuant to that certain Accounts Receivable
-Purchase Agreement between the undersigned and Excel
-Factoring Group, LLC.`;
+  the undersigned in the sums set opposite their respective
+  names,for merchandise sold and delivered or for work and  
+  labor done and accepted.The undersigned hereby sells,assigns 
+  and transfers all of its right, title and interest  in the
+  above listed accounts receivable ('Invoices') to Excel Factoring 
+  Group, LLC pursuant to that certain Accounts Receivable
+  Purchase Agreement between the undersigned and Excel
+  Factoring Group, LLC.`;
 
-    // const calculationsBlock = [
-    //   { text: `Invoice Amount         :   ${totalInvoiceAmount.toFixed(2)}\n\n`, color: 'black' },
-    //   { text: `Financed Amount      :   ${totalFinancedAmount.toFixed(2)}\n`, color: 'black' },
-    //   { text: `Setup                           :   ${totalSetup.toFixed(2)}\n`, color: 'black' },
-    //   { text: `Interest                        :   ${totalIntrestAmount.toFixed(2)}\n\n`, color: 'black' },
-    //   { text: `Net Advance               :   ${totalPaidAmount.toFixed(2)}`, color: 'red' }
-    // ];
-
-    // pdfContent.push({ text: ' ', style: lineHeight });
-    // pdfContent.push({
-    //   table: {
-    //     widths: ['50%'],
-    //     body: [
-    //       [{ text: calculationsBlock, alignment: 'left' }]
-    //     ],
-    //   },
-    // });
     const calculationsBlock = [
       [{ text: 'Invoice Amount', alignment: 'left', color: 'black' }, { text: `$${totalInvoiceAmount.toFixed(2)}`, alignment: 'right', color: 'black' }],
       [{ text: 'Financed Amount', alignment: 'left', color: 'black' }, { text: `$${totalFinancedAmount.toFixed(2)}`, alignment: 'right', color: 'black' }],
@@ -199,15 +183,11 @@ Factoring Group, LLC.`;
       { text: ' ', style: lineHeight },
     )
     pdfContent.push(
-      // { text: ' ', style: lineHeight },
       {
-        // alignment: 'center',
-        // layout: 'noBorders',
         margin: [0, 0, 50, 0],
         table: {
-          widths: ['30%', '20%'], // Adjust widths as needed
+          widths: ['30%', '20%'],
           body: calculationsBlock,
-
         },
       }
     );
@@ -226,6 +206,7 @@ Factoring Group, LLC.`;
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
     pdfDocGenerator.open();
   }
+
 
 
 

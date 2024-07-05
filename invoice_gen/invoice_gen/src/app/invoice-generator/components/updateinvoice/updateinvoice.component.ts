@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { MatInput } from '@angular/material/input';
 import { IntrestData } from '../../class/intrest-data';
+import { Invoice } from '../../class/invoice';
 @Component({
   selector: 'app-updateinvoice',
   templateUrl: './updateinvoice.component.html',
@@ -14,9 +15,9 @@ import { IntrestData } from '../../class/intrest-data';
 })
 export class UpdateinvoiceComponent implements OnInit {
 
-  invoiceDetails!: Invoicedetails
+  invoiceDetails!: Invoice
   today: string;
-  cloneInvoiceDetails!: Invoicedetails;
+  cloneInvoiceDetails!: Invoice;
   financedPercentage!: number;
   intrestData!: IntrestData
   @ViewChild('input', { read: MatInput }) input!: MatInput;
@@ -93,9 +94,13 @@ export class UpdateinvoiceComponent implements OnInit {
   }
 
 
-  updateInvoiceAndFinancedPercentageById(invoiceDetails: Invoicedetails) {
+  updateInvoiceAndFinancedPercentageById(invoiceDetails: Invoice) {
+    alert(JSON.stringify(invoiceDetails));
     if (this.financedPercentage == undefined) { this.financedPercentage = 0 }
-    this.invoiceService.updateInvoiceAndFinancedPercentageById(invoiceDetails.id, this.intrestData.finance_percent, invoiceDetails).subscribe(
+
+    console.log("id" + invoiceDetails.id + "fin percentatge" + this.invoiceDetails.financePercent);
+
+    this.invoiceService.updateInvoiceAndFinancedPercentageById(invoiceDetails.id, this.invoiceDetails.financePercent, invoiceDetails).subscribe(
       (response) => {
         location.reload();
       }, (error) => {

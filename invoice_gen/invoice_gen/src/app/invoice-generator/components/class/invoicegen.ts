@@ -6,4 +6,5 @@ export class invoicegen {
     dueDate!: Date
     financedAmount!: number
     credited_days!: number
+    invoiceAddedDate!: Date
 }
