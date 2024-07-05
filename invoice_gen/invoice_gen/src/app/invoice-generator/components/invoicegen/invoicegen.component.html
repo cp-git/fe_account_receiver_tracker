@@ -133,7 +133,7 @@
 
                     <th>Paid Amount</th>
                     <th>Paid Date</th>
-                    <th>Credit Days</th>
+                    <!-- <th>Credit Days</th> -->
 
                     <th>Received Date</th>
                     <th>Additional Interest</th>
@@ -170,7 +170,7 @@
                         </ng-container>
                         <input type="checkbox" (change)="onCheckboxChange($event, invoice.invoiceNo)">
                     </td> -->
-                    <td>{{ invoice.creditDays }}</td>
+                    <!-- <td>{{ invoice.creditDays }}</td> -->
 
                     <td *ngIf="!isFinancier">{{ invoice.recdDate | date }}</td>
                     <td *ngIf="isFinancier">
@@ -183,7 +183,7 @@
                                 [disabled]="!invoice.paidDate"> -->
                         </ng-template>
                     </td>
-                    <td>{{0}}</td>
+                    <td>{{invoice.intrestRecDate | currency:'USD':'symbol':'1.2-2' }}</td>
                     <td>{{ invoice.balAmt | currency:'USD':'symbol':'1.2-2' }}</td>
                     <!-- <td>{{ invoice.secondPaidDate | date }}</td> -->
                     <td *ngIf="!isFinancier">{{ invoice.secondPaidDate | date }}</td>

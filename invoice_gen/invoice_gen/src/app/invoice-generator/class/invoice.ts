@@ -18,4 +18,5 @@ export class Invoice {
     financePercent!: number;
     intrestRate!: number;
     setdays!: any;
+    intrestRecDate!: number;
 }
