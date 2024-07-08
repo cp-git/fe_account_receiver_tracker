@@ -42,19 +42,16 @@ h2 {
 }
 
 .date-form button.submitfile {
-    background-color: #261aad;
+    background-color: #ce0202;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 35px;
     cursor: pointer;
     margin-left: 20px;
     padding: 10px 20px;
     /* Restored padding for better button appearance */
 }
 
-.date-form button.submitfile:hover {
-    background-color: #3e8e41;
-}
 
 
 
@@ -222,4 +219,12 @@ h2 {
     font-weight: bold;
     text-align: center;
     font-size: 18px;
+}
+
+.date-form button.submitfile:disabled {
+    background-color: gray;
+    color: rgb(240, 240, 240);
+    /* Optionally adjust text color */
+    cursor: not-allowed;
+    /* Optionally change cursor style */
 }

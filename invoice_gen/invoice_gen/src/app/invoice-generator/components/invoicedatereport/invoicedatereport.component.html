@@ -62,7 +62,8 @@
                 <option value="3">Second Paid Date</option>
             </select>
 
-            <button class="submitfile" mat-flat-button [disabled]="!myForm.valid">Generate Report</button>
+            <button class="submitfile" mat-flat-button [disabled]="!myForm.valid || invoices.length ===0">Generate
+                Report</button>
         </form>
     </mat-card-content>
 </mat-card>
