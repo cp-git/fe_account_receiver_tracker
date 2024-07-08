@@ -59,6 +59,7 @@ export class UpdateinvoiceComponent implements OnInit {
   reset() {
 
     this.invoiceDetails.paidDate = null;
+    this.invoiceDetails.financePercent=0;
   }
 
   reset1() {
@@ -96,18 +97,30 @@ export class UpdateinvoiceComponent implements OnInit {
 
   updateInvoiceAndFinancedPercentageById(invoiceDetails: Invoice) {
     // alert(JSON.stringify(invoiceDetails));
-    if (this.financedPercentage == undefined) { this.financedPercentage = 0 }
-
-    console.log("id" + invoiceDetails.id + "fin percentatge" + this.invoiceDetails.financePercent);
-
-    this.invoiceService.updateInvoiceAndFinancedPercentageById(invoiceDetails.id, this.invoiceDetails.financePercent, invoiceDetails).subscribe(
-      (response) => {
-        alert("invoice updated successfully")
-        location.reload();
-      }, (error) => {
-        alert("failed")
+    if (this.invoiceDetails.financePercent == 0) {
+       
+       this.invoiceService.updateInvoiceById(invoiceDetails.id, invoiceDetails).subscribe(
+        (response) => {
+          alert("invoice updated successfully")
+          location.reload();
+        }, (error) => {
+          alert("failed")
+        }
+      )
       }
-    )
+
+    else{
+          console.log("id" + invoiceDetails.id + "fin percentatge" + this.invoiceDetails.financePercent);
+
+          this.invoiceService.updateInvoiceAndFinancedPercentageById(invoiceDetails.id, this.invoiceDetails.financePercent, invoiceDetails).subscribe(
+            (response) => {
+              alert("invoice updated successfully")
+              location.reload();
+            }, (error) => {
+              alert("failed")
+            }
+          )
+   }
   }
   getIntrestData() {
     this.invoiceService.getIntrestDataById(1).subscribe(
