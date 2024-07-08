@@ -1,7 +1,7 @@
 <nav class="navbar">
     <div class="container">
         <a href="#" class="logo">
-            Accounts Receivable Details</a>
+            {{ isFinancier ? 'Accounts Receivable Details - Financier' : 'Accounts Receivable Details - Client' }}</a>
         <button class="toggle-button">&#9776;</button>
         <div class="navbar-links">
             <!-- <a href="#">Range Voice</a>
@@ -184,7 +184,9 @@
                         </ng-template>
                     </td>
                     <td>{{invoice.intrestRecDate | currency:'USD':'symbol':'1.2-2' }}</td>
-                    <td>{{ invoice.balAmt | currency:'USD':'symbol':'1.2-2' }}</td>
+                    <td [ngClass]="{'red-text': invoice.balAmt < 0}">
+                        {{ invoice.balAmt | currency:'USD':'symbol':'1.2-2' }}
+                    </td>
                     <!-- <td>{{ invoice.secondPaidDate | date }}</td> -->
                     <td *ngIf="!isFinancier">{{ invoice.secondPaidDate | date }}</td>
                     <td *ngIf="isFinancier">

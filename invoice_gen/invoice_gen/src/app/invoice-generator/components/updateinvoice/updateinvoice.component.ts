@@ -95,13 +95,14 @@ export class UpdateinvoiceComponent implements OnInit {
 
 
   updateInvoiceAndFinancedPercentageById(invoiceDetails: Invoice) {
-    alert(JSON.stringify(invoiceDetails));
+    // alert(JSON.stringify(invoiceDetails));
     if (this.financedPercentage == undefined) { this.financedPercentage = 0 }
 
     console.log("id" + invoiceDetails.id + "fin percentatge" + this.invoiceDetails.financePercent);
 
     this.invoiceService.updateInvoiceAndFinancedPercentageById(invoiceDetails.id, this.invoiceDetails.financePercent, invoiceDetails).subscribe(
       (response) => {
+        alert("invoice updated successfully")
         location.reload();
       }, (error) => {
         alert("failed")

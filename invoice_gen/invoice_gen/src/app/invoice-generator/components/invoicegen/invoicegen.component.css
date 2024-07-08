@@ -333,3 +333,7 @@ input[type="submit"]:disabled {
     font-size: 15px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+.red-text {
+    color: red;
+}
