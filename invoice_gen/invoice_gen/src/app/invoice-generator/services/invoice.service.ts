@@ -91,12 +91,15 @@ export class InvoiceService {
     };
   }
 
+  getInvoiceDetailsByCompanyIdAndStatusDays(companyId: number,statusDays:number): Observable<Invoicedetails[]> {
+    const url = `${this.invoiceUrl}/company-status/${companyId}/${statusDays}`;
+    return this._http.get<Invoicedetails[]>(url);
+  }
+
   getInvoiceDetailsByCompanyId(companyId: number): Observable<Invoicedetails[]> {
     const url = `${this.invoiceUrl}/company/${companyId}`;
     return this._http.get<Invoicedetails[]>(url);
   }
-
-
 }
 
 

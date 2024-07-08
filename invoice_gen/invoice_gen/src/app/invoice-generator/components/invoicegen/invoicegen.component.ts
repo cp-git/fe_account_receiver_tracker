@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Invoicedetails } from '../../class/invoicedetails';
@@ -14,8 +14,12 @@ import { CompanyService } from 'src/app/company/services/company.service';
 import { Company } from 'src/app/company/classes/company';
 
 import { DialogService } from 'src/app/dialog/service/dialog.service';
+
 import { CompanyStaffService } from 'src/app/company-staff/services/company-staff.service';
 import { CompanyMembers } from 'src/app/company-staff/classes/company-members';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+
+
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-invoicegen',
@@ -25,7 +29,7 @@ import { CompanyMembers } from 'src/app/company-staff/classes/company-members';
 export class InvoicegenComponent implements OnInit {
 
 
-  statusId!: number;
+  statusId: number = 1;
   selectedFile!: File;
   invoicedetails: Invoicedetails[] = [];
   deatailsData: Invoicedetails[] = [];
@@ -38,8 +42,16 @@ export class InvoicegenComponent implements OnInit {
   invoiceNumbers: string[] = [];
   invoiceNumbersForUpdatingRecDate: string[] = [];
   invoiceNoForSndPaidDate: string[] = [];
+
   companies: { [key: number]: Company } = {}; // Map to store companies by companyId
   companyId!: number; // Define companyId property
+
+  paginatedInvoices: Invoicedetails[] = []; // Initialize paginated countries array
+  pageSize = 10; // Number of items per page
+  pageSizeOptions: number[] = [10, 12, 20]; // Options for page size
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  showAddScreen: boolean = false;
+
   constructor(
     private router: Router,
     private invoiceService: InvoiceService,
@@ -55,6 +67,13 @@ export class InvoicegenComponent implements OnInit {
     // }
   }
 
+  showAddInvoice() {
+    if (this.showAddScreen == false) {
+      this.showAddScreen = true;
+    } else {
+      this.showAddScreen = false;
+    }
+  }
   ngOnInit(): void {
     // this.getAllInvoiceDetails();
     // alert(this.isFinancier)
@@ -63,7 +82,7 @@ export class InvoicegenComponent implements OnInit {
    
    
     // const isAdmin = sessionStorage.getItem('isFinancier') === 'true';
-    if (isFinancier) {
+    if (this.isFinancier) {
       // Logic for financier role
       this.companyId = 0 ; // Reset companyId for financiers
       this.getAllInvoiceDetails();
@@ -88,12 +107,24 @@ export class InvoicegenComponent implements OnInit {
             this.invoiceService.getInvoiceDetailsByCompanyId(this.companyId).subscribe(
               (invoiceDetails: Invoicedetails[]) => {
                 this.invoicedetails = invoiceDetails;
+                this.loadCompanies(); 
                 console.log('Invoice details:', invoiceDetails);
+                if (this.statusId  != 4) {
+              
+                  this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize); // Initialize paginatedCountries with first page data
+    
+                  // Navigate to the first page
+                  this.paginator.pageIndex = 0;
+                  this.paginator.page.emit({ pageIndex: 0, pageSize: this.pageSize, length: this.invoicedetails.length });
+                }
+    
+                this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize);
               },
               (error) => {
                 console.error('Failed to fetch invoice details:', error);
               }
             );
+            this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize);
           } else {
             console.error('Company or companyId not found in companyMember:', companyMember);
           }
@@ -118,6 +149,17 @@ export class InvoicegenComponent implements OnInit {
       this.selectedFile = file;
     }
   }
+
+  onPageChange(event: PageEvent) {
+    const startIndex = event.pageIndex * event.pageSize;
+    console.log(startIndex + "************");
+    const endIndex = startIndex + event.pageSize;
+    this.paginatedInvoices = this.invoicedetails.slice(startIndex, endIndex);
+
+
+  }
+
+
   uploadFile(): void {
     if (this.selectedFile) {
       const formData: FormData = new FormData();
@@ -257,26 +299,31 @@ export class InvoicegenComponent implements OnInit {
 
         this.invoiceService.getAllInvoiceDataByStatusId(this.statusId).subscribe(
           response => {
+            console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
             console.log(response);
 
             if (this.statusId != 4) {
               console.log("In Status Column Data...");
               this.deatailsData = response;
               this.invoicedetails = this.deatailsData;
+              this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize); // Initialize paginatedCountries with first page data
 
+              // Navigate to the first page
+              this.paginator.pageIndex = 0;
+              this.paginator.page.emit({ pageIndex: 0, pageSize: this.pageSize, length: this.invoicedetails.length });
             }
 
-
+            this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize);
           }
         )
         console.log(this.invoicedetails);
-
+        this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize);
       }, (erro) => {
         console.log("fail to get all");
-
       }
     )
   }
+
 
   loadCompanies(): void {
     // Collect all unique companyIds from invoice details
@@ -292,6 +339,8 @@ export class InvoicegenComponent implements OnInit {
         });
     });
   }
+
+
   addInvoicegen(invoicegenData: invoicegen) {
 
     this.invoiceService.insertInvoice(invoicegenData).subscribe(

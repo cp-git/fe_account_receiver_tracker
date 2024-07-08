@@ -9,7 +9,7 @@ import { Company } from '../classes/company';
 })
 export class CompanyService {
 
-  private apiUrl = `${environment.companyUrl}/api/companies`;
+  private apiUrl = `http://localhost:8080/api/companies`;
 
   constructor(private http: HttpClient) { }
 

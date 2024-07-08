@@ -21,7 +21,7 @@ export class AddCompanyMemberComponent implements OnInit {
     '', 
     '', 
     '', 
-    new Company(0, '', '', '', '', false), 
+    new Company( '', '', '', '', false), 
     new LoginDetails('', '', new Role(0, ''), false, false), // Initialize with LoginDetails and Role
     false
   );

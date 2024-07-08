@@ -16,6 +16,7 @@
 }
 
 mat-card {
+    background-color: #f4f8ff;
     border: 2px solid #6e6e6e;
     margin-top: 3px;
     max-width: 100%;
@@ -31,7 +32,10 @@ body {
 }
 
 /* Navbar styles */
+
 .navbar {
+    position: sticky;
+
     background-color: #274cba;
     color: #fff;
     padding: 10px 5px;
@@ -116,6 +120,16 @@ label {
     border: 1px groove red;
     margin-left: 10px;
 
+
+}
+
+
+
+.invoicefilter {
+    margin-top: 16px;
+
+    font-size: 16px;
+    font-weight: bold;
 }
 
 
@@ -126,18 +140,20 @@ label {
 
 
 
-
-
-
+.table-container {
+    /* max-height: 400px;
+    /* Adjust the height as needed */
+    overflow-y: auto;
+    overflow-y: scroll;
+    height: 440px;
+    border: 1px solid #ddd;
+}
 
 .custom-table {
     width: 100%;
-
     border-collapse: collapse;
     font-family: Arial, sans-serif;
-    overflow-y: auto;
-    max-height: 400px;
-    /* Adjust height as needed */
+
 }
 
 .custom-table th,
@@ -157,6 +173,9 @@ label {
     background-color: #274cba;
     color: #ffffff;
     font-weight: 100;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .custom-table tbody tr:nth-child(even) {
@@ -259,6 +278,13 @@ input {
         color: white;
         box-shadow: 0 .75rem .5rem -.5rem hsl(0 50% 80%);
     }
+
+    &[type="close"] {
+        text-align: center;
+        background: rgb(255, 105, 105);
+        color: white;
+        box-shadow: 0 .75rem .5rem -.5rem hsl(0 50% 80%);
+    }
 }
 
 .header-container {
@@ -295,4 +321,11 @@ input {
     width: 300px;
     margin-left: 80px;
     height: 40px;
+}
+
+.mat-paginator {
+
+    color: rgb(0, 0, 0);
+    font-size: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

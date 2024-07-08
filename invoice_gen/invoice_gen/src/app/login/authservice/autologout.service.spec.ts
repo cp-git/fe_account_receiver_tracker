@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ComapnyService } from './comapny.service';
+import { AutologoutService } from './autologout.service';
 
-describe('ComapnyService', () => {
-  let service: ComapnyService;
+describe('AutologoutService', () => {
+  let service: AutologoutService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ComapnyService);
+    service = TestBed.inject(AutologoutService);
   });
 
   it('should be created', () => {
