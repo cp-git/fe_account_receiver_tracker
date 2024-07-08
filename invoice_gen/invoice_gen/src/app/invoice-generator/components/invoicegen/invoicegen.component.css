@@ -280,6 +280,15 @@ input {
         color: white;
         box-shadow: 0 .75rem .5rem -.5rem hsl(0 50% 80%);
     }
+
+}
+
+input[type="submit"]:disabled {
+    background: gray;
+    color: lightgray;
+
+    box-shadow: none;
+
 }
 
 .header-container {

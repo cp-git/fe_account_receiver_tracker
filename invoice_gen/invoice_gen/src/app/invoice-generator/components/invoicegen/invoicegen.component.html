@@ -50,7 +50,7 @@
         <div>
             <label for="dueDate">Due Date</label>
             <input type="date" id="dueDate" name="dueDate" [(ngModel)]="invoicegenData.dueDate"
-                [min]="invoicegenData.invoiceDate" required>
+                [min]="invoicegenData.invoiceDate" [max]="maxDueDate" required>
         </div>
         <div>
             <input type="submit" value="Add Invoice" [disabled]="benchForm.invalid">
