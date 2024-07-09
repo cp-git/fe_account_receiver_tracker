@@ -312,6 +312,12 @@ export class InvoicegenComponent implements OnInit {
       color: 'black',
       margin: [5, 5],
     };
+
+    const invoiceDataStyle = {
+      // fontSize: 12,
+      alignment: 'right',
+
+    };
     const details = {
       // fillColor: '#A76AFF',
       bold: true,
@@ -374,20 +380,21 @@ export class InvoicegenComponent implements OnInit {
       // { text: 'Second Paid Date', style: invoiceHeaderStyle },
     ];
 
-    const invoiceAmt = parseFloat(invoiceInfo.invoiceAmt);
-    const financedAmount = parseFloat(invoiceInfo.financedAmount);
-    const setup = parseFloat(invoiceInfo.setup);
+
+    const invoiceAmt = parseFloat(invoiceInfo.invoiceAmt || 0).toFixed(2);
+    const financedAmount = parseFloat(invoiceInfo.financedAmount || 0).toFixed(2);
+    const setup = parseFloat(invoiceInfo.setup || 0).toFixed(2);
     const paidAmt = parseFloat(invoiceInfo.paidAmt || 0);
     const interest = parseFloat(invoiceInfo.interest || 0);
-    const totalAmount = parseFloat(invoiceInfo.invoiceAmt);
+    const totalAmount = parseFloat(invoiceInfo.invoiceAmt || 0).toFixed(2);
 
     const invoiceDataRow = [
-      { text: '1' },
+      { text: '1', style: invoiceDataStyle },
       // { text: 'Equinix ( US) Enterprises, Inc' },
-      { text: invoiceInfo.invoiceNo },
-      { text: formatDate(invoiceInfo.invoiceDate) },
-      { text: formatDate(invoiceInfo.paidDate) },
-      { text: totalAmount },
+      { text: invoiceInfo.invoiceNo, style: invoiceDataStyle },
+      { text: formatDate(invoiceInfo.invoiceDate), style: invoiceDataStyle },
+      { text: formatDate(invoiceInfo.paidDate), style: invoiceDataStyle },
+      { text: "$ " + totalAmount, style: invoiceDataStyle },
 
       // { text: invoiceInfo.financedAmount },
       // { text: invoiceInfo.setup },
@@ -452,11 +459,11 @@ export class InvoicegenComponent implements OnInit {
 
 
     const calculationsBlock = [
-      [{ text: 'Invoice Amount', alignment: 'left', color: 'black' }, { text: `$${invoiceAmt.toFixed(2)}`, alignment: 'right', color: 'black' }],
-      [{ text: 'Financed Amount', alignment: 'left', color: 'black' }, { text: `$${financedAmount.toFixed(2)}`, alignment: 'right', color: 'black' }],
-      [{ text: 'Setup', alignment: 'left', color: 'black' }, { text: `$${setup.toFixed(2)}`, alignment: 'right', color: 'black' }],
-      [{ text: 'Interest', alignment: 'left', color: 'black' }, { text: `$${interest.toFixed(2)}`, alignment: 'right', color: 'black' }],
-      [{ text: 'Net Advance', alignment: 'left', color: 'red' }, { text: `$${paidAmt.toFixed(2)}`, alignment: 'right', color: 'red' }]
+      [{ text: 'Invoice Amount', alignment: 'left', color: 'black' }, { text: `$ ${invoiceAmt}`, alignment: 'right', color: 'black' }],
+      [{ text: 'Financed Amount', alignment: 'left', color: 'black' }, { text: `$ ${financedAmount}`, alignment: 'right', color: 'black' }],
+      [{ text: 'Setup', alignment: 'left', color: 'black' }, { text: `$ ${setup}`, alignment: 'right', color: 'black' }],
+      [{ text: 'Interest', alignment: 'left', color: 'black' }, { text: `$ ${interest.toFixed(2)}`, alignment: 'right', color: 'black' }],
+      [{ text: 'Net Advance', alignment: 'left', color: 'red' }, { text: `$ ${paidAmt.toFixed(2)}`, alignment: 'right', color: 'red' }]
     ];
 
     pdfContent.push(

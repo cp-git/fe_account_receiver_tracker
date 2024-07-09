@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.username === 'admin' && this.password === 'pass') {
+    if (this.username === 'client' && this.password === 'pass') {
       // Set session storage for admin
       sessionStorage.setItem('isAdmin', 'true');
       this.dialogService.openDeleteConfirmationDialog("Login successful.").subscribe(result => {
