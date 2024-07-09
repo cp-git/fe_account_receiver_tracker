@@ -90,6 +90,8 @@ export class UpdateinvoiceComponent implements OnInit {
         location.reload();
       },
       error => {
+        console.log("log...");
+
         alert("failed to update" + error);
       }
     );
