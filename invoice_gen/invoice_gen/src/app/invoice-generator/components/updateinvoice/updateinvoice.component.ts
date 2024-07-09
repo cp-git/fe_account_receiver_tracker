@@ -59,8 +59,8 @@ export class UpdateinvoiceComponent implements OnInit {
   }
 
   reset() {
-
     this.invoiceDetails.paidDate = null;
+    this.invoiceDetails.financePercent=0;
   }
 
   reset1() {
