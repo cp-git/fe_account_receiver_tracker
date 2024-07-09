@@ -71,7 +71,7 @@ export class InvoicegenComponent implements OnInit {
   get maxDueDate() {
     if (this.invoicegenData.invoiceDate) {
       const invoiceDate = new Date(this.invoicegenData.invoiceDate);
-      invoiceDate.setDate(invoiceDate.getDate() + 60 - 1);
+      invoiceDate.setDate(invoiceDate.getDate() + 60);
       return invoiceDate.toISOString().split('T')[0];
     }
     return '';
