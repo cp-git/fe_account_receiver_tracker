@@ -8,6 +8,7 @@ import { MatInput } from '@angular/material/input';
 import { IntrestData } from '../../class/intrest-data';
 import { Invoice } from '../../class/invoice';
 import { DialogService } from 'src/app/dialog/service/dialog.service';
+import { Invoicedetail } from '../../class/invoicedetail';
 @Component({
   selector: 'app-updateinvoice',
   templateUrl: './updateinvoice.component.html',
@@ -16,9 +17,9 @@ import { DialogService } from 'src/app/dialog/service/dialog.service';
 })
 export class UpdateinvoiceComponent implements OnInit {
 
-  invoiceDetails!: Invoice
+  invoiceDetails!: Invoicedetail
   today: string;
-  cloneInvoiceDetails!: Invoice;
+  cloneInvoiceDetails!: Invoicedetail;
   financedPercentage!: number;
   intrestData!: IntrestData
   @ViewChild('input', { read: MatInput }) input!: MatInput;
@@ -59,18 +60,18 @@ export class UpdateinvoiceComponent implements OnInit {
   }
 
   reset() {
-    this.invoiceDetails.paidDate = null;
-    this.invoiceDetails.financePercent=0;
+    //  this.invoiceDetails.paidDate = null;
+    this.invoiceDetails.financePercent = 0;
   }
 
   reset1() {
 
-    this.invoiceDetails.recdDate = null;
+    //  this.invoiceDetails.recdDate = null;
   }
 
   reset2() {
 
-    this.invoiceDetails.secondPaidDate = null;
+    // this.invoiceDetails.secondPaidDate = null;
   }
   onSubmit() {
     this.invoiceService.updateInvoiceByInvoiceNo(this.invoiceDetails.invoiceNo, this.invoiceDetails).subscribe(
@@ -98,7 +99,7 @@ export class UpdateinvoiceComponent implements OnInit {
   }
 
 
-  updateInvoiceAndFinancedPercentageById(invoiceDetails: Invoice) {
+  updateInvoiceAndFinancedPercentageById(invoiceDetails: Invoicedetails) {
     // alert(JSON.stringify(invoiceDetails));
     if (this.invoiceDetails.financePercent == 0) {
       this.invoiceService.updateInvoiceById(invoiceDetails.id, invoiceDetails).subscribe(

@@ -3,18 +3,16 @@ export class Invoicedetails {
     invoiceNo!: string;
     invoiceDate!: Date;
     invoiceAmt!: number;
-
     financedAmount!: number;
-
     setup!: number;
     interest!: number;
     paidAmt!: number;
-    paidDate!: any;
+    paidDate!: Date;
     creditDays!: number;
     dueDate!: Date;
-    recdDate!: Date | null;
+    recdDate!: Date;
     balAmt!: number;
-    secondPaidDate!: Date | null;
+    secondPaidDate!: Date;
     setdays!: any;
     financePercent!: number;
     intrestRate!: number;
