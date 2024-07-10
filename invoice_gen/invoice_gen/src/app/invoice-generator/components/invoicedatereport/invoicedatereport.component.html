@@ -56,10 +56,13 @@
             <select id="status" name="status" [(ngModel)]="statusId"
                 (change)="getAllInvociesBySelectedDateRangeAndStatus()" required>
                 <option value="4" disabled>Select</option>
+
                 <option value="0">Invoice Date</option>
                 <option value="1">Paid Date</option>
+                <option value="5">Open Invoice</option>
                 <option value="2">Received Date</option>
                 <option value="3">Second Paid Date</option>
+
             </select>
 
             <button class="submitfile" mat-flat-button [disabled]="!myForm.valid || invoices.length ===0">Generate
