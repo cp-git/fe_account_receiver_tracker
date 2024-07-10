@@ -60,19 +60,27 @@ export class UpdateinvoiceComponent implements OnInit {
   }
 
   reset() {
-    //  this.invoiceDetails.paidDate = null;
+    this.invoiceDetails.paidDate = this.getFormattedDate(new Date());
     this.invoiceDetails.financePercent = 0;
   }
-
   reset1() {
-
-    //  this.invoiceDetails.recdDate = null;
+    this.invoiceDetails.recdDate = this.getFormattedDate(new Date());
   }
 
   reset2() {
 
-    // this.invoiceDetails.secondPaidDate = null;
+    this.invoiceDetails.secondPaidDate = this.getFormattedDate(new Date());;
   }
+  // Utility method to get formatted date
+  private getFormattedDate(date: Date): any {
+    return this.datePipe.transform(date, 'dd-MM-yyyy');
+  }
+
+  // reset1() {
+
+  //     this.invoiceDetails.recdDate = Date();
+  // }
+
   onSubmit() {
     this.invoiceService.updateInvoiceByInvoiceNo(this.invoiceDetails.invoiceNo, this.invoiceDetails).subscribe(
       (response) => {
