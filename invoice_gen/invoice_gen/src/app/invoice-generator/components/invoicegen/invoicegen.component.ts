@@ -409,7 +409,7 @@ export class InvoicegenComponent implements OnInit {
     ];
 
     pdfContent.push(
-      { text: 'Details of Invoice - ' + invoiceInfo.invoiceNo, style: titlepdf },
+      { text: 'Details of Invoice  ' + invoiceInfo.invoiceNo, style: titlepdf },
       { text: ' ', style: height },
       // { text: 'Excel Factoring Group, LLC', style: header },
       // { text: ' ', style: height },
