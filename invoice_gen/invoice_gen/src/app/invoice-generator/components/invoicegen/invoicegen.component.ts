@@ -409,7 +409,7 @@ export class InvoicegenComponent implements OnInit {
     ];
 
     pdfContent.push(
-      { text: 'Schedule of Accounts', style: titlepdf },
+      { text: 'Details of Invoice - ' + invoiceInfo.invoiceNo, style: titlepdf },
       { text: ' ', style: height },
       // { text: 'Excel Factoring Group, LLC', style: header },
       // { text: ' ', style: height },
@@ -419,7 +419,7 @@ export class InvoicegenComponent implements OnInit {
     )
 
     pdfContent.push(
-      { text: 'Schedule Number  DATA-0003', style: schedule },
+      // { text: 'Schedule Number  DATA-0003', style: schedule },
       {
         table: {
           headerRows: 1,
@@ -545,7 +545,7 @@ export class InvoicegenComponent implements OnInit {
           return `Open_Invoices_report_${currentDate}.pdf`;
         case 0:
         default:
-          return `Invoice_report_${currentDate}.pdf`;
+          return `Invoice_report_${invoiceInfo.invoiceNo}_${currentDate}.pdf`;
       }
     };
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
