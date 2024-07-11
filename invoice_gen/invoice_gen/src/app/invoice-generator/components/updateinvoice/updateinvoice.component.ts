@@ -60,16 +60,16 @@ export class UpdateinvoiceComponent implements OnInit {
   }
 
   reset() {
-    this.invoiceDetails.paidDate = this.getFormattedDate(new Date());
+    this.invoiceDetails.paidDate =null;
     this.invoiceDetails.financePercent = 0;
   }
   reset1() {
-    this.invoiceDetails.recdDate = this.getFormattedDate(new Date());
+    this.invoiceDetails.recdDate =null;
   }
 
   reset2() {
 
-    this.invoiceDetails.secondPaidDate = this.getFormattedDate(new Date());;
+    this.invoiceDetails.secondPaidDate = null;
   }
   // Utility method to get formatted date
   private getFormattedDate(date: Date): any {
