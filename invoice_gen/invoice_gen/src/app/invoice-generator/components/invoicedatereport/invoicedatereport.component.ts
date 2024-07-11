@@ -139,7 +139,7 @@ export class InvoicedatereportComponent implements OnInit {
     }
     if (this.statusId == 0) {
       pdfContent.push(
-        { text: 'Invoices by Invoice', style: titlepdf },
+        { text: 'Invoices by Invoice Date', style: titlepdf },
         { text: ' ', style: height },
         { text: 'DATASYS CONSULTING & SOFTWARE, INC', style: header },
         { text: ' ', style: height },
