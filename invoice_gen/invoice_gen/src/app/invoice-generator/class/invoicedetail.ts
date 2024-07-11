@@ -11,10 +11,10 @@ export class Invoicedetail {
     paidAmt!: number;
     paidDate!: any;
     creditDays!: number;
-    dueDate!: Date;
-    recdDate!: Date;
+    dueDate!: any;
+    recdDate!: any;
     balAmt!: number;
-    secondPaidDate!: Date;
+    secondPaidDate!: any;
     setdays!: any;
     financePercent!: number;
     intrestRate!: number;

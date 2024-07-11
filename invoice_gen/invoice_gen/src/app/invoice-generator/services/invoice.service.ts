@@ -12,8 +12,8 @@ import { IntrestData } from '../class/intrest-data';
 export class InvoiceService {
 
 
-  private invoiceUrl: string = `http://localhost:8090/invoice/excel`;
-  // private invoiceUrl: string = `http://localhost:8090/excel`;
+  //private invoiceUrl: string = `http://localhost:8090/invoice/excel`;
+   private invoiceUrl: string = `http://localhost:8090/excel`;
   // private invoiceUrl: string = `http://18.206.50.192:8080/invoice/excel`;
   private countryUrl: any;
   private companyUrl: any;
