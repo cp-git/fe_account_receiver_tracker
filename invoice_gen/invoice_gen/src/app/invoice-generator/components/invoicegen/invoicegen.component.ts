@@ -524,8 +524,33 @@ export class InvoicegenComponent implements OnInit {
       //   };
       // }
     };
+    const current = (date: Date): string => {
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      const year = date.getFullYear().toString();
+      return `${month}/${day}/${year}`;
+    };
+    const getFileName = (statusId: number): string => {
+      console.log("****" + statusId);
 
+      const currentDate = current(new Date());
+      switch (statusId) {
+        case 1:
+          return `Paid_Date_report_${currentDate}.pdf`;
+        case 2:
+          return `Received_Date_report_${currentDate}.pdf`;
+        case 3:
+          return `Second_Paid_Date_report_${currentDate}.pdf`;
+        case 5:
+          return `Open_Invoices_report_${currentDate}.pdf`;
+        case 0:
+        default:
+          return `Invoice_report_${currentDate}.pdf`;
+      }
+    };
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-    pdfDocGenerator.open();
+    const fileName = getFileName(this.statusId);
+    pdfDocGenerator.download(fileName);
+    // pdfDocGenerator.open();
   }
 }

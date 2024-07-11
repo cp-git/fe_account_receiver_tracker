@@ -201,7 +201,7 @@ export class InvoicedatereportComponent implements OnInit {
         { text: ' ', style: invoiceHeaderStyle },
         { text: 'Invoice No', style: invoiceHeaderStyle },
         { text: 'Invoice Date', style: invoiceHeaderStyle },
-        { text: ' Received Date', style: invoiceHeaderStyle },
+        { text: ' Paid Date', style: invoiceHeaderStyle },
         { text: 'Invoice Amt', style: invoiceHeaderStyle },
       ];
     }
@@ -359,9 +359,26 @@ export class InvoicedatereportComponent implements OnInit {
         },
       },
     };
+    const getFileName = (statusId: number): string => {
+      console.log("****" + statusId);
 
+      const currentDate = formatDate(new Date());
+      if (statusId == 1) {
+        return `Paid_Date_report_${currentDate}.pdf`;
+      } else if (statusId == 2) {
+        return `Received_Date_report_${currentDate}.pdf`;
+      } else if (statusId == 3) {
+        return `Second_Paid_Date_report_${currentDate}.pdf`;
+      } else if (statusId == 5) {
+        return `Open_Invoices_report_${currentDate}.pdf`;
+      } else {
+        return `Invoice_report_${currentDate}.pdf`;
+      }
+    };
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-    pdfDocGenerator.open();
+    const fileName = getFileName(this.statusId);
+    pdfDocGenerator.download(fileName);
+    // pdfDocGenerator.open();
   }
 
 
