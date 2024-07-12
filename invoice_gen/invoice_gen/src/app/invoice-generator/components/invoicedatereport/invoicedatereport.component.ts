@@ -44,7 +44,6 @@ export class InvoicedatereportComponent implements OnInit {
 
 
   generateReports() {
-    // alert("in");
     const formatDate = (date: Date): string => {
       const month = (date.getMonth() + 1).toString().padStart(2, '0');
       const day = date.getDate().toString().padStart(2, '0');
@@ -66,7 +65,6 @@ export class InvoicedatereportComponent implements OnInit {
       alignment: 'right',
       color: 'black',
       margin: [5, 5],
-
     };
 
     const details = {
@@ -116,7 +114,6 @@ export class InvoicedatereportComponent implements OnInit {
         { text: ' ', style: height },
         { text: 'DATASYS CONSULTING & SOFTWARE, INC', style: header },
         { text: ' ', style: height },
-        // { text: 'Schedule Number  DATA-0003', style: schedule },
       );
     }
     if (this.statusId == 2) {
@@ -125,7 +122,6 @@ export class InvoicedatereportComponent implements OnInit {
         { text: ' ', style: height },
         { text: 'DATASYS CONSULTING & SOFTWARE, INC', style: header },
         { text: ' ', style: height },
-        // { text: 'Schedule Number  DATA-0003', style: schedule },
       );
     }
     if (this.statusId == 3) {
@@ -134,7 +130,6 @@ export class InvoicedatereportComponent implements OnInit {
         { text: ' ', style: height },
         { text: 'DATASYS CONSULTING & SOFTWARE, INC', style: header },
         { text: ' ', style: height },
-        // { text: 'Schedule Number  DATA-0003', style: schedule },
       );
     }
     if (this.statusId == 0) {
@@ -143,7 +138,6 @@ export class InvoicedatereportComponent implements OnInit {
         { text: ' ', style: height },
         { text: 'DATASYS CONSULTING & SOFTWARE, INC', style: header },
         { text: ' ', style: height },
-        // { text: 'Schedule Number  DATA-0003', style: schedule },
       );
     }
     if (this.statusId == 5) {
@@ -152,13 +146,10 @@ export class InvoicedatereportComponent implements OnInit {
         { text: ' ', style: height },
         { text: 'DATASYS CONSULTING & SOFTWARE, INC', style: header },
         { text: ' ', style: height },
-        // { text: 'Schedule Number  DATA-0003', style: schedule },
       );
     }
 
     // Define the invoice table header row
-
-
 
     if (this.statusId == 2) {
       this.invoiceHeaderRow = [
@@ -214,31 +205,34 @@ export class InvoicedatereportComponent implements OnInit {
     let totalSetup = 0;
     let totalPaidAmount = 0;
 
+    const numberFormatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+    // Helper function to format number with space between $ and amount
+    const formatCurrencyWithSpace = (value: number): string => {
+      return numberFormatter.format(value).replace('$', '$ ');
+    };
+
     // Iterate over each invoice and add its data row to the table body
     this.invoices.forEach((invoice, index) => {
-      const invoiceAmt = (invoice.invoiceAmt || 0).toFixed(2);
       totalInvoiceAmount += invoice.invoiceAmt || 0;
-      const financedAmount = (invoice.financedAmount || 0).toFixed(2);
       totalFinancedAmount += invoice.financedAmount || 0;
-      const setup = (invoice.setup || 0).toFixed(2);
       totalSetup += invoice.setup || 0;
-      const paidAmt = (invoice.paidAmt || 0).toFixed(2);
       totalPaidAmount += invoice.paidAmt || 0;
-      const interest = (invoice.interest || 0).toFixed(2);
       totalIntrestAmount += invoice.interest || 0;
-      const totalAmount = (invoice.invoiceAmt || 0).toFixed(2);
-      // const invoiceDate = invoice.invoiceDate ? new Date(invoice.invoiceDate) : defaultDate;
-      // const paidDate = invoice.paidDate ? new Date(invoice.paidDate) : defaultDate;
+      const totalAmount = invoice.invoiceAmt || 0;
 
       if (this.statusId == 1) {
         const invoiceDataRow = [
           { text: (index + 1).toString(), style: invoiceDataStyle },
           { text: invoice.invoiceNo, style: invoiceDataStyle },
           { text: formatDate(new Date(invoice.invoiceDate)), style: invoiceDataStyle },
-          // { text: invoice.invoiceDate, style: invoiceDataStyle },
-          // { text: invoice.paidDate, style: invoiceDataStyle },
           { text: formatDate(new Date(invoice.paidDate)), style: invoiceDataStyle },
-          { text: "$ " + totalAmount, style: invoiceDataStyle },
+          { text: formatCurrencyWithSpace(totalAmount), style: invoiceDataStyle },
         ];
         tableBody.push(invoiceDataRow);
       }
@@ -247,10 +241,8 @@ export class InvoicedatereportComponent implements OnInit {
           { text: (index + 1).toString(), style: invoiceDataStyle },
           { text: invoice.invoiceNo, style: invoiceDataStyle },
           { text: formatDate(new Date(invoice.invoiceDate)), style: invoiceDataStyle },
-          // { text: invoice.invoiceDate, style: invoiceDataStyle },
-          // { text: invoice.paidDate, style: invoiceDataStyle },
           { text: formatDate(new Date(invoice.recdDate)), style: invoiceDataStyle },
-          { text: "$ " + totalAmount, style: invoiceDataStyle },
+          { text: formatCurrencyWithSpace(totalAmount), style: invoiceDataStyle },
         ];
         tableBody.push(invoiceDataRow);
       }
@@ -260,10 +252,8 @@ export class InvoicedatereportComponent implements OnInit {
           { text: (index + 1).toString(), style: invoiceDataStyle },
           { text: invoice.invoiceNo, style: invoiceDataStyle },
           { text: formatDate(new Date(invoice.invoiceDate)), style: invoiceDataStyle },
-          // { text: invoice.invoiceDate, style: invoiceDataStyle },
-          // { text: invoice.paidDate, style: invoiceDataStyle },
           { text: formatDate(new Date(invoice.secondPaidDate)), style: invoiceDataStyle },
-          { text: "$ " + totalAmount, style: invoiceDataStyle },
+          { text: formatCurrencyWithSpace(totalAmount), style: invoiceDataStyle },
         ];
         tableBody.push(invoiceDataRow);
       }
@@ -272,10 +262,8 @@ export class InvoicedatereportComponent implements OnInit {
           { text: (index + 1).toString(), style: invoiceDataStyle },
           { text: invoice.invoiceNo, style: invoiceDataStyle },
           { text: formatDate(new Date(invoice.invoiceDate)), style: invoiceDataStyle },
-          // { text: invoice.invoiceDate, style: invoiceDataStyle },
-          // { text: invoice.paidDate, style: invoiceDataStyle },
           { text: formatDate(new Date(invoice.paidDate)), style: invoiceDataStyle },
-          { text: "$ " + totalAmount, style: invoiceDataStyle },
+          { text: formatCurrencyWithSpace(totalAmount), style: invoiceDataStyle },
         ];
         tableBody.push(invoiceDataRow);
       }
@@ -285,26 +273,21 @@ export class InvoicedatereportComponent implements OnInit {
             { text: (index + 1).toString(), style: invoiceDataStyle },
             { text: invoice.invoiceNo, style: invoiceDataStyle },
             { text: formatDate(new Date(invoice.invoiceDate)), style: invoiceDataStyle },
-            { text: " ", style: invoiceDataStyle },
-            { text: "$ " + totalAmount, style: invoiceDataStyle },
-
+            { text: '', style: invoiceDataStyle },
+            { text: formatCurrencyWithSpace(totalAmount), style: invoiceDataStyle },
           ];
           tableBody.push(invoiceDataRow);
-        }
-        else {
+        } else {
           const invoiceDataRow = [
             { text: (index + 1).toString(), style: invoiceDataStyle },
             { text: invoice.invoiceNo, style: invoiceDataStyle },
             { text: formatDate(new Date(invoice.invoiceDate)), style: invoiceDataStyle },
             { text: formatDate(new Date(invoice.paidDate)), style: invoiceDataStyle },
-            { text: "$ " + totalAmount, style: invoiceDataStyle },
-
+            { text: formatCurrencyWithSpace(totalAmount), style: invoiceDataStyle },
           ];
           tableBody.push(invoiceDataRow);
         }
-
       }
-
     });
 
     // Add the table to the pdfContent
@@ -328,12 +311,11 @@ export class InvoicedatereportComponent implements OnInit {
   Factoring Group, LLC.`;
 
     const calculationsBlock = [
-
-      [{ text: 'Invoice Amount', alignment: 'left', color: 'black' }, { text: `$ ${totalInvoiceAmount.toFixed(2)}`, alignment: 'right', color: 'black' }],
-      [{ text: 'Financed Amount', alignment: 'left', color: 'black' }, { text: `$ ${totalFinancedAmount.toFixed(2)}`, alignment: 'right', color: 'black' }],
-      [{ text: 'Setup', alignment: 'left', color: 'black' }, { text: `$ ${totalSetup.toFixed(2)}`, alignment: 'right', color: 'black' }],
-      [{ text: 'Interest', alignment: 'left', color: 'black' }, { text: `$ ${totalIntrestAmount.toFixed(2)}`, alignment: 'right', color: 'black' }],
-      [{ text: 'Net Advance', alignment: 'left', color: 'red' }, { text: `$ ${totalPaidAmount.toFixed(2)}`, alignment: 'right', color: 'red' }]
+      [{ text: 'Invoice Amount', alignment: 'left', color: 'black' }, { text: formatCurrencyWithSpace(totalInvoiceAmount), alignment: 'right', color: 'black' }],
+      [{ text: 'Financed Amount', alignment: 'left', color: 'black' }, { text: formatCurrencyWithSpace(totalFinancedAmount), alignment: 'right', color: 'black' }],
+      [{ text: 'Setup', alignment: 'left', color: 'black' }, { text: formatCurrencyWithSpace(totalSetup), alignment: 'right', color: 'black' }],
+      [{ text: 'Interest', alignment: 'left', color: 'black' }, { text: formatCurrencyWithSpace(totalIntrestAmount), alignment: 'right', color: 'black' }],
+      [{ text: 'Net Advance', alignment: 'left', color: 'red' }, { text: formatCurrencyWithSpace(totalPaidAmount), alignment: 'right', color: 'red' }]
     ];
 
     pdfContent.push(
@@ -377,8 +359,8 @@ export class InvoicedatereportComponent implements OnInit {
     };
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
     const fileName = getFileName(this.statusId);
-    pdfDocGenerator.download(fileName);
     // pdfDocGenerator.open();
+    pdfDocGenerator.download(fileName);
   }
 
 

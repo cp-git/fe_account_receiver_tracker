@@ -381,20 +381,38 @@ export class InvoicegenComponent implements OnInit {
     ];
 
 
-    const invoiceAmt = parseFloat(invoiceInfo.invoiceAmt || 0).toFixed(2);
-    const financedAmount = parseFloat(invoiceInfo.financedAmount || 0).toFixed(2);
-    const setup = parseFloat(invoiceInfo.setup || 0).toFixed(2);
-    const paidAmt = parseFloat(invoiceInfo.paidAmt || 0);
-    const interest = parseFloat(invoiceInfo.interest || 0);
-    const totalAmount = parseFloat(invoiceInfo.invoiceAmt || 0).toFixed(2);
+    // const invoiceAmt = parseFloat(invoiceInfo.invoiceAmt || 0).toFixed(2);
+    // const financedAmount = parseFloat(invoiceInfo.financedAmount || 0).toFixed(2);
+    // const setup = parseFloat(invoiceInfo.setup || 0).toFixed(2);
+    // const paidAmt = parseFloat(invoiceInfo.paidAmt || 0);
+    // const interest = parseFloat(invoiceInfo.interest || 0);
+    // const totalAmount = parseFloat(invoiceInfo.invoiceAmt || 0).toFixed(2);
 
+    const invoiceAmt = invoiceInfo.invoiceAmt || 0;
+    const financedAmount = invoiceInfo.financedAmount || 0;
+    const setup = invoiceInfo.setup || 0;
+    const paidAmt = invoiceInfo.paidAmt || 0;
+    const interest = invoiceInfo.interest || 0;
+    const totalAmount = invoiceInfo.invoiceAmt || 0;
+
+    const numberFormatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+    // Helper function to format number with space between $ and amount
+    const formatCurrencyWithSpace = (value: number): string => {
+      return numberFormatter.format(value).replace('$', '$ ');
+    };
     const invoiceDataRow = [
       { text: '1', style: invoiceDataStyle },
       // { text: 'Equinix ( US) Enterprises, Inc' },
       { text: invoiceInfo.invoiceNo, style: invoiceDataStyle },
       { text: formatDate(invoiceInfo.invoiceDate), style: invoiceDataStyle },
       { text: formatDate(invoiceInfo.paidDate), style: invoiceDataStyle },
-      { text: "$ " + totalAmount, style: invoiceDataStyle },
+      { text: formatCurrencyWithSpace(totalAmount), style: invoiceDataStyle },
 
       // { text: invoiceInfo.financedAmount },
       // { text: invoiceInfo.setup },
@@ -453,17 +471,19 @@ export class InvoicegenComponent implements OnInit {
       width: 'auto', // Adjust width as needed
       style: { fontSize: 12, },
     };
-
-
-
-
-
+    // const calculationsBlock = [
+    //   [{ text: 'Invoice Amount', alignment: 'left', color: 'black' }, { text: `$ ${invoiceAmt}`, alignment: 'right', color: 'black' }],
+    //   [{ text: 'Financed Amount', alignment: 'left', color: 'black' }, { text: `$ ${financedAmount}`, alignment: 'right', color: 'black' }],
+    //   [{ text: 'Setup', alignment: 'left', color: 'black' }, { text: `$ ${setup}`, alignment: 'right', color: 'black' }],
+    //   [{ text: 'Interest', alignment: 'left', color: 'black' }, { text: `$ ${interest.toFixed(2)}`, alignment: 'right', color: 'black' }],
+    //   [{ text: 'Net Advance', alignment: 'left', color: 'red' }, { text: `$ ${paidAmt.toFixed(2)}`, alignment: 'right', color: 'red' }]
+    // ];
     const calculationsBlock = [
-      [{ text: 'Invoice Amount', alignment: 'left', color: 'black' }, { text: `$ ${invoiceAmt}`, alignment: 'right', color: 'black' }],
-      [{ text: 'Financed Amount', alignment: 'left', color: 'black' }, { text: `$ ${financedAmount}`, alignment: 'right', color: 'black' }],
-      [{ text: 'Setup', alignment: 'left', color: 'black' }, { text: `$ ${setup}`, alignment: 'right', color: 'black' }],
-      [{ text: 'Interest', alignment: 'left', color: 'black' }, { text: `$ ${interest.toFixed(2)}`, alignment: 'right', color: 'black' }],
-      [{ text: 'Net Advance', alignment: 'left', color: 'red' }, { text: `$ ${paidAmt.toFixed(2)}`, alignment: 'right', color: 'red' }]
+      [{ text: 'Invoice Amount', alignment: 'left', color: 'black' }, { text: formatCurrencyWithSpace(invoiceAmt), alignment: 'right', color: 'black' }],
+      [{ text: 'Financed Amount', alignment: 'left', color: 'black' }, { text: formatCurrencyWithSpace(financedAmount), alignment: 'right', color: 'black' }],
+      [{ text: 'Setup', alignment: 'left', color: 'black' }, { text: formatCurrencyWithSpace(setup), alignment: 'right', color: 'black' }],
+      [{ text: 'Interest', alignment: 'left', color: 'black' }, { text: formatCurrencyWithSpace(interest), alignment: 'right', color: 'black' }],
+      [{ text: 'Net Advance', alignment: 'left', color: 'red' }, { text: formatCurrencyWithSpace(paidAmt), alignment: 'right', color: 'red' }]
     ];
 
     pdfContent.push(
