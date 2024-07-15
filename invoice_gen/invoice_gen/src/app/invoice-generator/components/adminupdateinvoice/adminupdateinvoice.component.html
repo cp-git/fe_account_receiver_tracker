@@ -1,0 +1,52 @@
+<div class="">
+
+    <mat-dialog-content class="mat-typography">
+        <!-- {{invoiceDetails|json}} -->
+        <h2 class="title" mat-dialog-title>Update Invoice </h2>
+        <!-- <form (ngSubmit)="onSubmit()" #invoiceForm="ngForm" class="invoice-form"> -->
+        <div class="confirmation-dialog-container">
+            <!-- {{invoiceDetails |json}} -->
+            <div class="content-container">
+                <div class="confirmation-dialog-content">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="label" for="invoiceNo">Invoice No</label>
+                                <input type="text" id="invoiceNo" [(ngModel)]="invoiceDetails.invoiceNo"
+                                    name="invoiceNo" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="label" for="invoiceDate">Invoice Date</label>
+                                <input type="date" id="invoiceDate" [(ngModel)]="invoiceDetails.invoiceDate"
+                                    name="invoiceDate" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="label" for="invoiceAmt">Invoice Amount</label>
+                                <input type="number" id="invoiceAmt" [(ngModel)]="invoiceDetails.invoiceAmt"
+                                    name="invoiceAmt" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <mat-dialog-actions align="end">
+                    <div class="confirmation-dialog-actions">
+                        <button class="button-18" (click)="onNoClick()">Cancel</button>
+                        &nbsp;
+                        <button class="button-18" (click)="updateInvoice(invoiceDetails)">Update</button>
+                    </div>
+                </mat-dialog-actions>
+            </div>
+
+        </div>
+        <!-- </form> -->
+    </mat-dialog-content>
+</div>

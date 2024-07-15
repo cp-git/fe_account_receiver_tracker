@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Invoicedetails } from '../class/invoicedetails';
 import { Observable, catchError, of } from 'rxjs';
 import { invoicegen } from '../components/class/invoicegen';
+import { IntrestData } from '../class/intrest-data';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,9 @@ import { invoicegen } from '../components/class/invoicegen';
 export class InvoiceService {
 
 
-  private invoiceUrl: string = `http://localhost:8090/invoice/excel`;
-  // private invoiceUrl: string = `http://localhost:8090/excel`;
+  // private invoiceUrl: string = `http://localhost:8090/invoice/excel`;
+  private invoiceUrl: string = `http://localhost:8050/invoice/excel`;
+  // private invoiceUrl: string = `http://18.206.50.192:8080/invoice/excel`;
   private countryUrl: any;
   private companyUrl: any;
 
@@ -91,6 +93,7 @@ export class InvoiceService {
     };
   }
 
+
   getInvoiceDetailsByCompanyIdAndStatusDays(companyId: number,statusDays:number): Observable<Invoicedetails[]> {
     const url = `${this.invoiceUrl}/company-status/${companyId}/${statusDays}`;
     return this._http.get<Invoicedetails[]>(url);
@@ -100,6 +103,24 @@ export class InvoiceService {
     const url = `${this.invoiceUrl}/company/${companyId}`;
     return this._http.get<Invoicedetails[]>(url);
   }
+
+  updateInvoiceByInvoiceNo(invoiceNo: string, invoiceDetails: Invoicedetails): Observable<Invoicedetails> {
+    return this._http.put<Invoicedetails>(`${this.invoiceUrl}/updateInvoice/${invoiceNo}`, invoiceDetails);
+  }
+
+  updateInvoiceById(id: number, invoiceDetails: Invoicedetails): Observable<Invoicedetails> {
+    return this._http.put<Invoicedetails>(`${this.invoiceUrl}/updateInvoiceById/${id}`, invoiceDetails);
+  }
+
+  updateInvoiceAndFinancedPercentageById(id: number, financedPercentage: number, invoiceDetails: Invoicedetails): Observable<Invoicedetails> {
+    return this._http.put<Invoicedetails>(`${this.invoiceUrl}/updateInvoiceAndFinPercentageById/${id}/${financedPercentage}`, invoiceDetails);
+  }
+
+  getIntrestDataById(id: number): Observable<IntrestData> {
+    return this._http.get<IntrestData>(`${this.invoiceUrl}/intrestData/${id}`);
+  }
+
+
 }
 
 

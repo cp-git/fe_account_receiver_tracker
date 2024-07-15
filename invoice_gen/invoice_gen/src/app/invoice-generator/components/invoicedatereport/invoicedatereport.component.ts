@@ -43,6 +43,7 @@ export class InvoicedatereportComponent implements OnInit {
 
 
   generateReports() {
+    alert("IN")
     const formatDate = (date: Date): string => {
       const month = (date.getMonth() + 1).toString().padStart(2, '0');
       const day = date.getDate().toString().padStart(2, '0');
@@ -110,9 +111,9 @@ export class InvoicedatereportComponent implements OnInit {
     // Define the invoice table header row
     const invoiceHeaderRow = [
       { text: ' ', style: invoiceHeaderStyle },
-      { text: 'Invoice #', style: invoiceHeaderStyle },
-      { text: 'PO #', style: invoiceHeaderStyle },
+      { text: 'Invoice No', style: invoiceHeaderStyle },
       { text: 'Invoice Date', style: invoiceHeaderStyle },
+      { text: 'Paid Date', style: invoiceHeaderStyle },
       { text: 'Invoice Amt', style: invoiceHeaderStyle },
     ];
 
@@ -141,8 +142,8 @@ export class InvoicedatereportComponent implements OnInit {
       const invoiceDataRow = [
         { text: (index + 1).toString(), style: invoiceHeaderStyle },
         { text: invoice.invoiceNo, style: invoiceHeaderStyle },
-        { text: '', style: invoiceHeaderStyle },
         { text: formatDate(new Date(invoice.invoiceDate)), style: invoiceHeaderStyle },
+        { text: formatDate(new Date(invoice.paidDate)), style: invoiceHeaderStyle },
         { text: totalAmount, style: invoiceHeaderStyle },
       ];
 

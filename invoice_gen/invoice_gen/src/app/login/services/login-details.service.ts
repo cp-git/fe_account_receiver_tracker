@@ -8,7 +8,7 @@ import { LoginDetails } from '../class/logindetails';
   providedIn: 'root'
 })
 export class LoginDetailsService {
-  private apiUrl = 'http://localhost:8010/api/logindetails'; // Adjust the URL as needed
+  private apiUrl = 'http://localhost:8020/api/logindetails'; // Adjust the URL as needed
 
   constructor(private http: HttpClient) { }
 

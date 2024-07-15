@@ -2,7 +2,8 @@
     <div class="container">
         <a href="#" class="logo">
             Accounts Receivable Details</a>
-          
+            <div  class="welcome-msg">  Welcome {{loggedIncompanyMember}} Member </div>
+        
         <button class="toggle-button">&#9776;</button>
         <div class="navbar-links">
             <!-- <a href="#">Range Voice</a>
@@ -47,13 +48,15 @@
 &nbsp;
 <mat-card *ngIf="!isFinancier &&showAddScreen" class="mat-elevation-z3 centered-card">
     <mat-card-content class="title"> Add Invoice Details</mat-card-content>
-    <form #benchForm="ngForm" (ngSubmit)="addInvoicegen(invoicegenData)" novalidate>
+    <form name="benchForm" #benchForm="ngForm" (ngSubmit)="addInvoicegen(invoicegenData)" novalidate>
         <input type="text" placeholder="Invoice Number" id="invoiceNo" name="invoiceNo"
             [(ngModel)]="invoicegenData.invoiceNo" required>
         <input type="date" placeholder="Invoice Date" id="invoiceDate" name="invoiceDate"
             [(ngModel)]="invoicegenData.invoiceDate" required>
         <input type="number" placeholder="Invoice Amount" id="invoiceAmt" name="invoiceAmt"
             [(ngModel)]="invoicegenData.invoiceAmt" required>
+        <input type="date" placeholder="Due Date" id="dueDate" name="dueDate" [(ngModel)]="invoicegenData.dueDate"
+            required>
         <!-- <input type="email" placeholder="Email Address"> -->
         <input type="submit" value="Add Invoice" [disabled]="benchForm.invalid">
 
@@ -83,7 +86,7 @@
     <div class="header-container">
         <mat-card-content class="title">Invoice Details</mat-card-content>
         <div class="buttons-container">
-            <button *ngIf="isFinancier" class="action-button" (click)="updatePaidDate()"
+            <!-- <button *ngIf="isFinancier" class="action-button" (click)="updatePaidDate()"
                 [disabled]="invoiceNumbers.length==0">
                 Update Paid Date
             </button>
@@ -94,6 +97,7 @@
             <button *ngIf="isFinancier" class="action-button" (click)="updateSndPaidDate()"
                 [disabled]="invoiceNoForSndPaidDate.length===0">
                 Update Second Paid Date
+
             </button>
 
             <label class="invoicefilter">Filter invoices :</label>
@@ -111,6 +115,42 @@
                 <option value=2>Received Date</option>
                 <option value=3>Second Paid Date</option>
             </select>
+
+            </button> -->
+            <div>
+                <label>Select Company:</label>
+                <select [(ngModel)]="selectedCompanyId" (change)="filterAndPaginateInvoices()">
+                  <option value="0">All Companies</option>
+                  <option *ngFor="let company of Object.values(companiesForFilter)" [value]="company.companyId">{{ company.companyName }}</option>
+                </select>
+              </div>
+              
+            
+            <div  *ngIf="isFinancier" class="buttons-container" style="display: flex; align-items: center;">
+                <label class="invoicefilter" style="margin-right: 0px;">Filter invoices :</label>
+                <select id="status" name="status" [(ngModel)]="statusId" (change)="getAllInvoiceDetails()"
+                    class="form-control">
+                    <option value="4">All Data</option>
+                    <option value="0">Invoice Date</option>
+                    <option value="1">Paid Date</option>
+                    <option value="2">Received Date</option>
+                    <option value="3">Second Paid Date</option>
+                </select>
+            </div>
+            
+          
+        </select>
+            <div  *ngIf="!isFinancier" class="buttons-container" style="display: flex; align-items: center;">
+                <label class="invoicefilter" style="margin-right: 0px;">Filter invoices :</label>
+                <select id="status" name="status" [(ngModel)]="statusId" (change)="fetchCompanyIdForCompanyMember()"
+                    class="form-control">
+                    <option value="4">All Data</option>
+                    <option value="0">Invoice Date</option>
+                    <option value="1">Paid Date</option>
+                    <option value="2">Received Date</option>
+                    <option value="3">Second Paid Date</option>
+                </select>
+            </div>
             <!-- <a class="change">Filter : </a> -->
 
         </div>
@@ -126,17 +166,18 @@
                     <th>Invoice No.</th>
                     <th>Invoice Date</th>
                     <th>Invoice Amount</th>
+                    <th>Due Date</th>
                     <th>Financed Amount</th>
                     <th>Setup</th>
                     <th>Interest</th>
                     <th>Paid Amount</th>
                     <th>Paid Date</th>
                     <th>Credit Days</th>
-                    <th>Due Date</th>
+
                     <th>Received Date</th>
                     <th>Balance Amount</th>
                     <th>Second Paid Date</th>
-                    <th>Company</th>
+                    <th  *ngIf="isFinancier">Company</th>
 
                     <th>Action</th>
                 </tr>
@@ -146,6 +187,7 @@
                     <td>{{ invoice.invoiceNo }}</td>
                     <td>{{ invoice.invoiceDate | date }}</td>
                     <td>{{ invoice.invoiceAmt | currency:'USD':'symbol':'1.2-2' }}</td>
+                    <td>{{ invoice.dueDate | date }}</td>
                     <td>{{ invoice.financedAmount | currency:'USD':'symbol':'1.2-2' }}</td>
                     <td>{{ invoice.setup | currency:'USD':'symbol':'1.2-2' }}</td>
                     <td>{{ invoice.interest | currency:'USD':'symbol':'1.2-2' }}</td>
@@ -156,8 +198,8 @@
                             {{ invoice.paidDate | date }}
                         </ng-container>
                         <ng-template #showCheckbox>
-                            <input class="checkbox" type="checkbox"
-                                (change)="onCheckboxChange($event, invoice.invoiceNo)">
+                            <!-- <input class="checkbox" type="checkbox"
+                                (change)="onCheckboxChange($event, invoice.invoiceNo)"> -->
                         </ng-template>
                     </td>
                     <!-- <td>
@@ -167,16 +209,16 @@
                         <input type="checkbox" (change)="onCheckboxChange($event, invoice.invoiceNo)">
                     </td> -->
                     <td>{{ invoice.creditDays }}</td>
-                    <td>{{ invoice.dueDate | date }}</td>
+
                     <td *ngIf="!isFinancier">{{ invoice.recdDate | date }}</td>
                     <td *ngIf="isFinancier">
                         <ng-container *ngIf="invoice.recdDate; else showCheckbox">
                             {{ invoice.recdDate | date }}
                         </ng-container>
                         <ng-template #showCheckbox>
-                            <input class="checkbox" type="checkbox"
+                            <!-- <input class="checkbox" type="checkbox"
                                 (change)="onCheckboxRecDateChange($event, invoice.invoiceNo)"
-                                [disabled]="!invoice.paidDate">
+                                [disabled]="!invoice.paidDate"> -->
                         </ng-template>
                     </td>
                     <td>{{ invoice.balAmt | currency:'USD':'symbol':'1.2-2' }}</td>
@@ -187,14 +229,14 @@
                             {{ invoice.secondPaidDate | date }}
                         </ng-container>
                         <ng-template #showCheckbox>
-                            <input class="checkbox" type="checkbox"
+                            <!-- <input class="checkbox" type="checkbox"
                                 (change)="onCheckboxSndDateChange($event, invoice.invoiceNo)"
-                                [disabled]="!invoice.recdDate">
+                                [disabled]="!invoice.recdDate"> -->
 
                         </ng-template>
                     </td>
                     
-                        <td>{{ companies[invoice.companyId]?.companyName }}</td>
+                        <td  *ngIf="isFinancier">{{ companies[invoice.companyId]?.companyName }}</td>
 
                    
                     <td>
@@ -202,6 +244,9 @@
                         &nbsp; -->
                         <!-- <button class="action-button"
                             (click)="generateInvoiceByInvoiceNo(invoice.invoiceNo)">Download</button> -->
+                        <button class="download-button" (click)="openUpdateDialog(invoice)"><i
+                                class="fa-solid fa-pen-to-square"></i></button>
+                        <!-- &nbsp; -->
                         <button class="download-button" (click)="generateInvoiceByInvoiceNo(invoice.invoiceNo)"><i
                                 class="fa fa-download"></i></button>
 

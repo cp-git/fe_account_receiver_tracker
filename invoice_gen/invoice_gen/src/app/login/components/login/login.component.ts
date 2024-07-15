@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
           if (loginDetails && loginDetails.password === this.password) {
             sessionStorage.setItem('loginDetailsId', loginDetails.id.toString());
 
+            console.log()
             if (loginDetails.role.roleName === 'COMPANY_MEMBER') {
               sessionStorage.setItem('isFinancier', 'false');
 

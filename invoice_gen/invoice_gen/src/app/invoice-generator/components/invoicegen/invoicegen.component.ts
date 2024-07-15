@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Invoicedetails } from '../../class/invoicedetails';
 import { InvoiceService } from '../../services/invoice.service';
@@ -19,6 +19,9 @@ import { CompanyStaffService } from 'src/app/company-staff/services/company-staf
 import { CompanyMembers } from 'src/app/company-staff/classes/company-members';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
+import { UpdateinvoiceComponent } from '../updateinvoice/updateinvoice.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AdminupdateinvoiceComponent } from '../adminupdateinvoice/adminupdateinvoice.component';
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 @Component({
@@ -29,7 +32,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 export class InvoicegenComponent implements OnInit {
 
 
-  statusId: number = 1;
+  statusId: number = 4;
   selectedFile!: File;
   invoicedetails: Invoicedetails[] = [];
   deatailsData: Invoicedetails[] = [];
@@ -42,30 +45,28 @@ export class InvoicegenComponent implements OnInit {
   invoiceNumbers: string[] = [];
   invoiceNumbersForUpdatingRecDate: string[] = [];
   invoiceNoForSndPaidDate: string[] = [];
-
+  loggedIncompanyMember: string ='';
   companies: { [key: number]: Company } = {}; // Map to store companies by companyId
   companyId!: number; // Define companyId property
-
+  filteredInvoices: Invoicedetails[] = [];
   paginatedInvoices: Invoicedetails[] = []; // Initialize paginated countries array
   pageSize = 10; // Number of items per page
   pageSizeOptions: number[] = [10, 12, 20]; // Options for page size
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   showAddScreen: boolean = false;
-
+  selectedCompanyId: number | null = 0;
+  companiesForFilter: { [key: number]: Company } = {};
   constructor(
     private router: Router,
     private invoiceService: InvoiceService,
     private companyService: CompanyService,
     private companyMemService: CompanyStaffService,
-
-
+    private dialog: MatDialog,
     private dialogService: DialogService
-  ) {
-    // const Financer = sessionStorage.getItem('isFinancier')
-    // if (Financer !== null) {
-    //   this.isFinancier = Financer === 'true'; // Convert string to boolean
-    // }
-  }
+    
+  ){}
+  @ViewChild('benchForm', { static: false }) benchForm!: NgForm;
+ 
 
   showAddInvoice() {
     if (this.showAddScreen == false) {
@@ -79,8 +80,12 @@ export class InvoicegenComponent implements OnInit {
     // alert(this.isFinancier)
     const isFinancier = sessionStorage.getItem('isFinancier') === 'true';
     this.isFinancier = isFinancier; // Set the component property
-   
-   
+    const loginDetailsId = sessionStorage.getItem('loginDetailsId');
+    if (loginDetailsId) {
+    const id = parseInt(loginDetailsId, 10);
+    this.getCompanyMemberName(id);
+    this.filterAndPaginateInvoices(); // Apply initial filtering
+    }
     // const isAdmin = sessionStorage.getItem('isFinancier') === 'true';
     if (this.isFinancier) {
       // Logic for financier role
@@ -92,6 +97,7 @@ export class InvoicegenComponent implements OnInit {
     }
 
   }
+
   fetchCompanyIdForCompanyMember(): void {
     const loginDetailsId = sessionStorage.getItem('loginDetailsId');
   
@@ -108,17 +114,21 @@ export class InvoicegenComponent implements OnInit {
               (invoiceDetails: Invoicedetails[]) => {
                 this.invoicedetails = invoiceDetails;
                 this.loadCompanies(); 
+                this.invoiceService.getInvoiceDetailsByCompanyIdAndStatusDays(this.companyId,this.statusId).subscribe(
+                  response => {
+
                 console.log('Invoice details:', invoiceDetails);
                 if (this.statusId  != 4) {
-              
+                  this.invoicedetails = response
                   this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize); // Initialize paginatedCountries with first page data
     
                   // Navigate to the first page
                   this.paginator.pageIndex = 0;
                   this.paginator.page.emit({ pageIndex: 0, pageSize: this.pageSize, length: this.invoicedetails.length });
                 }
-    
                 this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize);
+
+              })
               },
               (error) => {
                 console.error('Failed to fetch invoice details:', error);
@@ -137,7 +147,30 @@ export class InvoicegenComponent implements OnInit {
       console.error('No loginDetailsId found in session storage.');
     }
   }
-  
+
+
+  openUpdateDialog(invoice: Invoicedetails): void {
+    if (this.isFinancier == true) {
+      const dialogRef = this.dialog.open(UpdateinvoiceComponent, {
+        data: { invoice: invoice }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        // Handle the result if needed
+      });
+    } else {
+      const dialogRef = this.dialog.open(AdminupdateinvoiceComponent, {
+        data: { invoice: invoice }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        // Handle the result if needed
+      });
+    }
+  }
+
   onLogout() {
     sessionStorage.removeItem('isAdmin');
     sessionStorage.removeItem('isFinancier');
@@ -155,8 +188,6 @@ export class InvoicegenComponent implements OnInit {
     console.log(startIndex + "************");
     const endIndex = startIndex + event.pageSize;
     this.paginatedInvoices = this.invoicedetails.slice(startIndex, endIndex);
-
-
   }
 
 
@@ -292,7 +323,7 @@ export class InvoicegenComponent implements OnInit {
     this.invoiceService.getAllInvoiceData().subscribe(
       (data: Invoicedetails[]) => {
         this.invoicedetails = data;
-
+        this.filterAndPaginateInvoices(); // Apply initial filtering
         console.log(this.statusId + "============");
         this.loadCompanies(); // Load companies after fetching invoice details
 
@@ -341,16 +372,29 @@ export class InvoicegenComponent implements OnInit {
   }
 
 
-  addInvoicegen(invoicegenData: invoicegen) {
+ addInvoicegen(invoicegenData: invoicegen) {
+    const loginDetailsId = sessionStorage.getItem('loginDetailsId');
+    if (loginDetailsId) {
+    const id = parseInt(loginDetailsId, 10);
+    console.log(id)
+    this.companyMemService.fetchCompanyIdByLoginId(id).subscribe(
+      (companyMember: CompanyMembers) => {
+        if (companyMember && companyMember.company && companyMember.company.companyId) {
 
+        this.companyId = companyMember.company.companyId;
+        
+        invoicegenData.companyId = this.companyId;
     this.invoiceService.insertInvoice(invoicegenData).subscribe(
       response => {
+        console.log("&&&&&&&&&&&&&&&&&&&&&&&")
         console.log(response);
+        
         this.dialogService.openDeleteConfirmationDialog("Invoice added successfully.").subscribe(result => {
           if (result === false) {
             this.getAllInvoiceDetails();
           }
         });
+        this.benchForm.resetForm();
 
       },
       (error) => {
@@ -359,6 +403,10 @@ export class InvoicegenComponent implements OnInit {
       }
 
     )
+  }
+});
+}
+
   }
   async generateInvoiceByInvoiceNo(invoiceId: any) {
     const invoiceInfo: any = await this.invoiceService
@@ -427,9 +475,9 @@ export class InvoicegenComponent implements OnInit {
     const invoiceHeaderRow = [
       { text: ' ', style: invoiceHeaderStyle },
       // { text: 'Customer', style: invoiceHeaderStyle },
-      { text: 'Invoice #', style: invoiceHeaderStyle },
-      { text: 'PO #', style: invoiceHeaderStyle },
+      { text: 'Invoice No', style: invoiceHeaderStyle },
       { text: 'Invoice Date', style: invoiceHeaderStyle },
+      { text: 'Paid Date', style: invoiceHeaderStyle },
       { text: 'Invoice Amt', style: invoiceHeaderStyle },
       // { text: 'Financed Amount', style: invoiceHeaderStyle },
       // { text: 'Setup', style: invoiceHeaderStyle },
@@ -454,8 +502,8 @@ export class InvoicegenComponent implements OnInit {
       { text: '1' },
       // { text: 'Equinix ( US) Enterprises, Inc' },
       { text: invoiceInfo.invoiceNo },
-      { text: '' },
       { text: formatDate(invoiceInfo.invoiceDate) },
+      { text: formatDate(invoiceInfo.paidDate) },
       { text: totalAmount },
 
       // { text: invoiceInfo.financedAmount },
@@ -590,4 +638,46 @@ export class InvoicegenComponent implements OnInit {
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
     pdfDocGenerator.open();
   }
+
+  
+getCompanyMemberName(id:number){
+
+  this.companyMemService.fetchCompanyIdByLoginId(id).subscribe(
+    (companyMember: CompanyMembers) => {
+      if (companyMember && companyMember.company && companyMember.company.companyId) {
+        this.loggedIncompanyMember = companyMember.company.companyName;
+      }
+      })
+
+      }
+
+    
+
+      fetchCompaniesForFilter(): void {
+        this.companyService.getAllCompanies().subscribe((data: { [key: number]: Company }) => {
+          this.companiesForFilter = data;
+        });
+      }
+    
+      filterAndPaginateInvoices(): void {
+        if (this.selectedCompanyId === 0) {
+          // Show all invoices if no specific company is selected
+          this.paginatedInvoices = [...this.invoicedetails];
+        } else {
+          this.paginatedInvoices = this.invoicedetails.filter(invoice => invoice.companyId === this.selectedCompanyId);
+        }
+        this.paginateInvoices();
+      }
+    
+      paginateInvoices(): void {
+        // Reset pagination after filtering
+        if (this.paginator) {
+          this.paginator.firstPage();
+        }
+      }
+    
+
+
+
 }
+
