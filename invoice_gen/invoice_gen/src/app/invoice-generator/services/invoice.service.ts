@@ -118,7 +118,7 @@ export class InvoiceService {
   //   params = params.append('pageSize', pageSize.toString());
 
   //   return this._http.get<Invoicedetails[]>(`${this.invoiceUrl}/data`, { params })
-
+  // console.log();
   // }
 
   getProducts(pageNo: number, pageSize: number): Observable<any> {
@@ -128,6 +128,7 @@ export class InvoiceService {
   getInvoicePagiByStatusId(statusId: number, pageNo: number, pageSize: number): Observable<any> {
     return this._http.get<any>(`${this.invoiceUrl}/products?statusDays=${statusId}&val=${pageNo}&val1=${pageSize}`);
   }
+
 
 
 }
