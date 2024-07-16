@@ -37,11 +37,11 @@ export class InvoicegenComponent implements OnInit {
   invoiceNumbersForUpdatingRecDate: string[] = [];
   invoiceNoForSndPaidDate: string[] = [];
   paginatedInvoices: Invoicedetails[] = []; // Initialize paginated countries array
-  pageSize = 10; // Number of items per page
+
   pageSizeOptions: number[] = [10, 12, 20]; // Options for page size
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   showAddScreen: boolean = false;
-
+  length = 0;
   @ViewChild('benchForm', { static: false }) benchForm!: NgForm;
   constructor(
     private router: Router,
@@ -62,11 +62,12 @@ export class InvoicegenComponent implements OnInit {
       this.showAddScreen = false;
     }
   }
-  ngOnInit(): void {
-    this.getAllInvoiceDetails();
-    // alert(this.isFinancier)
+  // ngOnInit(): void {
+  //   // this.getAllInvoiceDetails();
+  //   // alert(this.isFinancier)
+  //   this.getAllInvoiceDetails(0, this.pageSize);
 
-  }
+  // }
 
   get maxDueDate() {
     if (this.invoicegenData.invoiceDate) {
@@ -110,14 +111,69 @@ export class InvoicegenComponent implements OnInit {
     }
   }
 
-  onPageChange(event: PageEvent) {
-    const startIndex = event.pageIndex * event.pageSize;
-    console.log(startIndex + "************");
-    const endIndex = startIndex + event.pageSize;
-    this.paginatedInvoices = this.invoicedetails.slice(startIndex, endIndex);
+  // onPageChange(event: PageEvent) {
+  //   const startIndex = event.pageIndex * event.pageSize;
+  //   console.log(startIndex + "************");
+
+  //   const endIndex = startIndex + event.pageSize;
+  //   console.log(endIndex + "************");
+  //   this.paginatedInvoices = this.invoicedetails.slice(startIndex, endIndex);
+  // }
+
+  pageIndexNo: number = 0;
+  defaultPageSize: number = 5;
+  totalElements: number = 0;
+
+  pageIndex: number = 0;
+  pageSize: number = 5;
+  ngOnInit(): void {
+    const savedPageIndexStr = sessionStorage.getItem('pageIndex');
+    this.pageIndex = savedPageIndexStr ? parseInt(savedPageIndexStr, 10) : 0;
+    this.loadInvoices();
   }
 
+  loadInvoices(): void {
+    console.log("Status id" + this.statusId, "pageindex" + this.pageIndex, "pageSize" + this.pageSize);
 
+    this.invoiceService.getInvoicePagiByStatusId(this.statusId, this.pageIndex, this.pageSize).subscribe(data => {
+      this.invoicedetails = data.content;
+      console.log(this.invoicedetails);
+
+
+      this.totalElements = data.totalElements;
+      console.log(this.totalElements);
+    });
+
+  }
+  onFilterChange(): void {
+    this.pageIndex = 0; // Reset to first page on filter change
+    sessionStorage.setItem('pageIndex', this.pageIndex.toString());
+    this.loadInvoices();
+  }
+  // loadData(pageIndex: number, pageSize: number): void {
+  //   console.log("In @@@" + pageIndex + "sie" + pageSize);
+  //   this.invoiceService.getProducts(pageIndex, pageSize).subscribe(data => {
+  //     this.invoicedetails = data.content;
+  //     this.totalElements = data.totalElements;
+
+  //   });
+  // }
+
+  loadData(): void {
+    console.log("In @@@" + this.pageIndex + "sie" + this.pageSize);
+    this.invoiceService.getProducts(this.pageIndex, this.pageSize).subscribe(data => {
+      this.invoicedetails = data.content;
+      this.totalElements = data.totalElements;
+
+    });
+  }
+
+  onPaginateChange(event: any): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    sessionStorage.setItem('pageIndex', this.pageIndex.toString());
+    this.loadInvoices();
+  }
   uploadFile(): void {
     if (this.selectedFile) {
       const formData: FormData = new FormData();
@@ -131,7 +187,7 @@ export class InvoicegenComponent implements OnInit {
         },
         (error) => {
           alert("upload file")
-          this.getAllInvoiceDetails()
+          // this.getAllInvoiceDetails()
           // this.message = 'Failed to upload file';
           // this.success = false;
         }
@@ -178,7 +234,7 @@ export class InvoicegenComponent implements OnInit {
         this.dialogService.openDeleteConfirmationDialog("Paid date updated successfully.").subscribe(result => {
           if (result === false) {
             this.invoiceNumbers = [];
-            this.getAllInvoiceDetails();
+            // this.getAllInvoiceDetails();
           }
         });
         // alert("Due date updated Successfully");
@@ -197,7 +253,7 @@ export class InvoicegenComponent implements OnInit {
         this.dialogService.openDeleteConfirmationDialog("Received date Updated successfully.").subscribe(result => {
           if (result === false) {
             this.invoiceNumbersForUpdatingRecDate = [];
-            this.getAllInvoiceDetails()
+            // this.getAllInvoiceDetails()
           }
         });
         // alert("Rec date Updated Successfully");
@@ -216,7 +272,7 @@ export class InvoicegenComponent implements OnInit {
         this.dialogService.openDeleteConfirmationDialog("Second paid date updated successfully.").subscribe(result => {
           if (result === false) {
             this.invoiceNoForSndPaidDate = [];
-            this.getAllInvoiceDetails();
+            // this.getAllInvoiceDetails();
           }
         });
         // alert("Second Paid Date Updated Successfully.");
@@ -238,36 +294,38 @@ export class InvoicegenComponent implements OnInit {
       }
     )
   }
-  getAllInvoiceDetails() {
-    this.invoiceService.getAllInvoiceData().subscribe(
-      (data: Invoicedetails[]) => {
-        this.invoicedetails = data;
+  // getAllInvoiceDetails() {
+  //   this.invoiceService.getAllInvoiceData().subscribe(
+  //     (data: Invoicedetails[]) => {
+  //       this.invoicedetails = data;
 
-        this.invoiceService.getAllInvoiceDataByStatusId(this.statusId).subscribe(
-          response => {
-            console.log(response);
+  //       this.invoiceService.getAllInvoiceDataByStatusId(this.statusId).subscribe(
+  //         response => {
+  //           console.log(response);
 
-            if (this.statusId != 4) {
-              console.log("In Status Column Data...");
-              this.deatailsData = response;
-              this.invoicedetails = this.deatailsData;
-              this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize); // Initialize paginatedCountries with first page data
+  //           if (this.statusId != 4) {
+  //             console.log("In Status Column Data...");
+  //             this.deatailsData = response;
+  //             this.invoicedetails = this.deatailsData;
+  //             this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize); // Initialize paginatedCountries with first page data
 
-              // Navigate to the first page
-              this.paginator.pageIndex = 0;
-              this.paginator.page.emit({ pageIndex: 0, pageSize: this.pageSize, length: this.invoicedetails.length });
-            }
+  //             // Navigate to the first page
+  //             this.paginator.pageIndex = 0;
+  //             this.paginator.page.emit({ pageIndex: 0, pageSize: this.pageSize, length: this.invoicedetails.length });
+  //           }
 
-            this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize);
-          }
-        )
-        console.log(this.invoicedetails);
-        this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize);
-      }, (erro) => {
-        console.log("fail to get all");
-      }
-    )
-  }
+  //           this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize);
+  //         }
+  //       )
+  //       console.log(this.invoicedetails);
+  //       this.paginatedInvoices = this.invoicedetails.slice(0, this.pageSize);
+  //     }, (erro) => {
+  //       console.log("fail to get all");
+  //     }
+  //   )
+  // }
+
+
 
 
   addInvoicegen(invoicegenData: invoicegen) {
@@ -278,7 +336,7 @@ export class InvoicegenComponent implements OnInit {
         console.log(response);
         this.dialogService.openDeleteConfirmationDialog("Invoice added successfully.").subscribe(result => {
           if (result === false) {
-            this.getAllInvoiceDetails();
+            // this.getAllInvoiceDetails();
           }
         });
         this.benchForm.resetForm();

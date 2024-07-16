@@ -13,8 +13,8 @@ export class InvoiceService {
 
 
 
-  private invoiceUrl: string = `http://localhost:8090/invoice/excel`;
-  // private invoiceUrl: string = `http://localhost:8090/excel`;
+  // private invoiceUrl: string = `http://localhost:8090/invoice/excel`;
+  private invoiceUrl: string = `http://localhost:8090/excel`;
 
 
   // private invoiceUrl: string = `http://18.206.50.192:8080/invoice/excel`;
@@ -111,6 +111,24 @@ export class InvoiceService {
   getIntrestDataById(id: number): Observable<IntrestData> {
     return this._http.get<IntrestData>(`${this.invoiceUrl}/intrestData/${id}`);
   }
+
+  // getProducts(pageNo: number, pageSize: number): Observable<Invoicedetails[]> {
+  //   let params = new HttpParams();
+  //   params = params.append('pageNo', pageNo.toString());
+  //   params = params.append('pageSize', pageSize.toString());
+
+  //   return this._http.get<Invoicedetails[]>(`${this.invoiceUrl}/data`, { params })
+
+  // }
+
+  getProducts(pageNo: number, pageSize: number): Observable<any> {
+    return this._http.get<any>(`${this.invoiceUrl}/data?pageNo=${pageNo}&pageSize=${pageSize}`);
+  }
+
+  getInvoicePagiByStatusId(statusId: number, pageNo: number, pageSize: number): Observable<any> {
+    return this._http.get<any>(`${this.invoiceUrl}/products?statusDays=${statusId}&val=${pageNo}&val1=${pageSize}`);
+  }
+
 
 }
 
